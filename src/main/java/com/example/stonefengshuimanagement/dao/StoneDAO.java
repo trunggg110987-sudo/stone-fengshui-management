@@ -42,7 +42,7 @@ public class StoneDAO {
             PreparedStatement preparedStatement = conn.prepareStatement(SELECT_BY_ID)
         ){
             preparedStatement.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
+            ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {
                 stone = mapResultSetToStone(rs);
             }
@@ -51,14 +51,14 @@ public class StoneDAO {
         }
         return stone;
     }
-    public Stone search(String keyword) throws SQLException {
+    public List<Stone> search(String keyword) throws SQLException {
         List<Stone> list = new ArrayList<>();
 
         try(Connection conn = DBConnectionUtil.getConnection();
             PreparedStatement preparedStatement = conn.prepareStatement(SEARCH_BY_NAME)
         ){
             preparedStatement.setString(1, "%" + keyword + "%");
-            ResultSet rs = ps.executeQuery();
+            ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 list.add(mapResultSetToStone(rs));
             }
