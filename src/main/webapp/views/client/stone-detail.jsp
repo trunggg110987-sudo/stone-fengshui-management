@@ -1,16 +1,14 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: admin
-  Date: 4/11/2026
-  Time: 2:44 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Title</title>
 </head>
 <body>
+<h2>Chi tiết đá</h2>
 
+<p>ID: ${stone.id}</p>
+<p>Tên: ${stone.name}</p>
+<p>Giá: ${stone.price}</p>
 </body>
 </html>

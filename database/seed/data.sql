@@ -1,65 +1,50 @@
-CREATE DATABASE movie_booking;
-USE movie_booking;
+CREATE DATABASE fengshui_stone_db;
+
+use fengshui_stone_db;
 
 CREATE TABLE users (
                        id INT AUTO_INCREMENT PRIMARY KEY,
-                       username VARCHAR(100) NOT NULL UNIQUE,
-                       password VARCHAR(255) NOT NULL,
-                       role VARCHAR(20) NOT NULL
+                       username VARCHAR(50),
+                       password VARCHAR(255),
+                       full_name VARCHAR(100),
+                       role VARCHAR(20),
+                       status INT,
+                       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE movies (
-                        id INT AUTO_INCREMENT PRIMARY KEY,
-                        title VARCHAR(255) NOT NULL,
-                        description TEXT,
-                        duration INT,
-                        release_date DATE
+CREATE TABLE categories (
+                            id INT AUTO_INCREMENT PRIMARY KEY,
+                            name VARCHAR(100),
+                            description TEXT,
+                            status INT
 );
 
-CREATE TABLE cinemas (
-                         id INT AUTO_INCREMENT PRIMARY KEY,
-                         name VARCHAR(255) NOT NULL,
-                         address VARCHAR(255)
-);
-
-CREATE TABLE rooms (
-                       id INT AUTO_INCREMENT PRIMARY KEY,
-                       name VARCHAR(100) NOT NULL,
-                       cinema_id INT,
-                       FOREIGN KEY (cinema_id) REFERENCES cinemas(id)
-);
-
-CREATE TABLE seats (
-                       id INT AUTO_INCREMENT PRIMARY KEY,
-                       seat_number VARCHAR(10) NOT NULL,
-                       room_id INT,
-                       FOREIGN KEY (room_id) REFERENCES rooms(id)
-);
-
-CREATE TABLE showtimes (
-                           id INT AUTO_INCREMENT PRIMARY KEY,
-                           movie_id INT,
-                           room_id INT,
-                           start_time DATETIME,
-                           FOREIGN KEY (movie_id) REFERENCES movies(id),
-                           FOREIGN KEY (room_id) REFERENCES rooms(id)
-);
-
-CREATE TABLE bookings (
+CREATE TABLE elements (
                           id INT AUTO_INCREMENT PRIMARY KEY,
-                          user_id INT,
-                          showtime_id INT,
-                          booking_time DATETIME,
-                          FOREIGN KEY (user_id) REFERENCES users(id),
-                          FOREIGN KEY (showtime_id) REFERENCES showtimes(id)
+                          name VARCHAR(50)
 );
 
-CREATE TABLE tickets (
-                         id INT AUTO_INCREMENT PRIMARY KEY,
-                         booking_id INT,
-                         seat_id INT,
-                         FOREIGN KEY (booking_id) REFERENCES bookings(id),
-                         FOREIGN KEY (seat_id) REFERENCES seats(id)
+CREATE TABLE stones (
+                        id INT AUTO_INCREMENT PRIMARY KEY,
+                        category_id INT,
+                        name VARCHAR(100),
+                        code VARCHAR(50),
+                        price DECIMAL(10,2),
+                        image_url VARCHAR(255),
+                        description TEXT,
+                        status INT,
+                        FOREIGN KEY (category_id) REFERENCES categories(id)
 );
 
-SHOW TABLES;
+CREATE TABLE contact_requests (
+                                  id INT AUTO_INCREMENT PRIMARY KEY,
+                                  full_name VARCHAR(100),
+                                  phone VARCHAR(20),
+                                  email VARCHAR(100),
+                                  subject VARCHAR(255),
+                                  message TEXT,
+                                  stone_id INT,
+                                  status VARCHAR(20),
+                                  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                                  FOREIGN KEY (stone_id) REFERENCES stones(id)
+);

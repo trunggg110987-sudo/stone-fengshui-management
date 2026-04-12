@@ -17,15 +17,16 @@ ext {
 sourceCompatibility = '1.8'
 targetCompatibility = '1.8'
 
-tasks.withType(JavaCompile) {
+tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
 
 dependencies {
     compileOnly('javax.servlet:javax.servlet-api:4.0.1')
-
+    implementation 'com.mysql:mysql-connector-j:9.6.0'
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+    implementation 'javax.servlet:jstl:1.2'
 }
 
 test {
