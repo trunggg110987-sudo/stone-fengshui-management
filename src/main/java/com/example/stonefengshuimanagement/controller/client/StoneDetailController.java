@@ -1,6 +1,6 @@
 package com.example.stonefengshuimanagement.controller.client;
 
-import com.example.stonefengshuimanagement.dao.StoneDAO;
+import com.example.stonefengshuimanagement.service.StoneService;
 import com.example.stonefengshuimanagement.model.entity.Stone;
 
 import javax.servlet.ServletException;
@@ -13,12 +13,12 @@ import java.sql.SQLException;
 
 @WebServlet(name = "stoneDetail", urlPatterns = "/stoneDetail")
 public class StoneDetailController extends HttpServlet {
+    private StoneService stoneService = new StoneService();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int id = Integer.parseInt(req.getParameter("id"));
-        StoneDAO stoneDAO = new StoneDAO();
         try {
-            Stone stone = stoneDAO.findById(id);
+            Stone stone = stoneService.findById(id);
             req.setAttribute("stone", stone);
             req.getRequestDispatcher("/views/client/stone-detail.jsp").forward(req, resp);
         } catch (SQLException e) {
