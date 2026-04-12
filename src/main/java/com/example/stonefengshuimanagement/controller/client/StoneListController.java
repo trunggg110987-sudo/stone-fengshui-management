@@ -24,11 +24,6 @@ public class StoneListController extends HttpServlet {
             List<Stone> stone;
             if (keyword != null && !keyword.trim().isEmpty()) {
                 stone  = stoneService.searchByName(keyword);
-                if (stone != null) {
-                    req.setAttribute("stone", stone);
-                    req.getRequestDispatcher("/views/client/stone-detail.jsp").forward(req, resp);
-                    return;
-                }
             } else {
                 stone = stoneService.findAll();
             }

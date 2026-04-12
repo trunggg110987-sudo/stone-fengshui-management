@@ -11,9 +11,13 @@
     <button type="submit">Search</button>
 </form>
 <c:forEach var="s" items="${stones}">
-    <p>
-        <a href="stone-detail?id=${s.id}">${s.name}</a> - ${s.price}
-    </p>
+    <div>
+        <p>ID: ${s.id}</p>
+        <p>Tên: ${s.name}</p>
+        <p>Giá: ${s.price}</p>
+
+        <a href="${pageContext.request.contextPath}/stone-detail?id=${s.id}">Xem chi tiết</a>
+    </div>
 </c:forEach>
 </body>
 </html>

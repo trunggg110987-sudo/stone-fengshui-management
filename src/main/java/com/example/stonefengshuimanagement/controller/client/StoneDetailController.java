@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet(name = "stoneDetail", urlPatterns = "/stoneDetail")
+@WebServlet(name = "stoneDetail", urlPatterns = "/stone-detail")
 public class StoneDetailController extends HttpServlet {
     private StoneService stoneService = new StoneService();
     @Override

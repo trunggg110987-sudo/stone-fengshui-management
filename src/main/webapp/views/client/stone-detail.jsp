@@ -10,5 +10,16 @@
 <p>ID: ${stone.id}</p>
 <p>Tên: ${stone.name}</p>
 <p>Giá: ${stone.price}</p>
+<p>Trạng thái:
+    <c:choose>
+        <c:when test="${stone.status == 1}">
+            Còn bán
+        </c:when>
+        <c:otherwise>
+            Tạm thời hết hàng
+        </c:otherwise>
+    </c:choose>
+</p>
+<p>Thông tin: ${stone.description}</p>
 </body>
 </html>
