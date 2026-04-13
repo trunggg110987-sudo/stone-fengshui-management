@@ -6,7 +6,6 @@ import com.example.stonefengshuimanagement.utils.DBConnectionUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,36 +19,39 @@ public class CategoryDAO {
 
     public List<Category> findAll() {
         List<Category> categories = new ArrayList<>();
-        Connection conn = DBConnectionUtil.getConnection();
-        PreparedStatement ps = null;
-        try {
-            ps = conn.prepareStatement(SELECT_ALL_CATEGORY);
-            ResultSet rs = ps.executeQuery();
+        try (
+                Connection conn = DBConnectionUtil.getConnection();
+                PreparedStatement ps = conn.prepareStatement(SELECT_ALL_CATEGORY);
+                ResultSet rs = ps.executeQuery();
+        ) {
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String name = rs.getString("name");
                 String description = rs.getString("description");
                 int status = rs.getInt("status");
+
                 Category category = new Category(id, name, description, status);
                 categories.add(category);
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
         return categories;
     }
 
-    public void addCategory(Category category) {
+    public boolean addCategory(Category category) {
         try {
             Connection conn = DBConnectionUtil.getConnection();
             PreparedStatement ps = conn.prepareStatement(INSERT_INTO_CATEGORY);
             ps.setString(1, category.getName());
             ps.setString(2, category.getDescription());
             ps.setInt(3, category.getStatus());
-            ps.executeUpdate();
+            return ps.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return false;
     }
 
     public Category findCategoryById(int id) {
@@ -59,7 +61,7 @@ public class CategoryDAO {
             PreparedStatement ps = conn.prepareStatement(SELECT_CATEGORY_BY_ID);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
+            if (rs.next()) {
                 String name = rs.getString("name");
                 String description = rs.getString("description");
                 int status = rs.getInt("status");
@@ -78,7 +80,7 @@ public class CategoryDAO {
             Connection conn = DBConnectionUtil.getConnection();
             PreparedStatement ps = conn.prepareStatement(DELETE_CATEGORY);
             ps.setInt(1, id);
-            ps.executeUpdate();
+            return ps.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -101,7 +103,7 @@ public class CategoryDAO {
         }
         return update;
     }
-    public static final String SEARCH_BY_NAME_AND_STATUS = "SELECT id, name , description, status FROM categories" + " WHERE name  LIKE ? AND status = ?";
+    public static final String SEARCH_BY_NAME_AND_STATUS = "SELECT id, name, description, status FROM categories WHERE name LIKE ? AND status = ?";
     public List<Category> searchByName(String name, int status) {
         List<Category> categories = new ArrayList<>();
         try {
@@ -116,7 +118,7 @@ public class CategoryDAO {
                 String nameCategory = rs.getString("name");
                 String descriptionCategory = rs.getString("description");
                 int statusCategory = rs.getInt("status");
-                Category category = new Category(id, nameCategory, descriptionCategory, status);
+                Category category = new Category(id, nameCategory, descriptionCategory, statusCategory);
                 categories.add(category);
             }
         }catch (Exception e) {
