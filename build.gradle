@@ -23,7 +23,7 @@ tasks.withType(JavaCompile).configureEach {
 
 dependencies {
     compileOnly('javax.servlet:javax.servlet-api:4.0.1')
-    implementation 'com.mysql:mysql-connector-j:8.3.0'
+    implementation 'com.mysql:mysql-connector-j:9.6.0'
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
     implementation 'javax.servlet:jstl:1.2'
