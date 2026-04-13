@@ -9,7 +9,7 @@ import javax.servlet.http.*;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "CategoryController", urlPatterns = "/admin/category")
+@WebServlet(name = "CategoryController", urlPatterns = "/category")
 public class CategoryController extends HttpServlet {
     private final CategoryDAO  categoryDAO = new CategoryDAO();
 
@@ -27,13 +27,13 @@ public class CategoryController extends HttpServlet {
         else {
             session.setAttribute("msg", "add fail");
         }
-        response.sendRedirect(request.getContextPath() + "/admin/category");
+        response.sendRedirect(request.getContextPath() + "/category");
     }
 
     private void updateCategory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String idCategory = request.getParameter("id");
-        if(idCategory == null || idCategory.isEmpty()) {
-            response.sendRedirect(request.getContextPath() + "/admin/category");
+        if(idCategory == null || idCategory.trim().isEmpty()) {
+
             return;
         }
         int id = Integer.parseInt(idCategory);
@@ -50,13 +50,13 @@ public class CategoryController extends HttpServlet {
         else {
             session.setAttribute("msg", "Update  fail");
         }
-        response.sendRedirect(request.getContextPath() + "/admin/category");
+        response.sendRedirect(request.getContextPath() + "/category");
     }
 
     private void deleteCategory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String idCategory = request.getParameter("id");
-        if(idCategory == null || idCategory.isEmpty()) {
-            response.sendRedirect(request.getContextPath() + "/admin/category");
+        if(idCategory == null || idCategory.trim().isEmpty()) {
+            response.sendRedirect(request.getContextPath() + "/category");
             return;
         }
         int id = Integer.parseInt(idCategory);
@@ -68,11 +68,14 @@ public class CategoryController extends HttpServlet {
         else {
             session.setAttribute("msg", "Delete  fail");
         }
-        response.sendRedirect(request.getContextPath() + "/admin/category");
+        response.sendRedirect(request.getContextPath() + "/category");
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
+        resp.setContentType("text/html; charset=UTF-8");
+        resp.setCharacterEncoding("UTF-8");
         String action = req.getParameter("act");
         if(action == null) action ="";
         switch(action) {
@@ -97,26 +100,26 @@ public class CategoryController extends HttpServlet {
             default:
                 List<Category> listCategory = categoryDAO.findAll();
                 request.setAttribute("categories", listCategory);
-                request.getRequestDispatcher("/admin/category/list.jsp").forward(request, response);
+                request.getRequestDispatcher("/views/admin/category/list.jsp").forward(request, response);
                 break;
             case "create":
-                request.getRequestDispatcher("/admin/category/create.jsp").forward(request, response);
+                request.getRequestDispatcher("/views/admin/category/create.jsp").forward(request, response);
                 break;
             case "edit":
                 String idCategory = request.getParameter("id");
                 if(idCategory == null || idCategory.isEmpty()) {
-                    response.sendRedirect(request.getContextPath() + "/admin/category");
+                    response.sendRedirect(request.getContextPath() + "/category");
                     return;
                 }
                 int id = Integer.parseInt(idCategory);
                  Category category = categoryDAO.findCategoryById(id);
                 if(category == null) {
-                    response.sendRedirect(request.getContextPath() + "/admin/category");
+                    response.sendRedirect(request.getContextPath() + "/category");
                     return;
                 }
 
                 request.setAttribute("category", category);
-                request.getRequestDispatcher("/admin/category/edit.jsp").forward(request, response);
+                request.getRequestDispatcher("/views/admin/category/edit.jsp").forward(request, response);
                 break;
         }
     }
