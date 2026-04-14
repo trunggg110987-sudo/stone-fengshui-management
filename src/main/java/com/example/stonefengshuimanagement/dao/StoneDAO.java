@@ -8,11 +8,16 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Collections;
 import java.util.List;
 import java.util.ArrayList;
 
 public class StoneDAO {
+
+    public static final String SELECT_BY_ID = "SELECT id, name, price, image_url FROM stones WHERE id = ?";
+    public static final String SELECT_ALL = "SELECT id, name, price, image_url FROM stones";
+    public static final String SELECT_BY_NAME = "SELECT id, name, price, image_url FROM stones WHERE name like ?";
+    public static final String UPDATE_BY_PRICE = "SELECT id, name, price, image_url FROM stones WHERE 1=1";
+    private static final String DELETE_BY_ID = "DELETE FROM stones WHERE id = ?";
 
     private Stone mapRow(ResultSet rs) throws Exception {
         Stone stone = new Stone();
@@ -26,25 +31,23 @@ public class StoneDAO {
     public List<Stone> findAll() throws SQLException {
         List<Stone> stones = new ArrayList<>();
 
-        String sql = "SELECT id, name, price, image_url FROM stones";
         try(Connection conn = DBConnectionUtil.getConnection();
-            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            PreparedStatement preparedStatement = conn.prepareStatement(SELECT_ALL);
             ResultSet rs = preparedStatement.executeQuery()
         ){
             while (rs.next()) {
                 stones.add(mapRow(rs));
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
         return stones;
     }
 
     public Stone findById(int id) throws SQLException {
-        String sql = "SELECT id, name, price, image_url FROM stones WHERE id = ?";
 
         try(Connection conn = DBConnectionUtil.getConnection();
-            PreparedStatement ps = conn.prepareStatement(sql)
+            PreparedStatement ps = conn.prepareStatement(SELECT_BY_ID)
         ){
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
@@ -53,17 +56,16 @@ public class StoneDAO {
             }
             ps.setInt(1, id);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
         return null;
     }
     public List<Stone> search(String keyword) throws SQLException {
-        String sql = "SELECT id, name, price, image_url FROM stones WHERE name like ?";
 
         List<Stone> stones = new ArrayList<>();
 
         try(Connection conn = DBConnectionUtil.getConnection();
-            PreparedStatement ps = conn.prepareStatement(sql)
+            PreparedStatement ps = conn.prepareStatement(SELECT_BY_NAME)
         ){
             ps.setString(1, "%" + keyword + "%");
             ResultSet rs = ps.executeQuery();
@@ -71,7 +73,7 @@ public class StoneDAO {
                 stones.add(mapRow(rs));
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
         return stones;
     }
@@ -79,7 +81,7 @@ public class StoneDAO {
     public List<Stone> filterByPrice(BigDecimal minPrice, BigDecimal maxPrice) {
         List<Stone> stones = new ArrayList<>();
 
-        StringBuilder sql = new StringBuilder("SELECT id, name, price, image_url FROM stones WHERE 1=1");
+        StringBuilder sql = new StringBuilder(UPDATE_BY_PRICE);
 
         if (minPrice != null) {
             sql.append(" AND price >= ?");
@@ -111,5 +113,16 @@ public class StoneDAO {
             e.printStackTrace();
         }
         return stones;
+    }
+
+    public void setDeleteById(int id) throws SQLException {
+        try(Connection conn = DBConnectionUtil.getConnection();
+            PreparedStatement ps = conn.prepareStatement(DELETE_BY_ID)
+        ){
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
