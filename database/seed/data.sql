@@ -1,3 +1,4 @@
+DROP DATABASE fengshui_stone_db;
 CREATE DATABASE fengshui_stone_db;
 
 use fengshui_stone_db;

@@ -7,40 +7,76 @@
 --%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet"
+      href="${pageContext.request.contextPath}/views/css/category.css">
+
 <jsp:include page="/views/common/admin-header.jsp"/>
 
 <div class="container mt-4">
 
-    <h2>Create Category</h2>
+    <h2 class="page-title">Create Category</h2>
 
-    <form action="${pageContext.request.contextPath}/category?act=create" method="post">
+    <div class="form-container">
 
-        <input type="hidden" name="act" value="create"/>
+        <form action="${pageContext.request.contextPath}/category?act=create" method="post">
 
-        <div class="mb-3">
-            <label>Name</label>
-            <input type="text" name="name" class="form-control" required>
-        </div>
+            <input type="hidden" name="act" value="create"/>
 
-        <div class="mb-3">
-            <label>Description</label>
-            <textarea name="description" class="form-control"></textarea>
-        </div>
+            <div class="mb-3">
+                <label class="form-label">Name</label>
+                <input type="text" name="name" class="form-control" required>
+            </div>
 
-        <div class="mb-3">
-            <label>Status</label>
-            <select name="status" class="form-control">
-                <option value="1">Active</option>
-                <option value="0">Inactive</option>
-            </select>
-        </div>
+            <div class="mb-3">
+                <label class="form-label">Description</label>
+                <textarea name="description" class="form-control"></textarea>
+            </div>
 
-        <button class="btn btn-success">Save</button>
-        <a href="${pageContext.request.contextPath}/category"
-           class="btn btn-secondary">Back</a>
+            <div class="mb-3">
+                <label class="form-label">Status</label>
+                <select name="status" class="form-control">
+                    <option value="1">Active</option>
+                    <option value="0">Inactive</option>
+                </select>
+            </div>
+            <div class="d-flex gap-2">
+                <button class="btn btn-success flex-fill">
+                    Save
+                </button>
 
-    </form>
+                <a href="${pageContext.request.contextPath}/category"
+                   class="btn btn-secondary flex-fill"
+                   id="btnBack">
+                    Back
+                </a>
+            </div>
+        </form>
+
+    </div>
 
 </div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.getElementById("btnBack").addEventListener("click", function (e) {
+        e.preventDefault();
 
+        let url = this.getAttribute("href");
+
+        Swal.fire({
+            title: "Exit without saving?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Exit",
+            cancelButtonText: "Stay",
+            confirmButtonColor: "#dc3545",
+            cancelButtonColor: "#6c757d",
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = url;
+            }
+        });
+    });
+</script>
 <jsp:include page="/views/common/admin-footer.jsp"/>

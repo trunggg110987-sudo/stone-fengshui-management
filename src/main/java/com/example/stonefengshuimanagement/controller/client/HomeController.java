@@ -2,7 +2,9 @@ package com.example.stonefengshuimanagement.controller.client;
 
 
 import com.example.stonefengshuimanagement.dao.CategoryDAO;
+import com.example.stonefengshuimanagement.dao.StoneDAO;
 import com.example.stonefengshuimanagement.model.entity.Category;
+import com.example.stonefengshuimanagement.model.entity.Stone;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,14 +14,25 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "HomeController", urlPatterns = "/home")
+@WebServlet(name = "HomeController", urlPatterns = {"/", "/home"})
 public class HomeController extends HttpServlet {
-    private final CategoryDAO categoryDAO = new CategoryDAO();
 
+    private final CategoryDAO categoryDAO = new CategoryDAO();
+    private final StoneDAO  stoneDAO = new StoneDAO();
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Category> categoryList = categoryDAO.findAll() ;
-        req.setAttribute("categoryList", categoryList);
-        req.getRequestDispatcher("/WEB-INF/views/client/home.jsp").forward(req, resp);
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+
+        // Nếu vào "/" thì redirect sang /home
+        if (req.getServletPath().equals("/")) {
+            resp.sendRedirect(req.getContextPath() + "/home");
+            return;
+        }
+
+        List<Category> categoryList = categoryDAO.findAll();
+        req.setAttribute("categories", categoryList);
+
+        req.getRequestDispatcher("/views/client/home.jsp")
+                .forward(req, resp);
     }
 }
