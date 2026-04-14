@@ -11,63 +11,133 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class StoneDAO {
-    public List<Stone> findAll() throws SQLException {
-        List<Stone> stones = new ArrayList<>();
 
-        String sql = "SELECT id, name, price, image_url FROM stones";
+    private static final String SELECT_ALL = "SELECT * FROM stones";
+    private static final String SELECT_BY_ID = "SELECT * FROM stones WHERE id = ?";
+    private static final String SEARCH_BY_NAME = "SELECT * FROM stones WHERE name LIKE ?";
+    private static final String INSERT = "INSERT INTO stones (category_id, name, code, price, image_url, description, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    private static final String UPDATE = "UPDATE stones SET category_id=?, name=?, code=?, price=?, image_url=?, description=?, status=? WHERE id=?";
+    private static final String DELETE = "DELETE FROM stones WHERE id=?";
+
+    public List<Stone> findAll() throws SQLException {
+        List<Stone> list = new ArrayList<>();
+
         try(Connection conn = DBConnectionUtil.getConnection();
-            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            PreparedStatement preparedStatement = conn.prepareStatement(SELECT_ALL);
             ResultSet rs = preparedStatement.executeQuery()
         ){
             while (rs.next()) {
-                Stone stone = new Stone();
-                stone.setId(rs.getInt("id"));
-                stone.setName(rs.getString("name"));
-                stone.setPrice(rs.getBigDecimal("price"));
-                stone.setImageUrl(rs.getString("image_url"));
-                stones.add(stone);
+                list.add(mapResultSetToStone(rs));
             }
         }catch (SQLException e){
             throw new RuntimeException(e);
         }
-        return stones;
+        return list;
     }
 
     public Stone findById(int id) throws SQLException {
-        String sql = "SELECT id, name, price, image_url FROM stones WHERE id = ?";
+        Stone stone = null;
+
         try(Connection conn = DBConnectionUtil.getConnection();
-            PreparedStatement preparedStatement = conn.prepareStatement(sql)
+            PreparedStatement preparedStatement = conn.prepareStatement(SELECT_BY_ID)
         ){
             preparedStatement.setInt(1, id);
-            Stone stone = getStone(preparedStatement);
-            if (stone != null) return stone;
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) {
+                stone = mapResultSetToStone(rs);
+            }
         }catch (SQLException e){
             throw new RuntimeException(e);
         }
-        return null;
+        return stone;
     }
-    public Stone search(String keyword) throws SQLException {
-        String sql = "SELECT id, name, price, image_url FROM stones WHERE name like ?";
+    public List<Stone> search(String keyword) throws SQLException {
+        List<Stone> list = new ArrayList<>();
+
         try(Connection conn = DBConnectionUtil.getConnection();
-            PreparedStatement preparedStatement = conn.prepareStatement(sql)
+            PreparedStatement preparedStatement = conn.prepareStatement(SEARCH_BY_NAME)
         ){
             preparedStatement.setString(1, "%" + keyword + "%");
-            Stone stone = getStone(preparedStatement);
-            if (stone != null) return stone;
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                list.add(mapResultSetToStone(rs));
+            }
+        } catch (SQLException e){
+            throw new RuntimeException(e);
         }
-        return null;
+        return list;
     }
 
-    private Stone getStone(PreparedStatement preparedStatement) throws SQLException {
-        ResultSet rs = preparedStatement.executeQuery();
-        if (rs.next()){
-            Stone stone = new Stone();
-            stone.setId(rs.getInt("id"));
-            stone.setName(rs.getString("name"));
-            stone.setPrice(rs.getBigDecimal("price"));
-            stone.setImageUrl(rs.getString("image_url"));
-            return stone;
+    public void insert(Stone stone) {
+        try (Connection conn = DBConnectionUtil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(INSERT)) {
+
+            ps.setInt(1, stone.getCategoryId());
+            ps.setString(2, stone.getName());
+            ps.setString(3, stone.getCode());
+            ps.setDouble(4, stone.getPrice());
+            ps.setString(5, stone.getImageUrl());
+            ps.setString(6, stone.getDescription());
+            ps.setInt(7, stone.getStatus());
+
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        return null;
     }
+
+    public boolean update(Stone stone) {
+        boolean rowUpdated = false;
+
+        try (Connection conn = DBConnectionUtil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(UPDATE)) {
+
+            ps.setInt(1, stone.getCategoryId());
+            ps.setString(2, stone.getName());
+            ps.setString(3, stone.getCode());
+            ps.setDouble(4, stone.getPrice());
+            ps.setString(5, stone.getImageUrl());
+            ps.setString(6, stone.getDescription());
+            ps.setInt(7, stone.getStatus());
+            ps.setInt(8, stone.getId());
+
+            rowUpdated = ps.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return rowUpdated;
+    }
+
+    public boolean delete(int id) {
+        boolean rowDeleted = false;
+
+        try (Connection conn = DBConnectionUtil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(DELETE)) {
+
+            ps.setInt(1, id);
+            rowDeleted = ps.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return rowDeleted;
+    }
+
+    private Stone mapResultSetToStone(ResultSet rs) throws SQLException {
+        return new Stone(
+                rs.getInt("id"),
+                rs.getInt("category_id"),
+                rs.getString("name"),
+                rs.getString("code"),
+                rs.getDouble("price"),
+                rs.getString("image_url"),
+                rs.getString("description"),
+                rs.getInt("status")
+        );
+    }
+
 }
