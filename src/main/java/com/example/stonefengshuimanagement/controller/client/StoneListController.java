@@ -17,8 +17,12 @@ import java.util.List;
 public class StoneListController extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void init() throws ServletException {
         StoneDAO stoneDAO = new StoneDAO();
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String keyword = req.getParameter("keyword");
         String minStr  = req.getParameter("minPrice");
