@@ -16,10 +16,12 @@ public class StoneDAO {
     public static final String SELECT_BY_ID = "SELECT id, name, price, image_url FROM stones WHERE id = ?";
     public static final String SELECT_ALL = "SELECT id, name, price, image_url FROM stones";
     public static final String SELECT_BY_NAME = "SELECT id, name, price, image_url FROM stones WHERE name like ?";
-    public static final String UPDATE_BY_PRICE = "SELECT id, name, price, image_url FROM stones WHERE 1=1";
+    public static final String SELECT_FILTER_BASE = "SELECT id, name, price, image_url FROM stones WHERE 1=1";
     private static final String DELETE_BY_ID = "DELETE FROM stones WHERE id = ?";
+    public static final String INSERT_INTO_STONES = "INSERT INTO stones (name, price, image_url) VALUES (?, ?, ?)";
+    public static final String UPDATE_STONE = "UPDATE stones SET name = ?, price = ?, image_url = ? WHERE id = ?";
 
-    private Stone mapRow(ResultSet rs) throws Exception {
+    private Stone mapRow(ResultSet rs) throws SQLException {
         Stone stone = new Stone();
         stone.setId(rs.getInt("id"));
         stone.setName(rs.getString("name"));
@@ -54,7 +56,6 @@ public class StoneDAO {
             if(rs.next()){
                 return mapRow(rs);
             }
-            ps.setInt(1, id);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -69,7 +70,7 @@ public class StoneDAO {
         ){
             ps.setString(1, "%" + keyword + "%");
             ResultSet rs = ps.executeQuery();
-            if(rs.next()){
+            while(rs.next()){
                 stones.add(mapRow(rs));
             }
         } catch (Exception e) {
@@ -81,7 +82,7 @@ public class StoneDAO {
     public List<Stone> filterByPrice(BigDecimal minPrice, BigDecimal maxPrice) {
         List<Stone> stones = new ArrayList<>();
 
-        StringBuilder sql = new StringBuilder(UPDATE_BY_PRICE);
+        StringBuilder sql = new StringBuilder(SELECT_FILTER_BASE);
 
         if (minPrice != null) {
             sql.append(" AND price >= ?");
@@ -115,7 +116,7 @@ public class StoneDAO {
         return stones;
     }
 
-    public void setDeleteById(int id) throws SQLException {
+    public void deleteById(int id) throws SQLException {
         try(Connection conn = DBConnectionUtil.getConnection();
             PreparedStatement ps = conn.prepareStatement(DELETE_BY_ID)
         ){
@@ -123,6 +124,29 @@ public class StoneDAO {
             ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public void insert(Stone stone) throws SQLException {
+        try(Connection conn = DBConnectionUtil.getConnection();
+            PreparedStatement ps = conn.prepareStatement(INSERT_INTO_STONES)
+        ){
+            ps.setString(1, stone.getName());
+            ps.setBigDecimal(2, stone.getPrice());
+            ps.setString(3, stone.getImageUrl());
+            ps.executeUpdate();
+        }
+    }
+
+    public void update(int id, Stone stone) throws SQLException {
+        try(Connection conn = DBConnectionUtil.getConnection();
+            PreparedStatement ps = conn.prepareStatement(UPDATE_STONE)
+        ){
+            ps.setString(1, stone.getName());
+            ps.setBigDecimal(2, stone.getPrice());
+            ps.setString(3, stone.getImageUrl());
+            ps.setInt(4, id);
+            ps.executeUpdate();
         }
     }
 }
