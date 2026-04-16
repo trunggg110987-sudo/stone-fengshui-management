@@ -1,28 +1,49 @@
 package com.example.stonefengshuimanagement.controller.admin;
 
+import com.example.stonefengshuimanagement.model.entity.User;
+import com.example.stonefengshuimanagement.service.AuthService;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 import java.io.IOException;
 
-@WebServlet(name = "AdminLogin", urlPatterns = "/login")
+@WebServlet(name = "admin-login", value = "/admin/login")
 public class AdminLoginController extends HttpServlet {
+
+    private AuthService authService;
+
+    @Override
+    public void init() throws ServletException {
+        authService = new AuthService();
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String action = req.getParameter("action");
+        req.getRequestDispatcher("/views/admin/login.jsp").forward(req, resp);
+    }
 
-        if("logout".equals(action)){
-            HttpSession session = req.getSession(false);
-            if(session != null) {
-                session.invalidate();
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        String username = req.getParameter("username");
+        String password = req.getParameter("password");
+
+        try {
+            User user = authService.login(username, password);
+
+            if (user != null) {
+                HttpSession session = req.getSession();
+                session.setAttribute("user", user);
+
+                resp.sendRedirect(req.getContextPath() + "/admin/dashboard");
+            } else {
+                req.setAttribute("error", "Sai tài khoản hoặc mật khẩu");
+                req.getRequestDispatcher("/views/admin/login.jsp").forward(req, resp);
             }
-            HttpSession newSession = req.getSession();
-            newSession.setAttribute("admin", null);
-            resp.sendRedirect("/stonefengshuimanagement/admin/login");
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 }
