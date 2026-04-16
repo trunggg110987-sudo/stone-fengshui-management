@@ -4,6 +4,7 @@ public class User {
     private Integer id;
     private String username;
     private String password;
+    private String fullName;
     private String email;
     private String phone;
     private String role;
@@ -11,10 +12,11 @@ public class User {
     public User() {
     }
 
-    public User(Integer id, String username, String password, String email, String phone, String role) {
+    public User(Integer id, String username, String password, String fullName, String email, String phone, String role) {
         this.id = id;
         this.username = username;
         this.password = password;
+        this.fullName = fullName;
         this.email = email;
         this.phone = phone;
         this.role = role;
@@ -66,5 +68,12 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 }

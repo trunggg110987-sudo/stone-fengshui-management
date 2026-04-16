@@ -7,9 +7,12 @@ CREATE TABLE users (
                        username VARCHAR(50),
                        password VARCHAR(255),
                        full_name VARCHAR(100),
+                       email VARCHAR(255),
+                       phone VARCHAR(20),
                        role VARCHAR(20),
                        status INT,
-                       crexated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+
 );
 
 CREATE TABLE categories (

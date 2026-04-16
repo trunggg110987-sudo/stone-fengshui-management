@@ -135,6 +135,8 @@ public class StoneDAO {
             ps.setBigDecimal(2, stone.getPrice());
             ps.setString(3, stone.getImageUrl());
             ps.executeUpdate();
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 
@@ -147,6 +149,8 @@ public class StoneDAO {
             ps.setString(3, stone.getImageUrl());
             ps.setInt(4, id);
             ps.executeUpdate();
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 }
