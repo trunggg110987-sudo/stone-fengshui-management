@@ -12,7 +12,7 @@
 <link rel="stylesheet"
       href="${pageContext.request.contextPath}/views/css/category.css">
 
-<jsp:include page="/views/common/admin-header.jsp"/>
+<%--<jsp:include page="/views/common/admin-header.jsp"/>--%>
 
 <div class="container mt-4">
 
@@ -89,4 +89,4 @@
         });
     });
 </script>
-<jsp:include page="/views/common/admin-footer.jsp"/>
+<%--<jsp:include page="/views/common/admin-footer.jsp"/>--%>

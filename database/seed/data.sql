@@ -64,6 +64,8 @@ WHERE status IS NULL;
 ALTER TABLE categories
     MODIFY status INT DEFAULT 1;
 
+ALTER TABLE categories ADD UNIQUE (name);
+
 -- Example data --
 
 INSERT INTO categories (name, description, status) VALUES

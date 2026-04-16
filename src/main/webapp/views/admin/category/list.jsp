@@ -12,11 +12,49 @@
 <link rel="stylesheet"
       href="${pageContext.request.contextPath}/views/css/category.css">
 
-<jsp:include page="/views/common/admin-header.jsp"/>
-
 <div class="container mt-4">
 
     <h2 class="page-title text-center">Category List</h2>
+
+    <!-- Search + Filter -->
+    <div class="card p-3 mb-3">
+        <form method="get" action="${pageContext.request.contextPath}/category">
+            <div class="row">
+
+                <div class="col-md-4">
+                    <input type="text"
+                           name="keyword"
+                           value="${param.keyword}"
+                           class="form-control"
+                           placeholder="Search by name">
+                </div>
+
+                <div class="col-md-3">
+                    <select name="status" class="form-select">
+                        <option value="">All status</option>
+                        <option value="1" ${param.status == '1' ? 'selected' : ''}>Active</option>
+                        <option value="0" ${param.status == '0' ? 'selected' : ''}>Inactive</option>
+                    </select>
+                </div>
+
+                <div class="col-md-3">
+                    <button class="btn btn-primary">
+                        Search
+                    </button>
+
+                    <a href="${pageContext.request.contextPath}/category"
+                       class="btn btn-secondary">
+                        Reset
+                    </a>
+                </div>
+
+                <div class="col-md-2 text-end">
+                    <strong>Total: ${total}</strong>
+                </div>
+
+            </div>
+        </form>
+    </div>
 
     <div class="text-end mb-3">
         <a href="${pageContext.request.contextPath}/category?act=create"
@@ -41,7 +79,9 @@
             <tbody>
 
             <c:forEach var="c" items="${categories}">
-                <tr>
+                <tr style="cursor:pointer"
+                    onclick="goDetail(${c.id})">
+
                     <td>${c.id}</td>
                     <td>${c.name}</td>
                     <td>${c.description}</td>
@@ -57,7 +97,7 @@
                         </c:choose>
                     </td>
 
-                    <td>
+                    <td onclick="event.stopPropagation()">
                         <a class="btn btn-warning btn-sm"
                            href="${pageContext.request.contextPath}/category?act=edit&id=${c.id}">
                             Edit
@@ -76,6 +116,7 @@
                             </button>
                         </form>
                     </td>
+
                 </tr>
             </c:forEach>
 
@@ -88,7 +129,25 @@
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+<!-- SweetAlert message -->
+<c:if test="${not empty sessionScope.msg}">
+    <script>
+        Swal.fire({
+            icon: 'info',
+            title: 'Notification',
+            text: '${sessionScope.msg}',
+            confirmButtonColor: '#3085d6'
+        });
+    </script>
+    <c:remove var="msg" scope="session"/>
+</c:if>
+
 <script>
+    function goDetail(id){
+        window.location =
+            "${pageContext.request.contextPath}/category?act=detail&id=" + id;
+    }
+
     document.querySelectorAll(".btn-delete").forEach(btn => {
         btn.addEventListener("click", function () {
 
@@ -112,5 +171,3 @@
         });
     });
 </script>
-
-<jsp:include page="/views/common/admin-footer.jsp"/>

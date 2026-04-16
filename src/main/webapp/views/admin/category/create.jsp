@@ -6,12 +6,11 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet"
       href="${pageContext.request.contextPath}/views/css/category.css">
-
-<jsp:include page="/views/common/admin-header.jsp"/>
 
 <div class="container mt-4">
 
@@ -23,23 +22,39 @@
 
             <input type="hidden" name="act" value="create"/>
 
+            <!-- NAME -->
             <div class="mb-3">
                 <label class="form-label">Name</label>
-                <input type="text" name="name" class="form-control" required>
+
+                <input type="text"
+                       name="name"
+                       class="form-control ${not empty errorName ? 'is-invalid' : ''}"
+                       value="${name}"
+                       required>
+
+                <c:if test="${not empty errorName}">
+                    <div class="invalid-feedback">
+                            ${errorName}
+                    </div>
+                </c:if>
             </div>
 
+            <!-- DESCRIPTION -->
             <div class="mb-3">
                 <label class="form-label">Description</label>
-                <textarea name="description" class="form-control"></textarea>
+                <textarea name="description"
+                          class="form-control">${description}</textarea>
             </div>
 
+            <!-- STATUS -->
             <div class="mb-3">
                 <label class="form-label">Status</label>
                 <select name="status" class="form-control">
-                    <option value="1">Active</option>
-                    <option value="0">Inactive</option>
+                    <option value="1" ${status == 1 ? 'selected' : ''}>Active</option>
+                    <option value="0" ${status == 0 ? 'selected' : ''}>Inactive</option>
                 </select>
             </div>
+
             <div class="d-flex gap-2">
                 <button class="btn btn-success flex-fill">
                     Save
@@ -51,12 +66,15 @@
                     Back
                 </a>
             </div>
+
         </form>
 
     </div>
 
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
     document.getElementById("btnBack").addEventListener("click", function (e) {
         e.preventDefault();
@@ -79,4 +97,3 @@
         });
     });
 </script>
-<jsp:include page="/views/common/admin-footer.jsp"/>

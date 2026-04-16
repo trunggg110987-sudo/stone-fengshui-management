@@ -2,6 +2,8 @@ package com.example.stonefengshuimanagement.controller.admin;
 
 import com.example.stonefengshuimanagement.dao.CategoryDAO;
 import com.example.stonefengshuimanagement.model.entity.Category;
+import com.example.stonefengshuimanagement.service.CategoryService;
+import exception.DatabaseException;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
@@ -11,117 +13,203 @@ import java.util.List;
 
 @WebServlet(name = "CategoryController", urlPatterns = "/category")
 public class CategoryController extends HttpServlet {
-    private final CategoryDAO  categoryDAO = new CategoryDAO();
 
-    private void createCategory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private final CategoryDAO categoryDAO = new CategoryDAO();
+
+    private void createCategory(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException, DatabaseException {
+
         String name = request.getParameter("name");
         String description = request.getParameter("description");
-        String statusParam = request.getParameter("status");
-        int status = (statusParam == null || statusParam.isEmpty()) ? 0 : Integer.parseInt(statusParam);
+        int status = Integer.parseInt(request.getParameter("status"));
+
         Category category = new Category(name, description, status);
+
         boolean success = categoryDAO.addCategory(category);
-        HttpSession session = request.getSession();
-        if(success) {
-            session.setAttribute("msg", "add success");
+
+        if (success) {
+
+            request.getSession().setAttribute("msg", "Add success");
+            response.sendRedirect(request.getContextPath() + "/category");
+
+        } else {
+            request.setAttribute("errorName", "Tên category đã tồn tại");
+
+            // giữ dữ liệu form
+            request.setAttribute("name", name);
+            request.setAttribute("description", description);
+            request.setAttribute("status", status);
+
+            request.getRequestDispatcher("/views/admin/category/create.jsp")
+                    .forward(request, response);
         }
-        else {
-            session.setAttribute("msg", "add fail");
-        }
-        response.sendRedirect(request.getContextPath() + "/category");
     }
 
-    private void updateCategory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String idCategory = request.getParameter("id");
-        if(idCategory == null || idCategory.trim().isEmpty()) {
 
+    private final CategoryService categoryService = new CategoryService();
+
+    private void updateCategory(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException, DatabaseException {
+
+        String idCategory = request.getParameter("id");
+        if (idCategory == null || idCategory.trim().isEmpty()) {
             return;
         }
+
         int id = Integer.parseInt(idCategory);
         String name = request.getParameter("name");
         String description = request.getParameter("description");
         String statusParam = request.getParameter("status");
-        int status = (statusParam == null || statusParam.isEmpty()) ? 0 : Integer.parseInt(statusParam);
+
+        int status = (statusParam == null || statusParam.isEmpty())
+                ? 0 : Integer.parseInt(statusParam);
         Category category = new Category(id, name, description, status);
-        boolean success = categoryDAO.updateCategory(category);
+        // sửa ở đây
+        boolean success = categoryService.updateCategory(category);
         HttpSession session = request.getSession();
-        if(success) {
-            session.setAttribute("msg", "Update  success");
-        }
-        else {
-            session.setAttribute("msg", "Update  fail");
+        if (success) {
+            session.setAttribute("msg", "Update success");
+        } else {
+            session.setAttribute("msg", "No changes detected");
         }
         response.sendRedirect(request.getContextPath() + "/category");
     }
+    private void deleteCategory(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException, DatabaseException {
 
-    private void deleteCategory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String idCategory = request.getParameter("id");
-        if(idCategory == null || idCategory.trim().isEmpty()) {
+        if (idCategory == null || idCategory.trim().isEmpty()) {
             response.sendRedirect(request.getContextPath() + "/category");
             return;
         }
+
         int id = Integer.parseInt(idCategory);
-        boolean success = categoryDAO.deleteCategoryById(id);
+
         HttpSession session = request.getSession();
-        if(success) {
-            session.setAttribute("msg", "Delete  success");
+
+        // kiểm tra khóa ngoại đến stones
+        if (categoryDAO.existsStoneByCategoryId(id)) {
+            session.setAttribute("msg", "Cannot delete! Category is in use");
+            response.sendRedirect(request.getContextPath() + "/category");
+            return;
         }
-        else {
-            session.setAttribute("msg", "Delete  fail");
+
+        boolean success = categoryDAO.deleteCategoryById(id);
+
+        if (success) {
+            session.setAttribute("msg", "Delete success");
+        } else {
+            session.setAttribute("msg", "Delete fail");
         }
+
         response.sendRedirect(request.getContextPath() + "/category");
     }
-
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+
         req.setCharacterEncoding("UTF-8");
         resp.setContentType("text/html; charset=UTF-8");
-        resp.setCharacterEncoding("UTF-8");
+
         String action = req.getParameter("act");
-        if(action == null) action ="";
-        switch(action) {
-            case "create":
-                createCategory(req, resp);
-                break;
-            case "update":
-                updateCategory(req, resp);
-                break;
-            case "delete":
-                deleteCategory(req, resp);
-                break;
+        if (action == null) action = "";
 
+        try {
+            switch (action) {
+                case "create":
+                    createCategory(req, resp);
+                    break;
+                case "update":
+                    updateCategory(req, resp);
+                    break;
+                case "delete":
+                    deleteCategory(req, resp);
+                    break;
+            }
+        } catch (DatabaseException e) {
+            throw new ServletException(e);
         }
     }
-// hiển thị form
+
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String action = request.getParameter("act");
-        if(action == null) action ="";
-        switch(action) {
-            default:
-                List<Category> listCategory = categoryDAO.findAll();
-                request.setAttribute("categories", listCategory);
-                request.getRequestDispatcher("/views/admin/category/list.jsp").forward(request, response);
-                break;
-            case "create":
-                request.getRequestDispatcher("/views/admin/category/create.jsp").forward(request, response);
-                break;
-            case "edit":
-                String idCategory = request.getParameter("id");
-                if(idCategory == null || idCategory.isEmpty()) {
-                    response.sendRedirect(request.getContextPath() + "/category");
-                    return;
-                }
-                int id = Integer.parseInt(idCategory);
-                 Category category = categoryDAO.findCategoryById(id);
-                if(category == null) {
-                    response.sendRedirect(request.getContextPath() + "/category");
-                    return;
-                }
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
-                request.setAttribute("category", category);
-                request.getRequestDispatcher("/views/admin/category/edit.jsp").forward(request, response);
-                break;
+        String action = request.getParameter("act");
+        if (action == null) action = "";
+
+        try {
+            switch (action) {
+
+                case "create":
+                    request.getRequestDispatcher("/views/admin/category/create.jsp")
+                            .forward(request, response);
+                    break;
+
+                case "edit":
+                    String idCategory = request.getParameter("id");
+                    if (idCategory == null || idCategory.isEmpty()) {
+                        response.sendRedirect(request.getContextPath() + "/category");
+                        return;
+                    }
+
+                    int id = Integer.parseInt(idCategory);
+                    Category category = categoryDAO.findCategoryById(id);
+
+                    request.setAttribute("category", category);
+                    request.getRequestDispatcher("/views/admin/category/edit.jsp")
+                            .forward(request, response);
+                    break;
+
+                case "detail":
+                    int idDetail = Integer.parseInt(request.getParameter("id"));
+                    Category detail = categoryDAO.findCategoryById(idDetail);
+                    request.setAttribute("category", detail);
+                    request.getRequestDispatcher("/views/admin/category/detail.jsp")
+                            .forward(request, response);
+                    break;
+                default:
+
+                    String keyword = request.getParameter("keyword");
+                    String statusParam = request.getParameter("status");
+
+                    List<Category> listCategory;
+
+                    boolean hasKeyword = keyword != null && !keyword.trim().isEmpty();
+                    boolean hasStatus = statusParam != null && !statusParam.trim().isEmpty();
+
+                    if (hasKeyword && hasStatus) {
+
+                        listCategory = categoryDAO.searchByNameAndStatus(
+                                keyword,
+                                Integer.parseInt(statusParam)
+                        );
+
+                    } else if (hasKeyword) {
+
+                        listCategory = categoryDAO.searchByName(keyword);
+
+                    } else if (hasStatus) {
+
+                        listCategory = categoryDAO.searchByStatus(
+                                Integer.parseInt(statusParam)
+                        );
+
+                    } else {
+
+                        listCategory = categoryDAO.findAll();
+                    }
+
+                    request.setAttribute("total", listCategory.size());
+                    request.setAttribute("categories", listCategory);
+
+                    request.getRequestDispatcher("/views/admin/category/list.jsp")
+                            .forward(request, response);
+                    break;
+            }
+
+        } catch (DatabaseException e) {
+            throw new ServletException(e);
         }
     }
-
 }

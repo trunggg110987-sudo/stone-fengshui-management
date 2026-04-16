@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: admin
@@ -48,13 +49,24 @@
                         Home
                     </a>
                 </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/stone">
-                        Products
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle"
+                       href="#"
+                       role="button"
+                       data-bs-toggle="dropdown">
+                        Stones | Category
                     </a>
+                    <ul class="dropdown-menu">
+                        <c:forEach var="c" items="${categories}">
+                            <li>
+                                <a class="dropdown-item"
+                                   href="${pageContext.request.contextPath}/stone?categoryId=${c.id}">
+                                        ${c.name}
+                                </a>
+                            </li>
+                        </c:forEach>
+                    </ul>
                 </li>
-
                 <li class="nav-item">
                     <a class="nav-link" href="#">
                         Blog

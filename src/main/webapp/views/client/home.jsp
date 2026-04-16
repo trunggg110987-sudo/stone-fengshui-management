@@ -16,19 +16,6 @@
 
 <!-- banner -->
 <div id="homeCarousel" class="carousel slide" data-bs-ride="carousel">
-
-    <div class="carousel-inner">
-
-        <div class="carousel-item active">
-            <img src="/assets/images/banner1.jpg" class="d-block w-100 banner-img">
-        </div>
-
-        <div class="carousel-item">
-            <img src="/assets/images/banner2.jpg" class="d-block w-100 banner-img">
-        </div>
-
-    </div>
-
     <!-- ARROWS -->
     <button class="carousel-control-prev" type="button" data-bs-target="#homeCarousel" data-bs-slide="prev">
         <span class="carousel-control-prev-icon"></span>

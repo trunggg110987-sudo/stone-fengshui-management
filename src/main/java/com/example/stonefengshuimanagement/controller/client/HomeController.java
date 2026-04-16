@@ -28,10 +28,6 @@ public class HomeController extends HttpServlet {
             resp.sendRedirect(req.getContextPath() + "/home");
             return;
         }
-
-        List<Category> categoryList = categoryDAO.findAll();
-        req.setAttribute("categories", categoryList);
-
         req.getRequestDispatcher("/views/client/home.jsp")
                 .forward(req, resp);
     }
