@@ -53,7 +53,6 @@
                            class="btn btn-outline-primary mt-auto">
                             Xem chi tiết
                         </a>
-
                     </div>
 
                 </div>

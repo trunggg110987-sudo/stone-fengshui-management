@@ -21,7 +21,7 @@
                 <h5 class="footer-title">Quick Links</h5>
                 <ul class="footer-links">
                     <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
-                    <li><a href="${pageContext.request.contextPath}/stone">Products</a></li>
+                    <li><a href="${pageContext.request.contextPath}/stones">Products</a></li>
                     <li><a href="#">Blog</a></li>
                     <li><a href="#">About</a></li>
                 </ul>
