@@ -1,50 +1,44 @@
-CREATE DATABASE fengshui_stone_db;
+-- USERS
+INSERT INTO users (username, password, full_name, email, phone, role, status)
+VALUES
+    ('admin', '123456', 'Trung Admin', 'admin@gmail.com', '0123456789', 'ADMIN', 1),
+    ('anh', '123456', 'Ngọc Ánh', 'anh@gmail.com', '0987654321', 'USER', 1),
+    ('duoc', '123456', 'Nguyễn Được', 'duoc@gmail.com', '0911222333', 'USER', 1),
+    ('manager', '123456', 'Quản lý', 'manager@gmail.com', '0933444555', 'ADMIN', 1),
+    ('guest', '123456', 'Khách', 'guest@gmail.com', '0966777888', 'USER', 1);
 
-use fengshui_stone_db;
+-- CATEGORIES
+INSERT INTO categories (name, description, status)
+VALUES
+    ('Đá thạch anh', 'Các loại đá thạch anh phong thủy', 1),
+    ('Đá mã não', 'Đá mã não tự nhiên', 1),
+    ('Đá mắt hổ', 'Đá mắt hổ tăng năng lượng', 1);
 
-CREATE TABLE users (
-                       id INT AUTO_INCREMENT PRIMARY KEY,
-                       username VARCHAR(50),
-                       password VARCHAR(255),
-                       full_name VARCHAR(100),
-                       role VARCHAR(20),
-                       status INT,
-                       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+-- ELEMENTS
+INSERT INTO elements (name)
+VALUES
+    ('Kim'),
+    ('Mộc'),
+    ('Thủy'),
+    ('Hỏa'),
+    ('Thổ');
 
-CREATE TABLE categories (
-                            id INT AUTO_INCREMENT PRIMARY KEY,
-                            name VARCHAR(100),
-                            description TEXT,
-                            status INT
-);
+-- STONES
+INSERT INTO stones (category_id, name, code, price, image_url, description, status)
+VALUES
+    (1, 'Thạch anh tím', 'TA001', 500000, 'https://via.placeholder.com/200', 'Đá giúp tăng trí tuệ', 1),
+    (1, 'Thạch anh hồng', 'TA002', 450000, 'https://via.placeholder.com/200', 'Đá tình duyên', 1),
+    (2, 'Mã não đỏ', 'MN001', 300000, 'https://via.placeholder.com/200', 'Mang lại may mắn', 1),
+    (2, 'Mã não xanh', 'MN002', 320000, 'https://via.placeholder.com/200', 'Giúp cân bằng', 1),
+    (3, 'Mắt hổ vàng', 'MH001', 600000, 'https://via.placeholder.com/200', 'Tăng tài lộc', 1),
+    (3, 'Mắt hổ đỏ', 'MH002', 650000, 'https://via.placeholder.com/200', 'Tăng sức mạnh', 1),
+    (1, 'Thạch anh trắng', 'TA003', 400000, 'https://via.placeholder.com/200', 'Thanh lọc năng lượng', 1),
+    (2, 'Mã não đen', 'MN003', 350000, 'https://via.placeholder.com/200', 'Bảo vệ khỏi tiêu cực', 1);
 
-CREATE TABLE elements (
-                          id INT AUTO_INCREMENT PRIMARY KEY,
-                          name VARCHAR(50)
-);
-
-CREATE TABLE stones (
-                        id INT AUTO_INCREMENT PRIMARY KEY,
-                        category_id INT,
-                        name VARCHAR(100),
-                        code VARCHAR(50),
-                        price DECIMAL(10,2),
-                        image_url VARCHAR(255),
-                        description TEXT,
-                        status INT,
-                        FOREIGN KEY (category_id) REFERENCES categories(id)
-);
-
-CREATE TABLE contact_requests (
-                                  id INT AUTO_INCREMENT PRIMARY KEY,
-                                  full_name VARCHAR(100),
-                                  phone VARCHAR(20),
-                                  email VARCHAR(100),
-                                  subject VARCHAR(255),
-                                  message TEXT,
-                                  stone_id INT,
-                                  status VARCHAR(20),
-                                  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                                  FOREIGN KEY (stone_id) REFERENCES stones(id)
-);
+-- CONTACT REQUESTS
+INSERT INTO contact_requests (full_name, phone, email, subject, message, stone_id, status)
+VALUES
+    ('Nguyễn Văn A', '0901111222', 'a@gmail.com', 'Tư vấn đá', 'Tôi muốn tư vấn đá hợp mệnh', 1, 'NEW'),
+    ('Trần Thị B', '0902222333', 'b@gmail.com', 'Giá sản phẩm', 'Cho tôi hỏi giá đá này', 2, 'NEW'),
+    ('Lê Văn C', '0903333444', 'c@gmail.com', 'Đặt hàng', 'Tôi muốn đặt mua đá', 3, 'PROCESSING'),
+    ('Phạm Thị D', '0904444555', 'd@gmail.com', 'Hỏi thông tin', 'Đá này có hợp mệnh không?', 4, 'DONE');
