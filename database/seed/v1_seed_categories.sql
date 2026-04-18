@@ -1,6 +1,11 @@
+SET FOREIGN_KEY_CHECKS = 0;
+
+TRUNCATE TABLE stones;
+TRUNCATE TABLE categories;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
 INSERT INTO categories (name, description, status) VALUES
-                                                       ('Vòng tay', 'Vòng tay đá phong thủy giúp cân bằng năng lượng và thu hút may mắn', 1),
-                                                       ('Đá viên', 'Đá phong thủy dạng viên nhỏ, dễ mang theo bên người', 1),
-                                                       ('Mặt dây chuyền', 'Trang sức phong thủy mang ý nghĩa bảo hộ và tài lộc', 1),
-                                                       ('Quả cầu đá', 'Biểu tượng của sự viên mãn, hài hòa năng lượng', 1),
-                                                       ('Tượng đá mini', 'Vật phẩm phong thủy để bàn giúp tăng vượng khí', 1);
+                                                       ('Đá thô', 'Các loại đá nguyên bản chưa qua xử lý', 1),
+                                                       ('Đá mài bóng', 'Đá đã được gia công, mài và đánh bóng', 1),
+                                                       ('Trang sức', 'Các loại đá phong thủy dùng làm trang sức', 1);

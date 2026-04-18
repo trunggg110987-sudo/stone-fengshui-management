@@ -1,8 +1,10 @@
 package com.example.stonefengshuimanagement.controller.client;
 
+import com.example.stonefengshuimanagement.dao.CategoryDAO;
 import com.example.stonefengshuimanagement.dao.StoneDAO;
 import com.example.stonefengshuimanagement.model.entity.Stone;
 import com.example.stonefengshuimanagement.service.StoneService;
+import exception.DatabaseException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,15 +23,30 @@ public class StoneListController extends HttpServlet {
         StoneDAO stoneDAO = new StoneDAO();
         try {
             String keyword = req.getParameter("keyword");
+            String categoryId = req.getParameter("categoryId"); // added by anh
             List<Stone> stone;
-            if (keyword != null && !keyword.trim().isEmpty()) {
+            if (categoryId != null && !categoryId.isEmpty()) {
+                stone = stoneService.findByCategory(Integer.parseInt(categoryId));
+
+            }// added by anh
+            else if (keyword != null && !keyword.trim().isEmpty()) {
                 stone  = stoneService.searchByName(keyword);
             } else {
                 stone = stoneService.findAll();
             }
             req.setAttribute("stones", stone);
-            req.getRequestDispatcher("/views/client/stone-list.jsp").forward(req, resp);
+            // ===== CATEGORY LIST  =====
+            CategoryDAO categoryDAO = new CategoryDAO(); // added by anh
+            req.setAttribute("categories", categoryDAO.getAll());// added by anh
+            // layout
+            req.setAttribute("contentPage", "/views/client/stone-list.jsp");
+
+            req.getRequestDispatcher("/views/common/client-layout.jsp")
+                    .forward(req, resp);
+
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (DatabaseException e) {
             throw new RuntimeException(e);
         }
     }

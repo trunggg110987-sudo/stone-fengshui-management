@@ -1,39 +1,25 @@
-INSERT INTO stones (category_id, name, code, price, image_url, description, status) VALUES
+SET FOREIGN_KEY_CHECKS = 0;
 
--- Thạch anh tím
-(1, 'Vòng tay thạch anh tím', 'TA-TIM-01', 350000, 'https://picsum.photos/seed/stone1/400/400', 'Giúp tăng trực giác, giảm stress và mang lại sự bình an', 1),
-(3, 'Mặt dây chuyền thạch anh tím', 'TA-TIM-02', 250000, 'https://picsum.photos/seed/stone2/400/400', 'Thu hút năng lượng tích cực và hỗ trợ thiền định', 1),
+TRUNCATE TABLE stones;
 
--- Thạch anh hồng
-(1, 'Vòng tay thạch anh hồng', 'TA-HONG-01', 300000, 'https://picsum.photos/seed/stone3/400/400', 'Biểu tượng của tình yêu và sự chữa lành cảm xúc', 1),
-(2, 'Đá viên thạch anh hồng', 'TA-HONG-02', 150000, 'https://picsum.photos/seed/stone4/400/400', 'Mang lại năng lượng nhẹ nhàng và cân bằng cảm xúc', 1),
+SET FOREIGN_KEY_CHECKS = 1;
+INSERT INTO stones (category_id, name, code, price, image_url, description, status)
+VALUES
 
--- Thạch anh trắng
-(1, 'Vòng tay thạch anh trắng', 'TA-TRANG-01', 280000, 'https://picsum.photos/seed/stone5/400/400', 'Thanh lọc năng lượng và tăng sự tập trung', 1),
+-- ================= ĐÁ THÔ =================
+(1, 'Thạch anh trắng', 'RAW001', 65000, 'thachanhtrang_tho.jpg', 'Đá nguyên bản tự nhiên', 1),
+(1, 'Thạch anh tím', 'RAW002', 50000, 'amethyst_tho.webp', 'Đá chưa xử lý', 1),
 
--- Đá mắt hổ vàng
-(1, 'Vòng tay đá mắt hổ vàng', 'MH-VANG-01', 320000, 'https://picsum.photos/seed/stone6/400/400', 'Mang lại sự tự tin, may mắn và tài lộc', 1),
+-- ================= ĐÁ MÀI BÓNG =================
+(2, 'Viên Thạch anh hồng ', 'POL001', 55000, 'thachanhhong_maibong.webp', 'Đá mài bóng đẹp', 1),
+(2, 'Viên Obsidian ', 'POL002', 60000, 'Obsidian_maibong.jpg', 'Bề mặt sáng bóng', 1),
 
--- Đá mắt hổ đỏ
-(1, 'Vòng tay đá mắt hổ đỏ', 'MH-DO-01', 330000, 'https://picsum.photos/seed/stone7/400/400', 'Tăng năng lượng, hỗ trợ quyết đoán', 1),
+-- ================= TRANG SỨC =================
+(3, 'Vòng tay green aventurine', 'JEW001', 250000, 'GreenAventurine_vongtay.webp', 'Trang sức phong thủy', 1),
+(3, 'Dây chuyền Aquamarine', 'JEW002', 1650000, 'Aquamarine_daychuyen.jpg', 'Trang sức cao cấp', 1),
 
--- Obsidian đen
-(3, 'Mặt dây chuyền obsidian đen', 'OB-DEN-01', 270000, 'https://picsum.photos/seed/stone8/400/400', 'Bảo vệ khỏi năng lượng xấu và tà khí', 1),
+(3, 'Nhẫn Freeset Super Seven', 'SS001', 2850000, 's7_nhan.jpg', 'Đá Super Seven – 7 khoáng chất năng lượng mạnh', 1),
+(3, 'Dây Chuyền Sunstone', 'SS002', 750000, 'Sunstone_daychuyen.jpg', 'Tăng trực giác và tâm linh', 1),
 
--- Cẩm thạch
-(3, 'Mặt dây chuyền cẩm thạch', 'CT-01', 500000, 'https://picsum.photos/seed/stone9/400/400', 'Biểu tượng của sự thịnh vượng và bình an', 1),
-
--- Aventurine xanh
-(2, 'Đá viên aventurine xanh', 'AV-XANH-01', 180000, 'https://picsum.photos/seed/stone10/400/400', 'Thu hút cơ hội và may mắn trong công việc', 1),
-
--- Mã não đỏ
-(1, 'Vòng tay mã não đỏ', 'MN-DO-01', 260000, 'https://picsum.photos/seed/stone11/400/400', 'Tăng năng lượng và sự nhiệt huyết', 1),
-
--- Fluorite tím xanh
-(2, 'Đá viên fluorite tím xanh', 'FL-01', 220000, 'https://picsum.photos/seed/stone12/400/400', 'Giúp tập trung và sáng suốt trong học tập', 1),
-
--- Lapis lazuli
-(3, 'Mặt dây chuyền lapis lazuli', 'LL-01', 450000, 'https://picsum.photos/seed/stone13/400/400', 'Tăng trí tuệ và khả năng giao tiếp', 1),
-
--- Moonstone
-(3, 'Mặt dây chuyền moonstone', 'MS-01', 400000, 'https://picsum.photos/seed/stone14/400/400', 'Mang lại cân bằng cảm xúc và nữ tính', 1);
+(3, 'Mặt Dây Moldavite', 'MD001', 2950000, 'modavite_matdaychuyen.jpg', 'Đá thiên thạch từ vũ trụ', 1),
+(3, 'Dây Chuyền Sliding Vera Cruz Amethyst', 'MD002', 950000, 'Amethyst_daychuyen.jpg', 'Năng lượng chuyển hóa mạnh, hiếm', 1);

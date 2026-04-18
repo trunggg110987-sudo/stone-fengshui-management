@@ -14,21 +14,30 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "HomeController", urlPatterns = {"/", "/home"})
+@WebServlet(name = "HomeController", urlPatterns = {"/home"})
 public class HomeController extends HttpServlet {
 
     private final CategoryDAO categoryDAO = new CategoryDAO();
-    private final StoneDAO  stoneDAO = new StoneDAO();
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
+    private final StoneDAO stoneDAO = new StoneDAO();
 
-        // Nếu vào "/" thì redirect sang /home
-        if (req.getServletPath().equals("/")) {
-            resp.sendRedirect(req.getContextPath() + "/home");
-            return;
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            // CHỈ LẤY 10 SẢN PHẨM HIỂN THỊ HOME
+            List<Stone> stones = stoneDAO.getLimit(10);
+
+            request.setAttribute("stones", stones);
+
+            request.setAttribute("contentPage", "/views/client/home.jsp");
+            request.setAttribute("pageCss", "/views/css/home.css");
+
+            request.getRequestDispatcher("/views/common/client-layout.jsp")
+                    .forward(request, response);
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+
         }
-        req.getRequestDispatcher("/views/client/home.jsp")
-                .forward(req, resp);
     }
 }

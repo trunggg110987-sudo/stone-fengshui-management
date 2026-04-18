@@ -19,6 +19,7 @@ public class StoneDAO {
     private static final String UPDATE = "UPDATE stones SET category_id=?, name=?, code=?, price=?, image_url=?, description=?, status=? WHERE id=?";
     private static final String DELETE = "DELETE FROM stones WHERE id=?";
 
+
     public List<Stone> findAll() throws SQLException {
         List<Stone> list = new ArrayList<>();
 
@@ -139,5 +140,55 @@ public class StoneDAO {
                 rs.getInt("status")
         );
     }
+    // added by anh
+    public List<Stone> findByCategory(int categoryId) throws SQLException {
+        List<Stone> list = new ArrayList<>();
 
+        String sql = "SELECT * FROM stones WHERE category_id = ?";
+
+        try (Connection conn = DBConnectionUtil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, categoryId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                list.add(mapResultSetToStone(rs));
+            }
+        }
+
+        return list;
+    }
+    public List<Stone> getLimit(int limit) {
+        List<Stone> list = new ArrayList<>();
+
+        String sql = "SELECT * FROM stones WHERE status = 1 LIMIT ?";
+
+        try (Connection conn = DBConnectionUtil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, limit);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Stone s = new Stone();
+                s.setId(rs.getInt("id"));
+                s.setName(rs.getString("name"));
+                s.setCode(rs.getString("code"));
+                s.setPrice(rs.getDouble("price"));
+                s.setImageUrl(rs.getString("image_url"));
+                s.setDescription(rs.getString("description"));
+                s.setStatus(rs.getInt("status"));
+                s.setCategoryId(rs.getInt("category_id"));
+
+                list.add(s);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
 }

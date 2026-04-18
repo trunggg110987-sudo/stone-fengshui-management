@@ -5,26 +5,44 @@
   Time: 2:44 PM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<link rel="stylesheet"
-      href="${pageContext.request.contextPath}/assets/css/home.css">
-<jsp:include page="/views/common/admin-header.jsp"/>
+<%--banner--%>
+<div class="home-slider">
+    <img src="${pageContext.request.contextPath}/images/banner1.jpg" class="active">
+    <img src="${pageContext.request.contextPath}/images/banner2.jpg">
 
-<!-- banner -->
-<div id="homeCarousel" class="carousel slide" data-bs-ride="carousel">
-    <!-- ARROWS -->
-    <button class="carousel-control-prev" type="button" data-bs-target="#homeCarousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon"></span>
-    </button>
-
-    <button class="carousel-control-next" type="button" data-bs-target="#homeCarousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon"></span>
-    </button>
-
+    <button class="prev">&#10094;</button>
+    <button class="next">&#10095;</button>
 </div>
 
-<jsp:include page="/views/common/admin-footer.jsp"/>
+<%-- 2 nút <>--%>
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+
+        let slides = document.querySelectorAll(".home-slider img");
+        let prev = document.querySelector(".home-slider .prev");
+        let next = document.querySelector(".home-slider .next");
+
+        let index = 0;
+
+        function showSlide(i){
+            slides.forEach(s => s.classList.remove("active"));
+            slides[i].classList.add("active");
+        }
+
+        next.addEventListener("click", function(){
+            index = (index + 1) % slides.length;
+            showSlide(index);
+        });
+
+        prev.addEventListener("click", function(){
+            index = (index - 1 + slides.length) % slides.length;
+            showSlide(index);
+        });
+
+        setInterval(function(){
+            index = (index + 1) % slides.length;
+            showSlide(index);
+        },3000);
+
+    });
+</script>

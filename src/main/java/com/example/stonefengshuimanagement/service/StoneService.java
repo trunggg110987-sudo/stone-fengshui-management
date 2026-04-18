@@ -9,6 +9,7 @@ import java.util.List;
 public class StoneService {
     private StoneDAO stoneDAO = new StoneDAO();
 
+
     // find all stone
     public List<Stone> findAll() throws SQLException {
         return stoneDAO.findAll();
@@ -59,5 +60,9 @@ public class StoneService {
         }
 
         return stoneDAO.delete(id);
+    }
+    // added by anh
+    public List<Stone> findByCategory(int categoryId) throws SQLException {
+        return stoneDAO.findByCategory(categoryId);
     }
 }
