@@ -115,8 +115,8 @@
                 <div class="col-lg-4 col-6">
                     <div class="small-box bg-info">
                         <div class="inner">
-                            <h4>Đá phong thủy</h4>
-                            <p>Quản lý sản phẩm</p>
+                            <h4>Quản lý Stones</h4>
+                            <p>Stones</p>
                         </div>
                         <a href="${pageContext.request.contextPath}/stone" class="small-box-footer">
                             Chi tiết <i class="fas fa-arrow-circle-right"></i>
@@ -127,8 +127,8 @@
                 <div class="col-lg-4 col-6">
                     <div class="small-box bg-success">
                         <div class="inner">
-                            <h4>Danh mục</h4>
-                            <p>Quản lý loại đá</p>
+                            <h4>Quản lý các loại category</h4>
+                            <p>Category</p>
                         </div>
                         <a href="${pageContext.request.contextPath}/category" class="small-box-footer">
                             Chi tiết <i class="fas fa-arrow-circle-right"></i>

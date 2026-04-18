@@ -101,12 +101,6 @@
     </div>
 
 </nav>
-
-<!-- LOGIN ICON -->
-<a href="#" id="loginBtn" class="text-dark">
-    <i class="fa fa-user"></i>
-</a>
-
 <!-- SweetAlert2 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 

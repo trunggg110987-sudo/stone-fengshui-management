@@ -21,13 +21,13 @@ public class AdminAuthFilter implements Filter {
         String contextPath = req.getContextPath();
 
         // add by anh
-        // ✅ BỎ QUA STATIC FILE
+        // BỎ QUA STATIC FILE
         if (uri.startsWith(contextPath + "/assets/")) {
             chain.doFilter(request, response);
             return;
         }
 
-// ✅ BỎ QUA LOGIN PAGE
+        //  BỎ QUA LOGIN PAGE
         if (uri.equals(contextPath + "/admin/login")) {
             chain.doFilter(request, response);
             return;
