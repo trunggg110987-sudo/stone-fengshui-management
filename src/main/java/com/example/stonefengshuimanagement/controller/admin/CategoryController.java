@@ -206,8 +206,6 @@ public class CategoryController extends HttpServlet {
                     request.setAttribute("total", listCategory.size());
                     request.setAttribute("categories", listCategory);
 
-//                    request.getRequestDispatcher("/views/admin/category/list.jsp")
-//                            .forward(request, response);
                     request.setAttribute("pageTitle", "Quản lý Category");
                     request.setAttribute("contentPage", "/views/admin/category/list.jsp");
                     request.getRequestDispatcher("/views/admin/dashboard.jsp")

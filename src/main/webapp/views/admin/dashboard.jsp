@@ -78,14 +78,14 @@
                     <li class="nav-item">
                         <a href="${pageContext.request.contextPath}/category" class="nav-link">
                             <i class="nav-icon fas fa-list"></i>
-                            <p>Danh mục</p>
+                            <p>Quản lý Category</p>
                         </a>
                     </li>
 
                     <li class="nav-item">
                         <a href="${pageContext.request.contextPath}/stone" class="nav-link">
                             <i class="nav-icon fas fa-gem"></i>
-                            <p>Đá phong thủy</p>
+                            <p>Quản lý Stones</p>
                         </a>
                     </li>
 

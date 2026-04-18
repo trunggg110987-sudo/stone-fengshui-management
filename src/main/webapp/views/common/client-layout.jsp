@@ -13,6 +13,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
     <!-- TITLE -->
     <title>${pageTitle != null ? pageTitle : "Fengshui Stone"}</title>
@@ -50,7 +51,7 @@
 
 
 <!-- ================= MAIN CONTENT ================= -->
-<div class="container-fluid p-0">
+<div class="container-fluid p-0 overflow-hidden">
 
     <jsp:include page="${contentPage}"/>
 

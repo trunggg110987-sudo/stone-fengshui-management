@@ -65,4 +65,13 @@ public class StoneService {
     public List<Stone> findByCategory(int categoryId) throws SQLException {
         return stoneDAO.findByCategory(categoryId);
     }
+    // added by anh
+    public List<Stone> getPaging(int page, int pageSize) {
+        int offset = (page - 1) * pageSize;
+        return stoneDAO.getPaging(offset, pageSize);
+    }
+    // added by anh
+    public int countAll() {
+        return stoneDAO.countAll();
+    }
 }
