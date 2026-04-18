@@ -36,7 +36,15 @@ public class AdminLoginController extends HttpServlet {
                 HttpSession session = req.getSession();
                 session.setAttribute("user", user);
 
-                resp.sendRedirect(req.getContextPath() + "/admin/dashboard");
+//                resp.sendRedirect(req.getContextPath() + "/admin/dashboard");
+                // redirect toàn trang (thoát khỏi iframe) add by anh
+                resp.setContentType("text/html;charset=UTF-8");
+                resp.getWriter().write(
+                        "<script>window.top.location='"
+                                + req.getContextPath()
+                                + "/admin/dashboard';</script>"
+                );
+
             } else {
                 req.setAttribute("error", "Sai tài khoản hoặc mật khẩu");
                 req.getRequestDispatcher("/views/admin/login.jsp").forward(req, resp);

@@ -1,12 +1,5 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: admin
-  Date: 4/11/2026
-  Time: 2:47 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
 
     <div class="container-fluid px-2">
@@ -57,17 +50,6 @@
                         </c:forEach>
                     </ul>
                 </li>
-                    <ul class="dropdown-menu">
-                        <c:forEach var="c" items="${categories}">
-                            <li>
-                                <a class="dropdown-item"
-                                   href="${pageContext.request.contextPath}/stone?categoryId=${c.id}">
-                                        ${c.name}
-                                </a>
-                            </li>
-                        </c:forEach>
-                    </ul>
-                </li>
 
                 <li class="nav-item">
                     <a class="nav-link" href="#">
@@ -86,22 +68,18 @@
             <!-- ICONS -->
             <div class="d-flex align-items-center gap-3">
 
-<%--                <a href="#" class="text-dark">--%>
-<%--                    <i class="fa fa-search"></i>--%>
-<%--                </a>--%>
-    <form class="d-flex me-3" method="get" action="${pageContext.request.contextPath}/stones">
+                <!-- SEARCH -->
+                <form class="d-flex me-3" method="get" action="${pageContext.request.contextPath}/stones">
+                    <input type="text"
+                           name="keyword"
+                           value="${param.keyword}"
+                           class="form-control form-control-sm"
+                           placeholder="Search stones...">
 
-        <input type="text"
-               name="keyword"
-               value="${param.keyword}"
-               class="form-control form-control-sm"
-               placeholder="Search stones...">
-
-        <button class="btn btn-sm btn-primary ms-2">
-            Search
-        </button>
-
-    </form>
+                    <button class="btn btn-sm btn-primary ms-2">
+                        Search
+                    </button>
+                </form>
 
                 <a href="#" class="text-dark">
                     <i class="fa fa-heart"></i>
@@ -111,7 +89,8 @@
                     <i class="fa fa-shopping-cart"></i>
                 </a>
 
-                <a href="${pageContext.request.contextPath}/login" class="text-dark">
+                <!-- LOGIN ICON -->
+                <a href="#" id="loginBtn" class="text-dark">
                     <i class="fa fa-user"></i>
                 </a>
 
@@ -122,3 +101,39 @@
     </div>
 
 </nav>
+
+<!-- LOGIN ICON -->
+<a href="#" id="loginBtn" class="text-dark">
+    <i class="fa fa-user"></i>
+</a>
+
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+
+        const loginBtn = document.getElementById("loginBtn");
+
+        if(loginBtn){
+            loginBtn.addEventListener("click", function(e) {
+                e.preventDefault();
+
+                Swal.fire({
+                    title: 'Đăng nhập',
+                    width: 500,
+                    html: `
+                    <iframe
+                        src="${pageContext.request.contextPath}/admin/login"
+                        style="width:100%; height:420px; border:none;">
+                    </iframe>
+                `,
+                    showConfirmButton: false,
+                    showCloseButton: true
+                });
+
+            });
+        }
+
+    });
+</script>

@@ -20,6 +20,19 @@ public class AdminAuthFilter implements Filter {
         String uri = req.getRequestURI();
         String contextPath = req.getContextPath();
 
+        // add by anh
+        // ✅ BỎ QUA STATIC FILE
+        if (uri.startsWith(contextPath + "/assets/")) {
+            chain.doFilter(request, response);
+            return;
+        }
+
+// ✅ BỎ QUA LOGIN PAGE
+        if (uri.equals(contextPath + "/admin/login")) {
+            chain.doFilter(request, response);
+            return;
+        }
+
         boolean isLoginRequest = uri.equals(contextPath + "/admin/login");
 
         HttpSession session = req.getSession(false);
