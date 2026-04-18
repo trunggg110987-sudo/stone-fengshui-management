@@ -1,4 +1,35 @@
 package com.example.stonefengshuimanagement.filter;
 
-public class AdminAuthFilter {
+import com.example.stonefengshuimanagement.model.entity.User;
+
+import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.*;
+import java.io.IOException;
+
+@WebFilter("/admin/*")
+public class AdminAuthFilter implements Filter {
+
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
+
+        HttpServletRequest req = (HttpServletRequest) request;
+        HttpServletResponse resp = (HttpServletResponse) response;
+
+        String uri = req.getRequestURI();
+        String contextPath = req.getContextPath();
+
+        boolean isLoginRequest = uri.equals(contextPath + "/admin/login");
+
+        HttpSession session = req.getSession(false);
+        User user = session == null ? null : (User) session.getAttribute("user");
+
+        if (isLoginRequest || user != null) {
+            chain.doFilter(request, response);
+            return;
+        }
+
+        resp.sendRedirect(contextPath + "/admin/login");
+    }
 }

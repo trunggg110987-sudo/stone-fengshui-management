@@ -48,4 +48,6 @@ CREATE TABLE contact_requests (
                                   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                                   FOREIGN KEY (stone_id) REFERENCES stones(id)
 );
+ALTER TABLE users ADD email VARCHAR(100);
+ALTER TABLE users ADD phone VARCHAR(20);
 select * from stones;

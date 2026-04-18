@@ -1,8 +1,7 @@
 package com.example.stonefengshuimanagement.model.entity;
 
-import java.math.BigDecimal;
-
 public class Stone {
+<<<<<<< HEAD
     private int id;
     private int categoryId;
     private String name;
@@ -102,4 +101,7 @@ public class Stone {
     public void setStatus(int status) {
         this.status = status;
     }
+=======
+
+>>>>>>> origin/trung
 }

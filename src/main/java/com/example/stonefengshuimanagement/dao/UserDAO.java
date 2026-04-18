@@ -20,6 +20,7 @@ public class UserDAO {
         user.setId(rs.getInt("id"));
         user.setUsername(rs.getString("username"));
         user.setPassword(rs.getString("password"));
+        user.setFullName(rs.getString("full_name"));
         user.setEmail(rs.getString("email"));
         user.setPhone(rs.getString("phone"));
         user.setRole(rs.getString("role"));
@@ -46,6 +47,7 @@ public class UserDAO {
         PreparedStatement ps = conn.prepareStatement(INSERT_USERS)){
             ps.setString(1, user.getUsername());
             ps.setString(2, user.getPassword());
+            ps.setString(3, user.getFullName());
             ps.setString(3, user.getEmail());
             ps.setString(4, user.getPhone());
             ps.setString(5, user.getRole());
@@ -60,6 +62,7 @@ public class UserDAO {
         PreparedStatement ps = conn.prepareStatement(UPDATE_USERS)){
             ps.setString(1, user.getUsername());
             ps.setString(2, user.getPassword());
+            ps.setString(3, user.getFullName());
             ps.setString(3, user.getEmail());
             ps.setString(4, user.getPhone());
             ps.setString(5, user.getRole());

@@ -41,7 +41,6 @@ public class AdminLoginController extends HttpServlet {
                 req.setAttribute("error", "Sai tài khoản hoặc mật khẩu");
                 req.getRequestDispatcher("/views/admin/login.jsp").forward(req, resp);
             }
-
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
