@@ -142,7 +142,8 @@ public class CategoryController extends HttpServlet {
             switch (action) {
 
                 case "create":
-                    request.getRequestDispatcher("/views/admin/category/create.jsp")
+                    request.setAttribute("contentPage","/views/admin/category/create.jsp");
+                    request.getRequestDispatcher("/views/admin/dashboard.jsp")
                             .forward(request, response);
                     break;
 
@@ -157,7 +158,8 @@ public class CategoryController extends HttpServlet {
                     Category category = categoryDAO.findCategoryById(id);
 
                     request.setAttribute("category", category);
-                    request.getRequestDispatcher("/views/admin/category/edit.jsp")
+                    request.setAttribute("contentPage","/views/admin/category/edit.jsp");
+                    request.getRequestDispatcher("/views/admin/dashboard.jsp")
                             .forward(request, response);
                     break;
 
@@ -165,7 +167,8 @@ public class CategoryController extends HttpServlet {
                     int idDetail = Integer.parseInt(request.getParameter("id"));
                     Category detail = categoryDAO.findCategoryById(idDetail);
                     request.setAttribute("category", detail);
-                    request.getRequestDispatcher("/views/admin/category/detail.jsp")
+                    request.setAttribute("contentPage","/views/admin/category/detail.jsp");
+                    request.getRequestDispatcher("/views/admin/dashboard.jsp")
                             .forward(request, response);
                     break;
                 default:
@@ -203,7 +206,11 @@ public class CategoryController extends HttpServlet {
                     request.setAttribute("total", listCategory.size());
                     request.setAttribute("categories", listCategory);
 
-                    request.getRequestDispatcher("/views/admin/category/list.jsp")
+//                    request.getRequestDispatcher("/views/admin/category/list.jsp")
+//                            .forward(request, response);
+                    request.setAttribute("pageTitle", "Quản lý Category");
+                    request.setAttribute("contentPage", "/views/admin/category/list.jsp");
+                    request.getRequestDispatcher("/views/admin/dashboard.jsp")
                             .forward(request, response);
                     break;
             }

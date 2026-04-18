@@ -110,50 +110,22 @@
 
         <section class="content">
 
-            <div class="row">
-
-                <div class="col-lg-4 col-6">
-                    <div class="small-box bg-info">
-                        <div class="inner">
-                            <h4>Quản lý Stones</h4>
-                            <p>Stones</p>
-                        </div>
-                        <a href="${pageContext.request.contextPath}/stone" class="small-box-footer">
-                            Chi tiết <i class="fas fa-arrow-circle-right"></i>
-                        </a>
-                    </div>
+            <c:if test="${not empty pageTitle}">
+                <div class="mb-3">
+                    <h4 class="font-weight-bold">
+                            ${pageTitle}
+                    </h4>
+                    <hr>
                 </div>
+            </c:if>
 
-                <div class="col-lg-4 col-6">
-                    <div class="small-box bg-success">
-                        <div class="inner">
-                            <h4>Quản lý các loại category</h4>
-                            <p>Category</p>
-                        </div>
-                        <a href="${pageContext.request.contextPath}/category" class="small-box-footer">
-                            Chi tiết <i class="fas fa-arrow-circle-right"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-6">
-                    <div class="small-box bg-warning">
-                        <div class="inner">
-                            <h4>Liên hệ</h4>
-                            <p>Khách hàng gửi yêu cầu</p>
-                        </div>
-                        <a href="${pageContext.request.contextPath}/admin/contact" class="small-box-footer">
-                            Chi tiết <i class="fas fa-arrow-circle-right"></i>
-                        </a>
-                    </div>
-                </div>
-
-            </div>
+            <c:if test="${not empty contentPage}">
+                <jsp:include page="${contentPage}" />
+            </c:if>
 
         </section>
 
     </div>
-
 </div>
 
 <!-- JS -->
