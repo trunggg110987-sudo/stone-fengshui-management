@@ -18,7 +18,7 @@
 
     <!-- Search + Filter -->
     <div class="card p-3 mb-3">
-        <form method="get" action="${pageContext.request.contextPath}/category">
+        <form method="get" action="${pageContext.request.contextPath}/admin/category">
             <div class="row">
 
                 <div class="col-md-4">
@@ -42,7 +42,7 @@
                         Search
                     </button>
 
-                    <a href="${pageContext.request.contextPath}/category"
+                    <a href="${pageContext.request.contextPath}/admin/category"
                        class="btn btn-secondary">
                         Reset
                     </a>
@@ -57,7 +57,7 @@
     </div>
 
     <div class="text-end mb-3">
-        <a href="${pageContext.request.contextPath}/category?act=create"
+        <a href="${pageContext.request.contextPath}/admin/category?act=create"
            class="btn btn-success">
             + Add Category
         </a>
@@ -99,11 +99,11 @@
 
                     <td onclick="event.stopPropagation()">
                         <a class="btn btn-warning btn-sm"
-                           href="${pageContext.request.contextPath}/category?act=edit&id=${c.id}">
+                           href="${pageContext.request.contextPath}/admin/category?act=edit&id=${c.id}">
                             Edit
                         </a>
 
-                        <form action="${pageContext.request.contextPath}/category?act=delete&id=${c.id}"
+                        <form action="${pageContext.request.contextPath}/admin/category?act=delete&id=${c.id}"
                               method="post"
                               style="display:inline-block;"
                               class="form-delete">
@@ -145,7 +145,7 @@
 <script>
     function goDetail(id){
         window.location =
-            "${pageContext.request.contextPath}/category?act=detail&id=" + id;
+            "${pageContext.request.contextPath}/admin/category?act=detail&id=" + id;
     }
 
     document.querySelectorAll(".btn-delete").forEach(btn => {

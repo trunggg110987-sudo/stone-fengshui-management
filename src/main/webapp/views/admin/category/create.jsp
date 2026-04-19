@@ -18,7 +18,7 @@
 
     <div class="form-container">
 
-        <form action="${pageContext.request.contextPath}/category?act=create" method="post">
+        <form action="${pageContext.request.contextPath}/admin/category?act=create" method="post">
 
             <input type="hidden" name="act" value="create"/>
 
@@ -60,7 +60,7 @@
                     Save
                 </button>
 
-                <a href="${pageContext.request.contextPath}/category"
+                <a href="${pageContext.request.contextPath}/admin/category"
                    class="btn btn-secondary flex-fill"
                    id="btnBack">
                     Back
