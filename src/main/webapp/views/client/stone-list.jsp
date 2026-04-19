@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <%--<html>--%>
 <%--<head>--%>
@@ -55,7 +56,7 @@
 
                                     <!-- PRICE -->
                                     <p class="text-danger fw-bold mb-2">
-                                            ${s.price} VND
+                                        <fmt:formatNumber value="${s.price}" type="number" groupingUsed="true"/> VND
                                     </p>
 
                                     <!-- STATUS -->

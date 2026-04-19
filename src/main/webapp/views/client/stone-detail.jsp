@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <title>Chi tiết đá</title>
@@ -41,7 +41,7 @@
 
                     <!-- PRICE -->
                     <h4 class="text-danger fw-bold mb-3">
-                            ${stone.price} VND
+                        <fmt:formatNumber value="${stone.price}" type="number" groupingUsed="true"/> VND
                     </h4>
 
                     <!-- STATUS -->
