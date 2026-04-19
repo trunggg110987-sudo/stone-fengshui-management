@@ -28,7 +28,7 @@
         </tr>
     </table>
 
-    <a href="${pageContext.request.contextPath}/category"
+    <a href="${pageContext.request.contextPath}/admin/category"
        class="btn btn-secondary">
         Back
     </a>

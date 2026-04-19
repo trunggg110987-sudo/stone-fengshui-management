@@ -11,7 +11,7 @@ import javax.servlet.http.*;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "CategoryController", urlPatterns = "/category")
+@WebServlet(name = "CategoryController", urlPatterns = "/admin/category")
 public class CategoryController extends HttpServlet {
 
     private final CategoryDAO categoryDAO = new CategoryDAO();
@@ -30,7 +30,7 @@ public class CategoryController extends HttpServlet {
         if (success) {
 
             request.getSession().setAttribute("msg", "Add success");
-            response.sendRedirect(request.getContextPath() + "/category");
+            response.sendRedirect(request.getContextPath() + "/admin/category");
 
         } else {
             request.setAttribute("errorName", "Tên category đã tồn tại");
@@ -72,14 +72,14 @@ public class CategoryController extends HttpServlet {
         } else {
             session.setAttribute("msg", "No changes detected");
         }
-        response.sendRedirect(request.getContextPath() + "/category");
+        response.sendRedirect(request.getContextPath() + "/admin/category");
     }
     private void deleteCategory(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, DatabaseException {
 
         String idCategory = request.getParameter("id");
         if (idCategory == null || idCategory.trim().isEmpty()) {
-            response.sendRedirect(request.getContextPath() + "/category");
+            response.sendRedirect(request.getContextPath() + "/admin/category");
             return;
         }
 
@@ -90,7 +90,7 @@ public class CategoryController extends HttpServlet {
         // kiểm tra khóa ngoại đến stones
         if (categoryDAO.existsStoneByCategoryId(id)) {
             session.setAttribute("msg", "Cannot delete! Category is in use");
-            response.sendRedirect(request.getContextPath() + "/category");
+            response.sendRedirect(request.getContextPath() + "/admin/category");
             return;
         }
 
@@ -102,7 +102,7 @@ public class CategoryController extends HttpServlet {
             session.setAttribute("msg", "Delete fail");
         }
 
-        response.sendRedirect(request.getContextPath() + "/category");
+        response.sendRedirect(request.getContextPath() + "/admin/category");
     }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
@@ -150,7 +150,7 @@ public class CategoryController extends HttpServlet {
                 case "edit":
                     String idCategory = request.getParameter("id");
                     if (idCategory == null || idCategory.isEmpty()) {
-                        response.sendRedirect(request.getContextPath() + "/category");
+                        response.sendRedirect(request.getContextPath() + "/admin/category");
                         return;
                     }
 

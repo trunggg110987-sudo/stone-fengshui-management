@@ -20,7 +20,7 @@
 
     <div class="form-container">
 
-        <form action="${pageContext.request.contextPath}/category?act=update&id=${category.id}" method="post">
+        <form action="${pageContext.request.contextPath}/admin/category?act=update&id=${category.id}" method="post">
 
             <input type="hidden" name="act" value="update"/>
             <input type="hidden" name="id" value="${category.id}"/>
@@ -57,7 +57,7 @@
                     Save
                 </button>
 
-                <a href="${pageContext.request.contextPath}/category"
+                <a href="${pageContext.request.contextPath}/admin/category"
                    class="btn btn-secondary flex-fill"
                    id="btnBack">
                     Back

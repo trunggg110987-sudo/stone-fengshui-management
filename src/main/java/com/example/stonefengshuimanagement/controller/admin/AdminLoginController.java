@@ -32,7 +32,7 @@ public class AdminLoginController extends HttpServlet {
         try {
             User user = authService.login(username, password);
 
-            if (user != null && "ADMIN".equalsIgnoreCase(user.getRole())) {
+            if (user != null&& "ADMIN".equalsIgnoreCase(user.getRole())) {
                 HttpSession session = req.getSession(true);
                 session.setAttribute("user", user);
 
