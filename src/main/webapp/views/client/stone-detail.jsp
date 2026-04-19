@@ -13,10 +13,24 @@
 <div class="container mt-5">
 
     <!-- BACK BUTTON -->
-    <a href="${pageContext.request.contextPath}/stones"
-       class="btn btn-secondary mb-4">
-        ← Quay lại
-    </a>
+    <c:choose>
+
+    <%--thêm nút quay về trang home sau khi xem detail ở trang home add by anh --%>
+        <c:when test="${param.source == 'home'}">
+             <a href="${pageContext.request.contextPath}/home?page=${param.page}#product-list"
+               class="btn btn-secondary">
+                ← Quay lại
+            </a>
+        </c:when>
+
+        <c:otherwise>
+            <a href="${pageContext.request.contextPath}/stones"
+               class="btn btn-secondary">
+                ← Quay lại
+            </a>
+        </c:otherwise>
+
+    </c:choose>
 
     <c:choose>
 

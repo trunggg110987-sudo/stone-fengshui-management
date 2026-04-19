@@ -1,4 +1,3 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -78,6 +77,7 @@
                     <li class="nav-item">
                         <a href="${pageContext.request.contextPath}/admin/category" class="nav-link">
                             <i class="nav-icon fas fa-list"></i>
+                            <p>Danh mục</p>
                             <p>Quản lý Category</p>
                         </a>
                     </li>
@@ -85,6 +85,7 @@
                     <li class="nav-item">
                         <a href="${pageContext.request.contextPath}/admin/stones" class="nav-link">
                             <i class="nav-icon fas fa-gem"></i>
+                            <p>Đá phong thủy</p>
                             <p>Quản lý Stones</p>
                         </a>
                     </li>

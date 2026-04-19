@@ -61,10 +61,7 @@ public class StoneService {
 
         return stoneDAO.delete(id);
     }
-    // added by anh
-    public List<Stone> findByCategory(int categoryId) throws SQLException {
-        return stoneDAO.findByCategory(categoryId);
-    }
+
     // added by anh
     public List<Stone> getPaging(int page, int pageSize) {
         int offset = (page - 1) * pageSize;
@@ -73,5 +70,12 @@ public class StoneService {
     // added by anh
     public int countAll() {
         return stoneDAO.countAll();
+    }
+    public List<Stone> getPagingByCategory(int categoryId, int offset, int limit) {
+        return stoneDAO.getPagingByCategory(categoryId, offset, limit);
+    }
+
+    public int countByCategory(int categoryId) {
+        return stoneDAO.countByCategory(categoryId);
     }
 }
