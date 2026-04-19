@@ -9,30 +9,28 @@ import java.sql.SQLException;
 
 public class AuthService {
 
-    private final UserDAO userDAO;
+    private UserDAO userDAO;
 
     public AuthService() {
         this.userDAO = new UserDAO();
     }
 
     public User login(String username, String password) throws SQLException {
-
+        // added by Trung
         // validate input
         if (ValidationUtil.isNullOrEmpty(username) || ValidationUtil.isNullOrEmpty(password)) {
             return null;
         }
-
         User user = userDAO.findByUsername(username);
 
         if (user == null) {
             return null;
         }
-
+        // added by Trung
         // check password (hash)
-        if (!PasswordUtil.checkPassword(password, user.getPassword())) {
+        if (!user.getPassword().equals(password)) {
             return null;
         }
-
         return user;
     }
 }

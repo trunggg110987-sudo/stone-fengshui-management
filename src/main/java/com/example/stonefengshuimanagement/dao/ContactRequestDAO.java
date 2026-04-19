@@ -14,6 +14,7 @@ public class ContactRequestDAO {
     public static final String SELECT_ALL = "SELECT * FROM contact_requests";
     private static final String SELECT_BY_ID = "SELECT id, full_name, phone, email, subject, message, stone_id, status, created_at " + "FROM contact_requests WHERE id = ?";
     public static final String UPDATE_STATUS = "UPDATE contact_requests SET status = ? WHERE id = ?";
+    private static final String DELETE_BY_ID = "DELETE FROM contact_requests WHERE id = ?";
 
     private ContactRequest mapRow(ResultSet rs) throws Exception {
         ContactRequest contactRequest = new ContactRequest();
@@ -50,15 +51,15 @@ public class ContactRequestDAO {
     }
 
     public ContactRequest findById(int id) throws Exception {
-        try(Connection conn = DBConnectionUtil.getConnection();
-        PreparedStatement ps = conn.prepareStatement(SELECT_BY_ID);
-        ResultSet rs = ps.executeQuery()){
-            while(rs.next()){
-                if(rs.getInt("id") == id){
+        try (Connection conn = DBConnectionUtil.getConnection()) {
+            try (PreparedStatement ps = conn.prepareStatement(SELECT_BY_ID)) {
+                ps.setInt(1, id);
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
                     return mapRow(rs);
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -75,4 +76,48 @@ public class ContactRequestDAO {
         }
         return false;
     }
+
+    // ================= DELETE =================
+    public boolean deleteById(int id) {
+        try (Connection conn = DBConnectionUtil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(DELETE_BY_ID)) {
+
+            ps.setInt(1, id);
+
+            return ps.executeUpdate() > 0;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean insert(ContactRequest c) {
+        String sql = "INSERT INTO contact_requests(full_name, phone, email, subject, message, stone_id, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = DBConnectionUtil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, c.getFullName());
+            ps.setString(2, c.getPhone());
+            ps.setString(3, c.getEmail());
+            ps.setString(4, c.getSubject());
+            ps.setString(5, c.getMessage());
+
+            if (c.getStoneId() == null) {
+                ps.setNull(6, java.sql.Types.INTEGER);
+            } else {
+                ps.setInt(6, c.getStoneId());
+            }
+
+            ps.setString(7, c.getStatus());
+
+            return ps.executeUpdate() > 0;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 }

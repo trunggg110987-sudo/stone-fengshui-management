@@ -132,8 +132,8 @@
                 <c:set var="start" value="1"/>
             </c:if>
 
-            <c:if test="${end > totalPages}">
-                <c:set var="end" value="${totalPages}"/>
+            <c:if test="${end > totalPage}">
+                <c:set var="end" value="${totalPage}"/>
             </c:if>
 
             <%-- FIRST --%>
@@ -155,18 +155,18 @@
             </c:forEach>
 
             <%-- LAST --%>
-            <c:if test="${end < totalPages}">
+            <c:if test="${end < totalPage}">
                 <li class="page-item disabled"><span class="page-link">...</span></li>
                 <li class="page-item">
                     <a class="page-link"
-                       href="${pageContext.request.contextPath}/home?page=${totalPages}">
-                            ${totalPages}
+                       href="${pageContext.request.contextPath}/home?page=${totalPage}">
+                            ${totalPage}
                     </a>
                 </li>
             </c:if>
 
             <%-- NEXT --%>
-            <li class="page-item ${currentPage == totalPages ? 'disabled' : ''}">
+            <li class="page-item ${currentPage == totalPage ? 'disabled' : ''}">
                 <a class="page-link"
                    href="${pageContext.request.contextPath}/home?page=${currentPage + 1}">
                     >
