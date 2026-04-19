@@ -26,8 +26,25 @@ public class StoneListController extends HttpServlet {
             String categoryId = req.getParameter("categoryId"); // added by anh
             List<Stone> stone;
             if (categoryId != null && !categoryId.isEmpty()) {
-                stone = stoneService.findByCategory(Integer.parseInt(categoryId));
+//                stone = stoneService.findByCategory(Integer.parseInt(categoryId));
+                int page = 1;
+                int pageSize = 9;
 
+                if (req.getParameter("page") != null) {
+                    page = Integer.parseInt(req.getParameter("page"));
+                }
+
+                int catId = Integer.parseInt(categoryId);
+                int offset = (page - 1) * pageSize;
+
+                stone = stoneService.getPagingByCategory(catId, offset, pageSize);
+
+                int total = stoneService.countByCategory(catId);
+                int totalPage = (int) Math.ceil((double) total / pageSize);
+
+                req.setAttribute("currentPage", page);
+                req.setAttribute("totalPage", totalPage);
+                req.setAttribute("categoryId", catId);
             }// added by anh
             else if (keyword != null && !keyword.trim().isEmpty()) {
                 stone  = stoneService.searchByName(keyword);

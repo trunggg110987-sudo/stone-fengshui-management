@@ -75,7 +75,7 @@
 </script>
 
 <%-- ================= PRODUCT LIST ================= --%>
-<div class="container mt-4">
+<div id="product-list" class="container mt-4">
 
     <h3>Tất cả sản phẩm</h3>
     <hr>
@@ -90,23 +90,26 @@
         <c:forEach var="stone" items="${stones}">
             <div class="col-md-3 mb-4">
 
-                <div class="card h-100">
+                <a href="${pageContext.request.contextPath}/stone-detail?id=${stone.id}&source=home&page=${currentPage}"
+                   style="text-decoration:none; color:inherit;">
 
-                    <img src="${pageContext.request.contextPath}/images/${stone.imageUrl}"
-                         class="card-img-top"
-                         style="height:200px; object-fit:cover;">
+                    <div class="card h-100">
 
-                    <div class="card-body text-center">
+                        <img src="${pageContext.request.contextPath}/images/${stone.imageUrl}"
+                             class="card-img-top"
+                             style="height:200px; object-fit:cover;">
 
-                        <h6>${stone.name}</h6>
+                        <div class="card-body text-center">
+                            <h6>${stone.name}</h6>
 
-                        <p class="text-danger">
-                                ${stone.price} VNĐ
-                        </p>
+                            <p class="text-danger">
+                                    ${stone.price} VNĐ
+                            </p>
+                        </div>
 
                     </div>
 
-                </div>
+                </a>
 
             </div>
         </c:forEach>

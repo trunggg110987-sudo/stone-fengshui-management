@@ -142,48 +142,22 @@ public class StoneDAO {
     }
 
     // added by anh
-    public List<Stone> findByCategory(int categoryId) throws SQLException {
+    public List<Stone> getPagingByCategory(int categoryId, int offset, int limit) {
         List<Stone> list = new ArrayList<>();
 
-        String sql = "SELECT * FROM stones WHERE category_id = ?";
+        String sql = "SELECT * FROM stones WHERE category_id = ? LIMIT ?, ?";
 
         try (Connection conn = DBConnectionUtil.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, categoryId);
+            ps.setInt(2, offset);
+            ps.setInt(3, limit);
+
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
                 list.add(mapResultSetToStone(rs));
-            }
-        }
-
-        return list;
-    }
-    public List<Stone> getLimit(int limit) {
-        List<Stone> list = new ArrayList<>();
-
-        String sql = "SELECT * FROM stones WHERE status = 1 LIMIT ?";
-
-        try (Connection conn = DBConnectionUtil.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-
-            ps.setInt(1, limit);
-
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-                Stone s = new Stone();
-                s.setId(rs.getInt("id"));
-                s.setName(rs.getString("name"));
-                s.setCode(rs.getString("code"));
-                s.setPrice(rs.getDouble("price"));
-                s.setImageUrl(rs.getString("image_url"));
-                s.setDescription(rs.getString("description"));
-                s.setStatus(rs.getInt("status"));
-                s.setCategoryId(rs.getInt("category_id"));
-
-                list.add(s);
             }
 
         } catch (Exception e) {
@@ -191,6 +165,27 @@ public class StoneDAO {
         }
 
         return list;
+    }
+    public int countByCategory(int categoryId) {
+
+        String sql = "SELECT COUNT(*) FROM stones WHERE category_id = ?";
+
+        try (Connection conn = DBConnectionUtil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, categoryId);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return 0;
     }
     // added by anh
     public List<Stone> getPaging(int offset, int limit) {

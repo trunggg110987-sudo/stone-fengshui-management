@@ -84,7 +84,7 @@
                 <!-- PREVIOUS -->
                 <li class="page-item ${currentPage == 1 ? 'disabled' : ''}">
                     <a class="page-link"
-                       href="stones?page=${currentPage - 1}">
+                       href="stones?categoryId=${categoryId}&page=${currentPage - 1}">
                         <
                     </a>
                 </li>
@@ -104,7 +104,7 @@
                 <!-- FIRST PAGE + ... -->
                 <c:if test="${start > 1}">
                     <li class="page-item">
-                        <a class="page-link" href="stones?page=1">1</a>
+                        <a class="page-link" href="stones?categoryId=${categoryId}&page=1">1</a>
                     </li>
                     <li class="page-item disabled">
                         <span class="page-link">...</span>
@@ -114,7 +114,7 @@
                 <!-- LOOP PAGE -->
                 <c:forEach begin="${start}" end="${end}" var="i">
                     <li class="page-item ${currentPage == i ? 'active' : ''}">
-                        <a class="page-link" href="stones?page=${i}">
+                        <a class="page-link" href="stones?categoryId=${categoryId}&page=${i}">
                                 ${i}
                         </a>
                     </li>
@@ -126,7 +126,7 @@
                         <span class="page-link">...</span>
                     </li>
                     <li class="page-item">
-                        <a class="page-link" href="stones?page=${totalPages}">
+                        <a class="page-link" href="stones?categoryId=${categoryId}&page=${totalPages}">
                                 ${totalPages}
                         </a>
                     </li>
@@ -135,7 +135,7 @@
                 <!-- NEXT -->
                 <li class="page-item ${currentPage == totalPages ? 'disabled' : ''}">
                     <a class="page-link"
-                       href="stones?page=${currentPage + 1}">
+                       href="stones?categoryId=${categoryId}&page=${currentPage + 1}">
                         >
                     </a>
                 </li>

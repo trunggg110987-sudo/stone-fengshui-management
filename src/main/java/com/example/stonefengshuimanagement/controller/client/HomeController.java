@@ -26,7 +26,7 @@ public class HomeController extends HttpServlet {
 
             // ===== PAGINATION =====
             int page = 1;
-            int pageSize = 10;
+            int pageSize = 12;
 
             String pageParam = request.getParameter("page");
 
