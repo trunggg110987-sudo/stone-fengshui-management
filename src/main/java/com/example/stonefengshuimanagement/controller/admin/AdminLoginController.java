@@ -32,15 +32,21 @@ public class AdminLoginController extends HttpServlet {
         try {
             User user = authService.login(username, password);
 
-            if (user != null && "ADMIN".equalsIgnoreCase(user.getRole())) {
+            if (user != null) {
                 HttpSession session = req.getSession(true);
                 session.setAttribute("user", user);
 
-                resp.sendRedirect(req.getContextPath() + "/admin/dashboard");
+                if ("ADMIN".equalsIgnoreCase(user.getRole())) {
+                    resp.sendRedirect(req.getContextPath() + "/admin/dashboard");
+                } else {
+                    resp.sendRedirect(req.getContextPath() + "/home");
+                }
+
             } else {
                 req.setAttribute("error", "Sai tài khoản hoặc mật khẩu");
                 req.getRequestDispatcher("/views/admin/login.jsp").forward(req, resp);
             }
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
