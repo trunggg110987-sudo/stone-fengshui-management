@@ -1,58 +1,94 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-<div class="container mt-4">
+<div class="container py-5">
 
-    <h3>Giỏ hàng của bạn</h3>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3 class="fw-bold">🛒 Giỏ hàng của bạn</h3>
+    </div>
 
     <c:set var="cart" value="${sessionScope.cart}" />
 
     <c:if test="${empty cart}">
-        <div class="alert alert-info">
+        <div class="alert alert-info shadow-sm">
             Giỏ hàng đang trống
         </div>
     </c:if>
 
     <c:if test="${not empty cart}">
 
-        <table class="table table-bordered text-center">
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-0">
 
-            <tr>
-                <th>Ảnh</th>
-                <th>Tên</th>
-                <th>Giá</th>
-                <th>Số lượng</th>
-                <th>Tổng</th>
-            </tr>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0 text-center">
 
-            <c:set var="total" value="0" />
+                        <thead class="table-dark">
+                        <tr>
+                            <th>Ảnh</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Giá</th>
+                            <th>Số lượng</th>
+                            <th>Tổng</th>
+                        </tr>
+                        </thead>
 
-            <c:forEach var="item" items="${cart}">
-                <tr>
-                    <td>
-                        <img src="${pageContext.request.contextPath}/images/${item.image}"
-                             width="60">
-                    </td>
+                        <tbody>
 
-                    <td>${item.name}</td>
-                    <td>
-                        <fmt:formatNumber value="${item.price}" type="number"/>
-                    </td>
-                    <td>${item.quantity}</td>
-                    <td>
-                        <fmt:formatNumber value="${item.total}" type="number"/>
-                    </td>
-                </tr>
+                        <c:set var="total" value="0" />
 
-                <c:set var="total" value="${total + item.total}" />
-            </c:forEach>
+                        <c:forEach var="item" items="${cart}">
+                            <tr>
 
-        </table>
+                                <td>
+                                    <img src="${pageContext.request.contextPath}/images/${item.image}"
+                                         class="rounded"
+                                         width="70" height="70"
+                                         style="object-fit: cover;">
+                                </td>
 
-        <h4 class="text-end text-danger">
-            Tổng tiền: <fmt:formatNumber value="${total}" type="number"/> VND
-        </h4>
+                                <td class="fw-semibold">${item.name}</td>
+
+                                <td class="text-primary">
+                                    <fmt:formatNumber value="${item.price}" type="number"/> VND
+                                </td>
+
+                                <td>
+                                    <span class="badge bg-secondary fs-6">
+                                            ${item.quantity}
+                                    </span>
+                                </td>
+
+                                <td class="text-danger fw-bold">
+                                    <fmt:formatNumber value="${item.total}" type="number"/> VND
+                                </td>
+
+                            </tr>
+
+                            <c:set var="total" value="${total + item.total}" />
+                        </c:forEach>
+
+                        </tbody>
+
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- TOTAL -->
+        <div class="text-end mt-4">
+            <div class="card shadow-sm border-0 d-inline-block px-4 py-3">
+                <h5 class="mb-0">
+                    Tổng tiền:
+                    <span class="text-danger fw-bold">
+                        <fmt:formatNumber value="${total}" type="number"/> VND
+                    </span>
+                </h5>
+            </div>
+        </div>
 
     </c:if>
 

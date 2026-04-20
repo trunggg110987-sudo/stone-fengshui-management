@@ -1,45 +1,49 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-<div class="container mt-4">
+<div class="container py-5">
 
-    <h3>❤️ Danh sách yêu thích</h3>
+    <h3 class="fw-bold mb-4">❤️ Danh sách yêu thích</h3>
 
     <c:set var="favorites" value="${sessionScope.favorites}" />
 
     <c:if test="${empty favorites}">
-        <div class="alert alert-warning">
+        <div class="alert alert-warning shadow-sm">
             Chưa có sản phẩm yêu thích
         </div>
     </c:if>
 
     <c:if test="${not empty favorites}">
 
-        <div class="row">
+        <div class="row g-4">
 
             <c:forEach var="item" items="${favorites}">
 
-                <div class="col-md-3 mb-4">
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
 
-                    <div class="card h-100">
+                    <div class="card h-100 shadow-sm border-0 hover-shadow">
 
-                        <!-- IMAGE -->
                         <img src="${pageContext.request.contextPath}/images/${item.image}"
                              class="card-img-top"
-                             style="height:200px; object-fit:cover;">
+                             style="height:220px; object-fit:cover;">
 
                         <div class="card-body text-center">
 
-                            <!-- NAME -->
-                            <h6>${item.name}</h6>
+                            <h6 class="fw-bold">${item.name}</h6>
 
-                            <!-- PRICE -->
-                            <p class="text-danger">
+                            <p class="text-danger fw-semibold mb-2">
                                 <fmt:formatNumber value="${item.price}"
                                                   type="number"
                                                   groupingUsed="true"/> VND
                             </p>
+
+                            <a href="favorite?action=remove&id=${item.stoneId}"
+                               class="btn btn-outline-danger btn-sm"
+                               onclick="return confirm('Bỏ yêu thích?')">
+                                💔 Bỏ yêu thích
+                            </a>
 
                         </div>
 
