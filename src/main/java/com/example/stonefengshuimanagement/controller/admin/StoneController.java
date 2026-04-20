@@ -79,32 +79,32 @@ public class StoneController extends HttpServlet {
                 break;
 
             default:
-                String keyword = request.getParameter("keyword");
+            String keyword = request.getParameter("keyword");
 
-                List<Stone> list;
+            List<Stone> list;
 
-                if (keyword != null && !keyword.trim().isEmpty()) {
-                    try {
-                        list = stoneService.searchByName(keyword);
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
-                    }
-                    request.setAttribute("keyword", keyword); // giữ lại input
-                } else {
-                    try {
-                        list = stoneService.findAll();
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
-                    }
+            if (keyword != null && !keyword.trim().isEmpty()) {
+                try {
+                    list = stoneService.searchByName(keyword);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
                 }
+                request.setAttribute("keyword", keyword); // giữ lại input
+            } else {
+                try {
+                    list = stoneService.findAll();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
 
-                request.setAttribute("stones", list);
-                request.setAttribute("total", list.size());
-                request.setAttribute("contentPage", "/views/admin/stone/list.jsp");
+            request.setAttribute("stones", list);
+            request.setAttribute("total", list.size());
+            request.setAttribute("contentPage", "/views/admin/stone/list.jsp");
 
-                request.getRequestDispatcher("/views/admin/dashboard.jsp")
-                        .forward(request, response);
-                break;
+            request.getRequestDispatcher("/views/admin/dashboard.jsp")
+                    .forward(request, response);
+            break;
         }
     }
 
@@ -152,6 +152,6 @@ public class StoneController extends HttpServlet {
             }
         }
 
-        response.sendRedirect("/admin/stones");
+        response.sendRedirect(request.getContextPath() + "/admin/stones");
     }
 }
