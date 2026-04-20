@@ -33,7 +33,7 @@ public class CartController extends HttpServlet {
             resp.sendRedirect(req.getContextPath() + "/admin/login");
             return;
         }
-        
+
         int stoneId = Integer.parseInt(req.getParameter("stoneId"));
 
         List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
