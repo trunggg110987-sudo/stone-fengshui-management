@@ -76,7 +76,7 @@
                     <td>${s.id}</td>
                     <td>${s.name}</td>
                     <td>${s.code}</td>
-                    <td> <fmt:formatNumber value="${s.price}" type="number" groupingUsed="true"/> ₫ </td>
+                    <td> <fmt:formatNumber value="${s.price}" type="number" groupingUsed="true"/> VND </td>
 
                     <td>
                         <img src="${pageContext.request.contextPath}/images/${s.imageUrl}"

@@ -81,11 +81,11 @@
                     </button>
                 </form>
 
-                <a href="#" class="text-dark">
+                <a href="${pageContext.request.contextPath}/favorite/view" class="text-dark">
                     <i class="fa fa-heart"></i>
                 </a>
 
-                <a href="#" class="text-dark">
+                <a href="${pageContext.request.contextPath}/cart/view" class="text-dark">
                     <i class="fa fa-shopping-cart"></i>
                 </a>
 

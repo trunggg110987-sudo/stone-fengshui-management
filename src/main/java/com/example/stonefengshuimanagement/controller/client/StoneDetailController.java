@@ -20,7 +20,10 @@ public class StoneDetailController extends HttpServlet {
         try {
             Stone stone = stoneService.findById(id);
             req.setAttribute("stone", stone);
-            req.getRequestDispatcher("/views/client/stone-detail.jsp").forward(req, resp);
+            req.setAttribute("contentPage", "/views/client/stone-detail.jsp");
+
+            req.getRequestDispatcher("/views/common/client-layout.jsp")
+                    .forward(req, resp);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

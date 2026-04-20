@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <title>Chi tiết đá</title>
@@ -55,7 +55,7 @@
 
                     <!-- PRICE -->
                     <h4 class="text-danger fw-bold mb-3">
-                            ${stone.price} VND
+                        <fmt:formatNumber value="${stone.price}" type="number" groupingUsed="true"/> VND
                     </h4>
 
                     <!-- STATUS -->
@@ -78,13 +78,29 @@
 
                     <!-- ACTION -->
                     <div class="mt-4">
-                        <button class="btn btn-primary me-2">
-                            🛒 Mua ngay
-                        </button>
 
-                        <button class="btn btn-outline-secondary">
-                            ❤️ Yêu thích
-                        </button>
+                        <!-- ADD TO CART -->
+                        <form action="${pageContext.request.contextPath}/cart" method="post" class="d-inline">
+
+                            <input type="hidden" name="stoneId" value="${stone.id}">
+
+                            <button type="submit" class="btn btn-primary me-2">
+                                🛒 Thêm vào giỏ
+                            </button>
+
+                        </form>
+
+                        <!-- ADD TO FAVORITE -->
+                        <form action="${pageContext.request.contextPath}/favorite" method="post" class="d-inline">
+
+                            <input type="hidden" name="stoneId" value="${stone.id}">
+
+                            <button type="submit" class="btn btn-outline-danger">
+                                ❤️ Yêu thích
+                            </button>
+
+                        </form>
+
                     </div>
 
                 </div>
