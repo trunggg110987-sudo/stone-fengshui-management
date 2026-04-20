@@ -65,7 +65,7 @@
                                     </span>
 
                                     <!-- DETAIL BUTTON -->
-                                    <a href="${pageContext.request.contextPath}/stone-detail?id=${s.id}"
+                                    <a href="${pageContext.request.contextPath}/stone-detail?id=${stone.id}&source=home&page=${currentPage}"
                                        class="btn btn-outline-primary mt-auto">
                                         Xem chi tiết
                                     </a>

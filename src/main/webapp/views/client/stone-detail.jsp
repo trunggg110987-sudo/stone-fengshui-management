@@ -17,7 +17,7 @@
 
     <%--thêm nút quay về trang home sau khi xem detail ở trang home add by anh --%>
         <c:when test="${param.source == 'home'}">
-             <a href="${pageContext.request.contextPath}/home?page=${param.page}#product-list"
+            <a href="${pageContext.request.contextPath}/home?page=${param.page}#product-list"
                class="btn btn-secondary">
                 ← Quay lại
             </a>
