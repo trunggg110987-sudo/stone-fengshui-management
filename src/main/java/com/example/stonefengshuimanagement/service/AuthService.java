@@ -16,8 +16,6 @@ public class AuthService {
     }
 
     public User login(String username, String password) throws SQLException {
-
-        // validate input
         if (ValidationUtil.isNullOrEmpty(username) || ValidationUtil.isNullOrEmpty(password)) {
             return null;
         }
@@ -28,7 +26,6 @@ public class AuthService {
             return null;
         }
 
-        // check password (hash)
         if (!PasswordUtil.checkPassword(password, user.getPassword())) {
             return null;
         }

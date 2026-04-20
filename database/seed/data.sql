@@ -42,3 +42,13 @@ VALUES
     ('Trần Thị B', '0902222333', 'b@gmail.com', 'Giá sản phẩm', 'Cho tôi hỏi giá đá này', 2, 'NEW'),
     ('Lê Văn C', '0903333444', 'c@gmail.com', 'Đặt hàng', 'Tôi muốn đặt mua đá', 3, 'PROCESSING'),
     ('Phạm Thị D', '0904444555', 'd@gmail.com', 'Hỏi thông tin', 'Đá này có hợp mệnh không?', 4, 'DONE');
+
+update users set password ='8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92'
+where username = 'admin';
+
+select username, password from users
+where username = 'admin';
+
+DELETE FROM users
+WHERE username = 'admin'
+LIMIT 1;
