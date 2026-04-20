@@ -26,7 +26,10 @@ public class FavoriteViewController extends HttpServlet {
             return;
         }
 
-        req.getRequestDispatcher("/views/client/favorite.jsp")
+        req.setAttribute("contentPage", "/views/client/favorite.jsp");
+        req.setAttribute("pageTitle", "Yêu thích");
+
+        req.getRequestDispatcher("/views/common/client-layout.jsp")
                 .forward(req, resp);
     }
 }

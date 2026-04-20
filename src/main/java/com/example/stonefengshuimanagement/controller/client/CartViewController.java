@@ -25,7 +25,10 @@ public class CartViewController extends HttpServlet {
             return;
         }
 
-        req.getRequestDispatcher("/views/client/cart.jsp")
+        req.setAttribute("contentPage", "/views/client/cart.jsp");
+        req.setAttribute("pageTitle", "Giỏ hàng");
+
+        req.getRequestDispatcher("/views/common/client-layout.jsp")
                 .forward(req, resp);
     }
 }

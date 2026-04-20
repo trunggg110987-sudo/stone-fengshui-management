@@ -53,7 +53,17 @@
 <!-- ================= MAIN CONTENT ================= -->
 <div class="container-fluid p-0 overflow-hidden">
 
-    <jsp:include page="${contentPage}"/>
+<%--    <jsp:include page="${contentPage}"/>--%>
+    <c:choose>
+        <c:when test="${not empty contentPage}">
+            <jsp:include page="${contentPage}"/>
+        </c:when>
+        <c:otherwise>
+            <div class="container py-5 text-center text-danger">
+                No content page found
+            </div>
+        </c:otherwise>
+    </c:choose>
 
 </div>
 

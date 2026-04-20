@@ -59,14 +59,6 @@ public class HomeController extends HttpServlet {
 
             request.setAttribute("contentPage", "/views/client/home.jsp");
 
-            // cart
-            request.setAttribute("contentPage", "/views/client/cart.jsp");
-            request.setAttribute("pageTitle", "Giỏ hàng");
-
-            // yêu thích
-            request.setAttribute("contentPage", "/views/client/favorite.jsp");
-            request.setAttribute("pageTitle", "❤ Danh sách yêu thích");
-
             // ===== FORWARD =====
             request.getRequestDispatcher("/views/common/client-layout.jsp")
                     .forward(request, response);

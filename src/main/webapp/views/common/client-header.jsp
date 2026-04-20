@@ -81,12 +81,24 @@
                     </button>
                 </form>
 
-                <a href="${pageContext.request.contextPath}/favorite/view" class="text-dark">
+                <a href="${pageContext.request.contextPath}/favorite/view"
+                   class="text-dark position-relative">
                     <i class="fa fa-heart"></i>
+                    <c:if test="${not empty sessionScope.favorites}">
+                        <span class="badge bg-danger position-absolute top-0 start-100 translate-middle">
+                            ${sessionScope.favorites.size()}
+                        </span>
+                    </c:if>
                 </a>
 
-                <a href="${pageContext.request.contextPath}/cart/view" class="text-dark">
+                <a href="${pageContext.request.contextPath}/cart/view"
+                   class="text-dark position-relative">
                     <i class="fa fa-shopping-cart"></i>
+                    <c:if test="${not empty sessionScope.cart}">
+                         <span class="badge bg-danger position-absolute top-0 start-100 translate-middle">
+                             ${sessionScope.cart.size()}
+                            </span>
+                    </c:if>
                 </a>
 
                 <!-- LOGIN ICON -->
