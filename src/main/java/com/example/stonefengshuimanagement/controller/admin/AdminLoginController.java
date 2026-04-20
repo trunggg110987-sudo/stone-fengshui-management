@@ -24,7 +24,8 @@ public class AdminLoginController extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
 
         String username = req.getParameter("username");
         String password = req.getParameter("password");
@@ -32,23 +33,34 @@ public class AdminLoginController extends HttpServlet {
         try {
             User user = authService.login(username, password);
 
-            if (user != null&& "ADMIN".equalsIgnoreCase(user.getRole())) {
-                HttpSession session = req.getSession(true);
-                session.setAttribute("user", user);
-
-//                resp.sendRedirect(req.getContextPath() + "/admin/dashboard");
-                // redirect toàn trang (thoát khỏi iframe) add by anh
-                resp.setContentType("text/html;charset=UTF-8");
-                resp.getWriter().write(
-                        "<script>window.top.location='"
-                                + req.getContextPath()
-                                + "/admin/dashboard';</script>"
-                );
-
-            } else {
+            // ===== LOGIN FAIL =====
+            if (user == null) {
                 req.setAttribute("error", "Sai tài khoản hoặc mật khẩu");
-                req.getRequestDispatcher("/views/admin/login.jsp").forward(req, resp);
+                req.getRequestDispatcher("/views/admin/login.jsp")
+                        .forward(req, resp);
+                return;
             }
+
+            // ===== SAVE SESSION =====
+            HttpSession session = req.getSession(true);
+            session.setAttribute("user", user);
+
+            String redirectUrl;
+
+            // ===== ROLE DECISION =====
+            if ("ADMIN".equalsIgnoreCase(user.getRole())) {
+                redirectUrl = req.getContextPath() + "/admin/dashboard";
+            } else {
+                redirectUrl = req.getContextPath() + "/home";
+                session.setAttribute("msg", "👋 Đăng nhập thành công, chào " + user.getUsername());
+            }
+
+            // ===== EXIT IFRAME (CHO CẢ ADMIN + USER) =====
+            resp.setContentType("text/html;charset=UTF-8");
+            resp.getWriter().write(
+                    "<script>window.top.location='" + redirectUrl + "';</script>"
+            );
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

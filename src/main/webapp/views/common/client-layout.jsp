@@ -57,6 +57,29 @@
 
 </div>
 
+<c:if test="${not empty sessionScope.msg}">
+
+    <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 9999">
+
+        <div id="liveToast" class="toast align-items-center text-bg-success border-0 show"
+             role="alert">
+
+            <div class="d-flex">
+                <div class="toast-body">
+                        ${sessionScope.msg}
+                </div>
+
+                <button type="button" class="btn-close btn-close-white me-2 m-auto"
+                        data-bs-dismiss="toast"></button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <c:remove var="msg" scope="session"/>
+
+</c:if>
 
 <!-- ================= FOOTER ================= -->
 <jsp:include page="/views/common/client-footer.jsp"/>
@@ -64,6 +87,6 @@
 
 <!-- ================= BOOTSTRAP JS ================= -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
+<script src="${pageContext.request.contextPath}/assets/dist/js/notification.js"></script>
 </body>
 </html>
