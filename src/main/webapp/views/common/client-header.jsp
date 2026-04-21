@@ -117,7 +117,7 @@
 
                         <div class="dropdown">
 
-                            <a class="text-dark dropdown-toggle"
+                            <a class="text-dark dropdown-toggle text-decoration-none"
                                href="#"
 
                                role="button"
