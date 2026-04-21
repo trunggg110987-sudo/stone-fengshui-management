@@ -145,14 +145,15 @@ public class StoneDAO {
     public List<Stone> getPagingByCategory(int categoryId, int offset, int limit) {
         List<Stone> list = new ArrayList<>();
 
-        String sql = "SELECT * FROM stones WHERE category_id = ? LIMIT ?, ?";
+//        String sql = "SELECT * FROM stones WHERE category_id = ? LIMIT ?, ?";
 
+        String sql = "SELECT * FROM stones WHERE category_id = ? ORDER BY id DESC LIMIT ? OFFSET ?";
         try (Connection conn = DBConnectionUtil.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, categoryId);
-            ps.setInt(2, offset);
-            ps.setInt(3, limit);
+            ps.setInt(2, limit);
+            ps.setInt(3, offset);
 
             ResultSet rs = ps.executeQuery();
 
