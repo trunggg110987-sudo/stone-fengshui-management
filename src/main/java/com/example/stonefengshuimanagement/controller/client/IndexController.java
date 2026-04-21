@@ -13,7 +13,11 @@ public class IndexController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        // redirect về home
-        resp.sendRedirect(req.getContextPath() + "/home");
+
+        String uri = req.getRequestURI();
+
+        if (uri.equals(req.getContextPath() + "/")) {
+            resp.sendRedirect(req.getContextPath() + "/home");
+        }
     }
 }

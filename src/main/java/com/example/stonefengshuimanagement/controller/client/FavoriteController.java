@@ -30,6 +30,7 @@ public class FavoriteController extends HttpServlet {
             resp.sendRedirect(req.getContextPath() + "/admin/login");
             return;
         }
+        String action = req.getParameter("action");
 
         int stoneId = Integer.parseInt(req.getParameter("stoneId"));
 
@@ -38,6 +39,18 @@ public class FavoriteController extends HttpServlet {
 
         if (favorites == null) favorites = new ArrayList<>();
 
+        // ================= REMOVE ================= add by anh
+        if ("remove".equals(action)) {
+
+            favorites.removeIf(item -> item.getStoneId() == stoneId);
+
+            session.setAttribute("favorites", favorites);
+            session.setAttribute("msg", "🗑 Đã xóa khỏi yêu thích!");
+
+            resp.sendRedirect(req.getContextPath() + "/favorite/view");
+            return;
+        }
+        // ================= ADD =================
         try {
             Stone stone = stoneService.findById(stoneId);
 
