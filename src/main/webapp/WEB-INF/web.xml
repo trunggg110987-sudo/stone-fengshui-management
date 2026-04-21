@@ -3,7 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
-    <!--    add by anh-->
+<!--    add by anh-->
     <servlet-mapping>
         <servlet-name>default</servlet-name>
         <url-pattern>/images/*</url-pattern>
@@ -29,8 +29,8 @@
         <url-pattern>/plugins/*</url-pattern>
     </servlet-mapping>
 
-    <!--    add by trung -->
-    <!--    <welcome-file-list>-->
-    <!--        <welcome-file>index.jsp</welcome-file>-->
-    <!--    </welcome-file-list>-->
+<!--    add by trung -->
+<!--    <welcome-file-list>-->
+<!--        <welcome-file>index.jsp</welcome-file>-->
+<!--    </welcome-file-list>-->
 </web-app>

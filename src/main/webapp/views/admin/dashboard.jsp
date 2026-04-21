@@ -64,7 +64,7 @@
         <div class="sidebar d-flex flex-column" style="height: 100%;">
 
             <!-- MENU -->
-            <nav class="mt-2">0
+            <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar flex-column">
 
                     <li class="nav-item">
