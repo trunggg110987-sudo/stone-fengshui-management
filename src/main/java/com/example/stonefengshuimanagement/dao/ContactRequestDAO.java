@@ -6,6 +6,7 @@ import com.example.stonefengshuimanagement.utils.DBConnectionUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +16,7 @@ public class ContactRequestDAO {
     private static final String SELECT_BY_ID = "SELECT id, full_name, phone, email, subject, message, stone_id, status, created_at " + "FROM contact_requests WHERE id = ?";
     public static final String UPDATE_STATUS = "UPDATE contact_requests SET status = ? WHERE id = ?";
     private static final String DELETE_BY_ID = "DELETE FROM contact_requests WHERE id = ?";
+    public static final String INSERT_CONTACT_REQUEST = "INSERT INTO contact_requests(full_name, phone, email, subject, message, stone_id, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
     private ContactRequest mapRow(ResultSet rs) throws Exception {
         ContactRequest contactRequest = new ContactRequest();
@@ -85,6 +87,32 @@ public class ContactRequestDAO {
             return ps.executeUpdate() > 0;
 
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean insert(ContactRequest c) throws SQLException {
+        String sql = INSERT_CONTACT_REQUEST;
+        try(Connection conn = DBConnectionUtil.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql)){
+            ps.setString(1, c.getFullName());
+            ps.setString(2, c.getPhone());
+            ps.setString(3, c.getEmail());
+            ps.setString(4, c.getSubject());
+            ps.setString(5, c.getMessage());
+            ps.setInt(6, c.getStoneId());
+            ps.setString(7, c.getStatus());
+
+            if (c.getStoneId() == null) {
+                ps.setNull(6, java.sql.Types.INTEGER);
+            } else {
+                ps.setInt(6, c.getStoneId());
+            }
+
+            ps.setString(7, c.getStatus());
+            return ps.executeUpdate() > 0;
+        }catch (Exception e){
             e.printStackTrace();
         }
         return false;

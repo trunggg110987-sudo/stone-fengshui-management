@@ -14,7 +14,6 @@ public class AdminContactController extends HttpServlet {
 
     private final ContactRequestDAO dao = new ContactRequestDAO();
 
-    // ===== CREATE STATUS =====
     private void create(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
@@ -47,7 +46,6 @@ public class AdminContactController extends HttpServlet {
         response.sendRedirect(request.getContextPath() + "/admin/contact");
     }
 
-    // ===== UPDATE STATUS =====
     private void update(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
@@ -70,7 +68,6 @@ public class AdminContactController extends HttpServlet {
         response.sendRedirect(request.getContextPath() + "/admin/contact");
     }
 
-    // ===== DELETE =====
     private void delete(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
 
@@ -91,7 +88,6 @@ public class AdminContactController extends HttpServlet {
         response.sendRedirect(request.getContextPath() + "/admin/contact");
     }
 
-    // ===== POST =====
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
@@ -123,7 +119,6 @@ public class AdminContactController extends HttpServlet {
         }
     }
 
-    // ===== GET =====
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
