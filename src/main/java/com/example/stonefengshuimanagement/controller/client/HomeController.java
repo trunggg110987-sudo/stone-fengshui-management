@@ -19,12 +19,10 @@ public class HomeController extends HttpServlet {
             throws ServletException, IOException {
 
         try {
-            // UTF-8 (đặt trước forward)
             request.setCharacterEncoding("UTF-8");
             response.setCharacterEncoding("UTF-8");
             response.setContentType("text/html;charset=UTF-8");
 
-            // ===== PAGINATION =====
             int page = 1;
             int pageSize = 12;
 
@@ -42,7 +40,6 @@ public class HomeController extends HttpServlet {
 
             int offset = (page - 1) * pageSize;
 
-            // ===== DATA =====
             List<Stone> stones = stoneService.getPaging(page, pageSize);
             int total = stoneService.countAll();
 
@@ -52,14 +49,12 @@ public class HomeController extends HttpServlet {
                 page = totalPage;
             }
 
-            // ===== SET ATTRIBUTE =====
             request.setAttribute("stones", stones);
             request.setAttribute("currentPage", page);
             request.setAttribute("totalPage", totalPage);
 
             request.setAttribute("contentPage", "/views/client/home.jsp");
 
-            // ===== FORWARD =====
             request.getRequestDispatcher("/views/common/client-layout.jsp")
                     .forward(request, response);
 
