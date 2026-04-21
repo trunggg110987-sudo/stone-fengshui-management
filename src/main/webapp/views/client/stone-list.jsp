@@ -79,70 +79,93 @@
         </div>
 
         <%--    // phân trang // added by anh--%>
-        <nav class="mt-4">
-            <ul class="pagination justify-content-center">
+    <nav class="mt-4">
+        <ul class="pagination justify-content-center">
 
-                <!-- PREVIOUS -->
-                <li class="page-item ${currentPage == 1 ? 'disabled' : ''}">
-                    <a class="page-link"
-                       href="stones?categoryId=${categoryId}&page=${currentPage - 1}">
-                        <
-                    </a>
-                </li>
-
-                <!-- PAGE RANGE -->
-                <c:set var="start" value="${currentPage - 2}"/>
-                <c:set var="end" value="${currentPage + 2}"/>
-
-                <c:if test="${start < 1}">
-                    <c:set var="start" value="1"/>
-                </c:if>
-
-                <c:if test="${end > totalPages}">
-                    <c:set var="end" value="${totalPages}"/>
-                </c:if>
-
-                <!-- FIRST PAGE + ... -->
-                <c:if test="${start > 1}">
+            <!-- PREVIOUS -->
+            <c:choose>
+                <c:when test="${currentPage > 1}">
                     <li class="page-item">
-                        <a class="page-link" href="stones?categoryId=${categoryId}&page=1">1</a>
-                    </li>
-                    <li class="page-item disabled">
-                        <span class="page-link">...</span>
-                    </li>
-                </c:if>
-
-                <!-- LOOP PAGE -->
-                <c:forEach begin="${start}" end="${end}" var="i">
-                    <li class="page-item ${currentPage == i ? 'active' : ''}">
-                        <a class="page-link" href="stones?categoryId=${categoryId}&page=${i}">
-                                ${i}
+                        <a class="page-link"
+                           href="${pageContext.request.contextPath}/stones?page=${currentPage - 1}<c:if test='${not empty categoryId}'>&categoryId=${categoryId}</c:if>">
+                            <
                         </a>
                     </li>
-                </c:forEach>
-
-                <!-- ... + LAST PAGE -->
-                <c:if test="${end < totalPages}">
+                </c:when>
+                <c:otherwise>
                     <li class="page-item disabled">
-                        <span class="page-link">...</span>
+                        <span class="page-link"><</span>
                     </li>
-                    <li class="page-item">
-                        <a class="page-link" href="stones?categoryId=${categoryId}&page=${totalPages}">
-                                ${totalPages}
-                        </a>
-                    </li>
-                </c:if>
+                </c:otherwise>
+            </c:choose>
 
-                <!-- NEXT -->
-                <li class="page-item ${currentPage == totalPages ? 'disabled' : ''}">
+            <!-- PAGE RANGE -->
+            <c:set var="start" value="${currentPage - 2}" />
+            <c:set var="end" value="${currentPage + 2}" />
+
+            <c:if test="${start < 1}">
+                <c:set var="start" value="1" />
+            </c:if>
+
+            <c:if test="${end > totalPages}">
+                <c:set var="end" value="${totalPages}" />
+            </c:if>
+
+            <!-- FIRST PAGE -->
+            <c:if test="${start > 1}">
+                <li class="page-item">
                     <a class="page-link"
-                       href="stones?categoryId=${categoryId}&page=${currentPage + 1}">
-                        >
+                       href="${pageContext.request.contextPath}/stones?page=1<c:if test='${not empty categoryId}'>&categoryId=${categoryId}</c:if>">
+                        1
                     </a>
                 </li>
+                <li class="page-item disabled">
+                    <span class="page-link">...</span>
+                </li>
+            </c:if>
 
-            </ul>
-        </nav>
+            <!-- LOOP PAGE -->
+            <c:forEach begin="${start}" end="${end}" var="i">
+                <li class="page-item ${currentPage == i ? 'active' : ''}">
+                    <a class="page-link"
+                       href="${pageContext.request.contextPath}/stones?page=${i}<c:if test='${not empty categoryId}'>&categoryId=${categoryId}</c:if>">
+                            ${i}
+                    </a>
+                </li>
+            </c:forEach>
+
+            <!-- LAST PAGE -->
+            <c:if test="${end < totalPages}">
+                <li class="page-item disabled">
+                    <span class="page-link">...</span>
+                </li>
+                <li class="page-item">
+                    <a class="page-link"
+                       href="${pageContext.request.contextPath}/stones?page=${totalPages}<c:if test='${not empty categoryId}'>&categoryId=${categoryId}</c:if>">
+                            ${totalPages}
+                    </a>
+                </li>
+            </c:if>
+
+            <!-- NEXT -->
+            <c:choose>
+                <c:when test="${currentPage < totalPages}">
+                    <li class="page-item">
+                        <a class="page-link"
+                           href="${pageContext.request.contextPath}/stones?page=${currentPage + 1}<c:if test='${not empty categoryId}'>&categoryId=${categoryId}</c:if>">
+                            >
+                        </a>
+                    </li>
+                </c:when>
+                <c:otherwise>
+                    <li class="page-item disabled">
+                        <span class="page-link">></span>
+                    </li>
+                </c:otherwise>
+            </c:choose>
+
+        </ul>
+    </nav>
 
     </div>
     <%--</body>--%>

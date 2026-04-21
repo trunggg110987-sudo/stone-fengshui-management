@@ -32,6 +32,7 @@
                             <th>Giá</th>
                             <th>Số lượng</th>
                             <th>Tổng</th>
+                            <th>Hành động</th>
                         </tr>
                         </thead>
 
@@ -65,10 +66,22 @@
                                     <fmt:formatNumber value="${item.total}" type="number"/> VND
                                 </td>
 
+                                <td>
+                                    <form action="${pageContext.request.contextPath}/cart" method="post">
+                                        <input type="hidden" name="stoneId" value="${item.stoneId}">
+                                        <input type="hidden" name="action" value="remove">
+
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            Xóa
+                                        </button>
+                                    </form>
+                                </td>
+
                             </tr>
 
                             <c:set var="total" value="${total + item.total}" />
                         </c:forEach>
+
 
                         </tbody>
 

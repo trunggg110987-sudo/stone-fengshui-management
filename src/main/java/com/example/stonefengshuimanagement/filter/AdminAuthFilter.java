@@ -22,7 +22,10 @@ public class AdminAuthFilter implements Filter {
 
         // add by anh
         // BỎ QUA STATIC FILE
-        if (uri.startsWith(contextPath + "/assets/")) {
+        if (uri.startsWith(contextPath + "/assets/")
+                || uri.startsWith(contextPath + "/css/")
+                || uri.startsWith(contextPath + "/js/")
+                || uri.startsWith(contextPath + "/images/")) {
             chain.doFilter(request, response);
             return;
         }
