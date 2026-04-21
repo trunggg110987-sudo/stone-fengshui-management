@@ -39,11 +39,11 @@
                                                   groupingUsed="true"/> VND
                             </p>
 
-                            <a href="favorite?action=remove&id=${item.stoneId}"
-                               class="btn btn-outline-danger btn-sm"
-                               onclick="return confirm('Bỏ yêu thích?')">
-                                💔 Bỏ yêu thích
-                            </a>
+                            <form action="${pageContext.request.contextPath}/favorite" method="post">
+                                <input type="hidden" name="stoneId" value="${item.stoneId}">
+                                <input type="hidden" name="action" value="remove">
+                                <button type="submit"> 💔 Bỏ yêu thích </button>
+                            </form>
 
                         </div>
 

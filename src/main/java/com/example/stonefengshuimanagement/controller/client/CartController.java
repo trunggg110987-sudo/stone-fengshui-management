@@ -33,7 +33,7 @@ public class CartController extends HttpServlet {
             resp.sendRedirect(req.getContextPath() + "/admin/login");
             return;
         }
-
+        String action = req.getParameter("action");
         int stoneId = Integer.parseInt(req.getParameter("stoneId"));
 
         List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
@@ -44,6 +44,17 @@ public class CartController extends HttpServlet {
             stone = stoneService.findById(stoneId);
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+        // ================= REMOVE =================
+        if ("remove".equals(action)) {
+
+            cart.removeIf(item -> item.getStoneId() == stoneId);
+
+            session.setAttribute("cart", cart);
+            session.setAttribute("msg", "🗑 Đã xóa khỏi giỏ hàng!");
+
+            resp.sendRedirect(req.getContextPath() + "/cart/view");
+            return;
         }
 
         boolean found = false;

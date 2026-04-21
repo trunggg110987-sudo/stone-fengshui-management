@@ -57,11 +57,10 @@
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        About
-                    </a>
-                </li>
+                <a class="nav-link"
+                   href="${pageContext.request.contextPath}/contact">
+                    Contact Us
+                </a>
 
             </ul>
 

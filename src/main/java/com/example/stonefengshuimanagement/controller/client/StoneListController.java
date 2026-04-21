@@ -43,7 +43,7 @@ public class StoneListController extends HttpServlet {
                 int totalPage = (int) Math.ceil((double) total / pageSize);
 
                 req.setAttribute("currentPage", page);
-                req.setAttribute("totalPage", totalPage);
+                req.setAttribute("totalPages", totalPage);
                 req.setAttribute("categoryId", catId);
             }// added by anh
             else if (keyword != null && !keyword.trim().isEmpty()) {

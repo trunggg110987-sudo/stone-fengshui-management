@@ -45,7 +45,6 @@ public class CategoryController extends HttpServlet {
         }
     }
 
-
     private final CategoryService categoryService = new CategoryService();
 
     private void updateCategory(HttpServletRequest request, HttpServletResponse response)
