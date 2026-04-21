@@ -247,6 +247,7 @@ public class CategoryDAO {
     public List<Category> getAll() throws DatabaseException {
         return findAll();
     }
+
 }
 
 
