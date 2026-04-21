@@ -18,22 +18,17 @@ public class AdminDashboardController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // thống kê
-        int totalStones = stoneService.countAll();
-        int totalCategories = 0;
+        req.setAttribute("totalStones", stoneService.countAll());
         try {
-            totalCategories = categoryService.getTotalCategories();
+            req.setAttribute("totalCategories", categoryService.getTotalCategories());
         } catch (DatabaseException e) {
             throw new RuntimeException(e);
         }
-        int totalContacts = contactService.countAll();
+        req.setAttribute("totalContacts", contactService.countAll());
 
-        // set data cho dashboard
-        req.setAttribute("totalStones", totalStones);
-        req.setAttribute("totalCategories", totalCategories);
-        req.setAttribute("totalContacts", totalContacts);
+        req.setAttribute("pageTitle", "Dashboard Thống kê");
+        req.setAttribute("contentPage", "/views/admin/dashboard-home.jsp");
 
-        // view
         req.getRequestDispatcher("/views/admin/dashboard.jsp")
                 .forward(req, resp);
     }

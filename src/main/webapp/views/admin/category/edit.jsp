@@ -89,4 +89,4 @@
         });
     });
 </script>
-<%--<jsp:include page="/views/common/admin-footer.jsp"/>--%>
+<%--<jsp:include page="/views/common/dashboard-home.jsp"/>--%>

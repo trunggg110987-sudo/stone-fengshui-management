@@ -32,9 +32,9 @@
         </thead>
 
         <tbody>
-        <c:forEach var="item" items="${contactRequests}">
+        <c:forEach var="item" items="${contactRequests}" varStatus="i">
             <tr>
-                <td>${item.id}</td>
+                <td>${i.count}</td>
                 <td>${item.fullName}</td>
                 <td>${item.phone}</td>
                 <td>${item.email}</td>
