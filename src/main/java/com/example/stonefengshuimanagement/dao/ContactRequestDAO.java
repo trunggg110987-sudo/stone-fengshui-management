@@ -14,6 +14,7 @@ public class ContactRequestDAO {
     public static final String SELECT_ALL = "SELECT * FROM contact_requests";
     private static final String SELECT_BY_ID = "SELECT id, full_name, phone, email, subject, message, stone_id, status, created_at " + "FROM contact_requests WHERE id = ?";
     public static final String UPDATE_STATUS = "UPDATE contact_requests SET status = ? WHERE id = ?";
+    private static final String DELETE_BY_ID = "DELETE FROM contact_requests WHERE id = ?";
 
     private ContactRequest mapRow(ResultSet rs) throws Exception {
         ContactRequest contactRequest = new ContactRequest();
@@ -71,6 +72,19 @@ public class ContactRequestDAO {
             ps.setInt(2, id);
             return ps.executeUpdate() > 0;
         }catch (Exception e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+    public boolean deleteById(int id) {
+        try (Connection conn = DBConnectionUtil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(DELETE_BY_ID)) {
+
+            ps.setInt(1, id);
+
+            return ps.executeUpdate() > 0;
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
