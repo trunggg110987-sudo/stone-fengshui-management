@@ -1,0 +1,100 @@
+/* =========================
+   BOOTSTRAP / CAROUSEL (nếu dùng carousel cũ)
+========================= */
+#homeCarousel {
+    border-radius: 12px;
+    overflow: hidden;
+    max-height: 220px;
+}
+
+/* Ảnh trong carousel Bootstrap */
+.banner-img {
+    height: 220px;
+    object-fit: cover;
+}
+
+/* Caption text trong carousel Bootstrap */
+.carousel-caption {
+    background: rgba(0,0,0,0.4);
+    border-radius: 10px;
+    padding: 10px 15px;
+}
+
+.carousel-caption h2 {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+
+/* =========================
+   CARD SẢN PHẨM (HOME / STONE LIST)
+========================= */
+.card {
+    border: none;
+    border-radius: 12px;
+    transition: 0.25s;
+}
+
+/* Hover card sản phẩm */
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+}
+
+
+/* =========================
+   HOME SLIDER (BANNER CUSTOM JS)
+========================= */
+
+/* Container chính của slider */
+.home-slider {
+    margin-top: 0;
+    width: 100%;
+    height: 400px;
+
+    overflow: hidden;
+}
+
+/* ⚠️ ẢNH SLIDER (đây là phần QUAN TRỌNG) */
+.home-slider img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+    /* ❌ đang dùng display none => dễ gây nhảy layout */
+    display: none;
+}
+
+/* ảnh đang active */
+.home-slider img.active {
+    display: block;
+}
+
+/* nút prev/next */
+.home-slider .prev,
+.home-slider .next {
+    position: absolute; /* ⚠️ cần có relative ở parent nếu không sẽ lệch */
+    top: 50%;
+    transform: translateY(-50%);
+
+    background: rgba(0,0,0,0.4);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+/* đảm bảo nút nằm trên ảnh */
+.home-slider button {
+    z-index: 10;
+}
+
+/* vị trí nút trái */
+.home-slider .prev {
+    left: 10px;
+}
+
+/* vị trí nút phải */
+.home-slider .next {
+    right: 10px;
+}
