@@ -57,7 +57,7 @@
     <!-- SIDEBAR -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
 
-        <a href="${pageContext.request.contextPath}/admin" class="brand-link">
+        <a href="${pageContext.request.contextPath}/admin/dashboard" class="brand-link">
             <span class="brand-text font-weight-light">Stone Admin</span>
         </a>
 
@@ -95,12 +95,13 @@
 
             <!-- LOGOUT BOTTOM -->
             <div class="mt-auto p-3">
-                <form method="post" action="${pageContext.request.contextPath}/admin/logout">
-                    <button class="btn btn-danger btn-block">
+                <form method="post" action="${pageContext.request.contextPath}/logout">
+                    <button type="submit" class="btn btn-danger btn-block">
                         <i class="fas fa-sign-out-alt"></i> Đăng xuất
                     </button>
                 </form>
             </div>
+
 
         </div>
 
