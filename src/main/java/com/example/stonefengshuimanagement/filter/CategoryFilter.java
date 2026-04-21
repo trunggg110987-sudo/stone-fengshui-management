@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.List;
 
 @WebFilter("/*")
-public class CatetoryFilter implements Filter {
+public class CategoryFilter implements Filter {
 
     private final CategoryDAO categoryDAO = new CategoryDAO();
 
