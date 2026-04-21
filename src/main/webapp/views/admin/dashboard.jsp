@@ -6,13 +6,8 @@
 <head>
     <title>Admin Dashboard</title>
 
-    <!-- AdminLTE CSS -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/dist/css/adminlte.min.css">
-
-    <!-- FontAwesome -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/plugins/fontawesome-free/css/all.min.css">
-
-    <!-- Bootstrap -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/plugins/bootstrap/css/bootstrap.min.css">
 </head>
 
@@ -22,7 +17,6 @@
 
     <!-- NAVBAR -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-
         <ul class="navbar-nav">
             <li class="nav-item">
                 <a class="nav-link" data-widget="pushmenu" href="#">
@@ -40,16 +34,12 @@
                 <li class="nav-item">
                     <span class="nav-link">
                         Xin chào, <b>${sessionScope.user.fullName}</b>
-                        &nbsp; | &nbsp;
-                        Role:
-                        <span class="badge badge-info">
-                                ${sessionScope.user.role}
-                        </span>
+                        | Role:
+                        <span class="badge badge-info">${sessionScope.user.role}</span>
                     </span>
                 </li>
             </c:if>
         </ul>
-
     </nav>
 
     <!-- SIDEBAR -->
@@ -62,7 +52,6 @@
         <div class="sidebar d-flex flex-column" style="height: 100%;">
 
             <nav class="mt-2">
-
                 <ul class="nav nav-pills nav-sidebar flex-column">
 
                     <li class="nav-item">
@@ -99,79 +88,35 @@
             <!-- LOGOUT -->
             <div class="mt-auto p-3">
                 <form method="post" action="${pageContext.request.contextPath}/logout">
-                    <button type="submit" class="btn btn-danger btn-block">
+                    <button class="btn btn-danger btn-block">
                         <i class="fas fa-sign-out-alt"></i> Đăng xuất
                     </button>
                 </form>
             </div>
 
-
         </div>
-
     </aside>
 
     <!-- CONTENT -->
     <div class="content-wrapper p-3">
-
         <section class="content">
 
-            <!-- TITLE -->
-            <div class="mb-3">
-                <h4 class="font-weight-bold">Dashboard Thống kê </h4>
-                <hr>
-            </div>
-
-            <!-- ================= STATISTICS ================= -->
-            <div class="row">
-
-                <!-- CATEGORIES -->
-                <div class="col-md-4">
-                    <div class="small-box bg-info">
-                        <div class="inner">
-                            <h3>${totalCategories}</h3>
-                            <p>Categories</p>
-                        </div>
-                        <div class="icon">
-                            <i class="fas fa-list"></i>
-                        </div>
-                    </div>
+            <c:if test="${not empty pageTitle}">
+                <div class="mb-3">
+                    <h4 class="font-weight-bold">${pageTitle}</h4>
+                    <hr>
                 </div>
+            </c:if>
 
-                <!-- STONES -->
-                <div class="col-md-4">
-                    <div class="small-box bg-success">
-                        <div class="inner">
-                            <h3>${totalStones}</h3>
-                            <p>Stones</p>
-                        </div>
-                        <div class="icon">
-                            <i class="fas fa-gem"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- CONTACTS -->
-                <div class="col-md-4">
-                    <div class="small-box bg-warning">
-                        <div class="inner">
-                            <h3>${totalContacts}</h3>
-                            <p>Contacts</p>
-                        </div>
-                        <div class="icon">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+            <c:if test="${not empty contentPage}">
+                <jsp:include page="${contentPage}" />
+            </c:if>
 
         </section>
-
     </div>
 
 </div>
 
-<!-- JS -->
 <script src="${pageContext.request.contextPath}/assets/plugins/jquery/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/dist/js/adminlte.min.js"></script>
