@@ -44,12 +44,24 @@
                             <tr>
 
                                 <td>
-                                    <img src="${pageContext.request.contextPath}/images/${item.image}"
-                                         class="rounded"
-                                         width="70" height="70"
-                                         style="object-fit: cover;">
+                                    <c:choose>
+                                        <c:when test="${item.image.startsWith('upload_')}">
+                                            <img src="${pageContext.request.contextPath}/uploads/${item.image.substring(7)}"
+                                                 class="rounded"
+                                                 width="70" height="70"
+                                                 style="object-fit: cover;" alt="">
+                                        </c:when>
+
+                                        <c:otherwise>
+                                            <img src="${pageContext.request.contextPath}/images/${item.image}"
+                                                 class="rounded"
+                                                 width="70" height="70"
+                                                 style="object-fit: cover;" alt="">
+                                        </c:otherwise>
+                                    </c:choose>
                                 </td>
 
+                                
                                 <td class="fw-semibold">${item.name}</td>
 
                                 <td class="text-primary">

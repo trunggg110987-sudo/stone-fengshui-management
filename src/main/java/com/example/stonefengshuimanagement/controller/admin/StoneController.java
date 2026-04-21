@@ -70,6 +70,34 @@ public class StoneController extends HttpServlet {
             case "delete":
                 int deleteId = Integer.parseInt(request.getParameter("id"));
                 try {
+                    // 1. LẤY stone TRƯỚC KHI XÓA
+                    stone = stoneService.findById(deleteId);
+
+                    if (stone != null) {
+                        String imageUrl = stone.getImageUrl();
+
+                        // 2. XÓA FILE NẾU LÀ ẢNH UPLOAD
+                        if (imageUrl != null && imageUrl.startsWith("upload_")) {
+
+                            String fileName = imageUrl.substring(7);
+
+                            String uploadPath = System.getProperty("user.home")
+                                    + File.separator + "stone-upload";
+
+                            File file = new File(uploadPath, fileName);
+
+                            System.out.println("Deleting file: " + file.getAbsolutePath()); // DEBUG
+
+                            if (file.exists()) {
+                                boolean deleted = file.delete();
+                                System.out.println("Deleted: " + deleted);
+                            } else {
+                                System.out.println("File not found!");
+                            }
+                        }
+                    }
+
+                    // 3. XÓA TRONG DATABASE
                     stoneService.deleteStone(deleteId);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
@@ -120,27 +148,57 @@ public class StoneController extends HttpServlet {
         String name = request.getParameter("name");
         String code = request.getParameter("code");
         String priceStr = request.getParameter("price");
-        priceStr = priceStr.replace(".", "");
+
+        // nếu có dấu . mà là format tiền → xóa hết
+        if (priceStr.contains(".")) {
+            priceStr = priceStr.replace(".", "");
+        }
+
+        // nếu có dấu , → xóa
+        priceStr = priceStr.replace(",", "");
 
         double price = Double.parseDouble(priceStr);
+
         Part filePart = request.getPart("imageFile");
 
-        String fileName = Paths.get(filePart.getSubmittedFileName())
-                .getFileName()
-                .toString();
-        String uploadPath = getServletContext().getRealPath("/images");
+        String fileName = null;
 
-        File uploadDir = new File(uploadPath);
-        if (!uploadDir.exists()) uploadDir.mkdir();
+        if (filePart != null && filePart.getSize() > 0) {
 
-        // chỉ lưu khi có file
-        if (fileName != null && !fileName.isEmpty()) {
+            fileName = Paths.get(filePart.getSubmittedFileName())
+                    .getFileName()
+                    .toString();
+
+            // tránh trùng tên
+            fileName = System.currentTimeMillis() + "_" + fileName;
+
+            // 📁 lưu ngoài project (C:\Users\<username>\stone-upload để không mất khi deploy)
+            String uploadPath = System.getProperty("user.home") + File.separator + "stone-upload";
+
+            File uploadDir = new File(uploadPath);
+            if (!uploadDir.exists()) uploadDir.mkdirs();
+
             filePart.write(uploadPath + File.separator + fileName);
         }
+
         String description = request.getParameter("description");
         int status = Integer.parseInt(request.getParameter("status"));
 
-        String imageUrl = fileName;
+        String imageUrl;
+
+        String oldImage = request.getParameter("oldImage");
+
+        if (filePart != null && filePart.getSize() > 0) {
+
+            // 🔥 XÓA ẢNH CŨ TRƯỚC
+            deleteOldImage(oldImage);
+
+            imageUrl = "upload_" + fileName;
+
+        } else {
+            imageUrl = oldImage;
+        }
+
         Stone stone = new Stone(id, categoryId, name, code, price, imageUrl, description, status);
 
         if (id == 0) {
@@ -155,4 +213,21 @@ public class StoneController extends HttpServlet {
 
         response.sendRedirect(request.getContextPath() + "/admin/stones");
     }
+
+    private void deleteOldImage(String imageUrl) {
+        if (imageUrl != null && imageUrl.startsWith("upload_")) {
+
+            String fileName = imageUrl.substring(7);
+
+            String uploadPath = System.getProperty("user.home")
+                    + File.separator + "stone-upload";
+
+            File file = new File(uploadPath, fileName);
+
+            if (file.exists()) {
+                file.delete();
+            }
+        }
+    }
+
 }

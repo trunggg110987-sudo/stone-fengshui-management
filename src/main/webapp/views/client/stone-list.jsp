@@ -45,10 +45,21 @@
                                 <!-- IMAGE -->
                                 <%--<img src="${pageContext.request.contextPath}/${s.imageUrl}"--%>
 <%--                                // added by anh--%>
-                                <img src="${pageContext.request.contextPath}/images/${s.imageUrl}"
-                                     class="card-img-top p-2"
-                                     style="height: 200px; object-fit: contain; background-color: #f8f9fa;"
-                                     alt="">
+                                <c:choose>
+                                    <c:when test="${s.imageUrl.startsWith('upload_')}">
+                                        <img src="${pageContext.request.contextPath}/uploads/${s.imageUrl.substring(7)}"
+                                             class="card-img-top p-2"
+                                             style="height: 200px; object-fit: contain; background-color: #f8f9fa;"
+                                             alt="">
+                                    </c:when>
+
+                                    <c:otherwise>
+                                        <img src="${pageContext.request.contextPath}/images/${s.imageUrl}"
+                                             class="card-img-top p-2"
+                                             style="height: 200px; object-fit: contain; background-color: #f8f9fa;"
+                                             alt="">
+                                    </c:otherwise>
+                                </c:choose>
                                 <div class="card-body d-flex flex-column">
 
                                     <!-- NAME -->
@@ -76,7 +87,7 @@
 
                         </div>
                     </c:forEach>
-        </div>
+                </div>
 
         <%--    // phân trang // added by anh--%>
     <nav class="mt-4">
