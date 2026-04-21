@@ -44,7 +44,6 @@ A web application built using Java JSP/Servlet following MVC architecture to man
     - DriverManager
     - SQLException
 
-> ⚠️ Note: No role-based access control (Filter) implemented yet.
 
 ---
 
