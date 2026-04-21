@@ -110,7 +110,6 @@ public class CategoryService {
         return categoryDAO.searchByNameAndStatus(name, status);
     }
     // đếm tổng category
-
     public int getTotalCategories() throws DatabaseException {
         return categoryDAO.countAll();
     }

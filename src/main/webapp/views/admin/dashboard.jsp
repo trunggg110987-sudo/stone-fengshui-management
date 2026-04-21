@@ -23,7 +23,6 @@
     <!-- NAVBAR -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
 
-        <!-- LEFT -->
         <ul class="navbar-nav">
             <li class="nav-item">
                 <a class="nav-link" data-widget="pushmenu" href="#">
@@ -36,7 +35,6 @@
             </li>
         </ul>
 
-        <!-- RIGHT -->
         <ul class="navbar-nav ml-auto">
             <c:if test="${not empty sessionScope.user}">
                 <li class="nav-item">
@@ -63,9 +61,16 @@
 
         <div class="sidebar d-flex flex-column" style="height: 100%;">
 
-            <!-- MENU -->
-            <nav class="mt-2">0
+            <nav class="mt-2">
+
                 <ul class="nav nav-pills nav-sidebar flex-column">
+
+                    <li class="nav-item">
+                        <a href="${pageContext.request.contextPath}/home" class="nav-link">
+                            <i class="nav-icon fas fa-home"></i>
+                            <p>Home</p>
+                        </a>
+                    </li>
 
                     <li class="nav-item">
                         <a href="${pageContext.request.contextPath}/admin/contact" class="nav-link">
@@ -78,7 +83,6 @@
                         <a href="${pageContext.request.contextPath}/admin/category" class="nav-link">
                             <i class="nav-icon fas fa-list"></i>
                             <p>Danh mục</p>
-                            <p>Quản lý Category</p>
                         </a>
                     </li>
 
@@ -86,14 +90,13 @@
                         <a href="${pageContext.request.contextPath}/admin/stones" class="nav-link">
                             <i class="nav-icon fas fa-gem"></i>
                             <p>Đá phong thủy</p>
-                            <p>Quản lý Stones</p>
                         </a>
                     </li>
 
                 </ul>
             </nav>
 
-            <!-- LOGOUT BOTTOM -->
+            <!-- LOGOUT -->
             <div class="mt-auto p-3">
                 <form method="post" action="${pageContext.request.contextPath}/logout">
                     <button type="submit" class="btn btn-danger btn-block">
@@ -112,22 +115,60 @@
 
         <section class="content">
 
-            <c:if test="${not empty pageTitle}">
-                <div class="mb-3">
-                    <h4 class="font-weight-bold">
-                            ${pageTitle}
-                    </h4>
-                    <hr>
-                </div>
-            </c:if>
+            <!-- TITLE -->
+            <div class="mb-3">
+                <h4 class="font-weight-bold">Dashboard Thống kê </h4>
+                <hr>
+            </div>
 
-            <c:if test="${not empty contentPage}">
-                <jsp:include page="${contentPage}" />
-            </c:if>
+            <!-- ================= STATISTICS ================= -->
+            <div class="row">
+
+                <!-- CATEGORIES -->
+                <div class="col-md-4">
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3>${totalCategories}</h3>
+                            <p>Categories</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-list"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STONES -->
+                <div class="col-md-4">
+                    <div class="small-box bg-success">
+                        <div class="inner">
+                            <h3>${totalStones}</h3>
+                            <p>Stones</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-gem"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CONTACTS -->
+                <div class="col-md-4">
+                    <div class="small-box bg-warning">
+                        <div class="inner">
+                            <h3>${totalContacts}</h3>
+                            <p>Contacts</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
 
         </section>
 
     </div>
+
 </div>
 
 <!-- JS -->

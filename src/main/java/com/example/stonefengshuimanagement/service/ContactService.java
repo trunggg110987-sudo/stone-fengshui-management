@@ -25,4 +25,7 @@ public class ContactService {
     public boolean delete(int id) {
         return dao.deleteById(id);
     }
+    public int countAll() {
+        return dao.countAll();
+    }
 }
