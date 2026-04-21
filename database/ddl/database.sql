@@ -1,17 +1,8 @@
--- =========================
--- DROP DATABASE nếu tồn tại
--- =========================
 DROP DATABASE IF EXISTS fengshui_stone_db;
 
--- =========================
--- CREATE DATABASE
--- =========================
 CREATE DATABASE fengshui_stone_db;
 USE fengshui_stone_db;
 
--- =========================
--- TABLE: USERS
--- =========================
 CREATE TABLE users (
                        id INT AUTO_INCREMENT PRIMARY KEY,
                        username VARCHAR(50),
@@ -24,9 +15,6 @@ CREATE TABLE users (
                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- =========================
--- TABLE: CATEGORIES
--- =========================
 CREATE TABLE categories (
                             id INT AUTO_INCREMENT PRIMARY KEY,
                             name VARCHAR(100),
@@ -34,17 +22,11 @@ CREATE TABLE categories (
                             status INT
 );
 
--- =========================
--- TABLE: ELEMENTS
--- =========================
 CREATE TABLE elements (
                           id INT AUTO_INCREMENT PRIMARY KEY,
                           name VARCHAR(50)
 );
 
--- =========================
--- TABLE: STONES
--- =========================
 CREATE TABLE stones (
                         id INT AUTO_INCREMENT PRIMARY KEY,
                         category_id INT,
@@ -57,9 +39,6 @@ CREATE TABLE stones (
                         FOREIGN KEY (category_id) REFERENCES categories(id)
 );
 
--- =========================
--- TABLE: CONTACT REQUESTS
--- =========================
 CREATE TABLE contact_requests (
                                   id INT AUTO_INCREMENT PRIMARY KEY,
                                   full_name VARCHAR(100),
@@ -73,9 +52,14 @@ CREATE TABLE contact_requests (
                                   FOREIGN KEY (stone_id) REFERENCES stones(id)
 );
 
--- =========================
--- INSERT: CATEGORIES
--- =========================
+CREATE TABLE blog (
+                      id INT PRIMARY KEY AUTO_INCREMENT,
+                      title VARCHAR(255),
+                      content TEXT,
+                      image VARCHAR(255),
+                      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 INSERT INTO categories (name, description, status) VALUES
                                                        ('Đá thô', 'Các loại đá nguyên bản chưa qua xử lý', 1),
                                                        ('Đá mài bóng', 'Đá đã được gia công, mài và đánh bóng', 1),
