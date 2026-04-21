@@ -87,8 +87,18 @@
 
                         <input type="radio" name="stoneId" value="${stone.id}" class="form-check-input me-2">
 
-                        <img src="${pageContext.request.contextPath}/images/${stone.imageUrl}"
-                             style="width:60px;height:60px;object-fit:cover;border-radius:8px;margin-right:10px;">
+                        <c:choose>
+                            <c:when test="${stone.imageUrl.startsWith('upload_')}">
+                                <img src="${pageContext.request.contextPath}/uploads/${stone.imageUrl.substring(7)}"
+                                     style="width:60px;height:60px;object-fit:cover;border-radius:8px;margin-right:10px;">
+                            </c:when>
+
+                            <c:otherwise>
+                                <img src="${pageContext.request.contextPath}/images/${stone.imageUrl}"
+                                     style="width:60px;height:60px;object-fit:cover;border-radius:8px;margin-right:10px;">
+                            </c:otherwise>
+                        </c:choose>
+
                         <div>
                             <b>${stone.name}</b><br>
                             <small>ID: ${stone.id}</small>

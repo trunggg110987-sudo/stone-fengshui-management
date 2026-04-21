@@ -79,8 +79,16 @@
                     <td> <fmt:formatNumber value="${s.price}" type="number" groupingUsed="true"/> VND </td>
 
                     <td>
-                        <img src="${pageContext.request.contextPath}/images/${s.imageUrl}"
-                             width="60" height="60" style="object-fit: cover;">
+                        <c:choose>
+                            <c:when test="${s.imageUrl.startsWith('upload_')}">
+                                <img src="${pageContext.request.contextPath}/uploads/${s.imageUrl.substring(7)}"
+                                     width="60" height="60" style="object-fit: cover;">
+                            </c:when>
+                            <c:otherwise>
+                                <img src="${pageContext.request.contextPath}/images/${s.imageUrl}"
+                                     width="60" height="60" style="object-fit: cover;">
+                            </c:otherwise>
+                        </c:choose>
                     </td>
 
                     <td>

@@ -35,7 +35,7 @@
 
     <div class="form-group">
         <label>Image</label>
-        <input type="file" name="imageFile" class="form-control" onchange="previewImage(event)">
+        <input type="file" name="imageFile" class="form-control" onchange="previewImage(event)" required>
 
         <!-- Preview -->
         <img id="preview"

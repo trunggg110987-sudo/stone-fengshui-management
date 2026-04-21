@@ -98,12 +98,13 @@
 
             <!-- LOGOUT -->
             <div class="mt-auto p-3">
-                <form method="post" action="${pageContext.request.contextPath}/admin/logout">
-                    <button class="btn btn-danger btn-block">
+                <form method="post" action="${pageContext.request.contextPath}/logout">
+                    <button type="submit" class="btn btn-danger btn-block">
                         <i class="fas fa-sign-out-alt"></i> Đăng xuất
                     </button>
                 </form>
             </div>
+
 
         </div>
 
