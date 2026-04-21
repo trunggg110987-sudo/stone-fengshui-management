@@ -1,0 +1,102 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: Welcome to Windows10
+  Date: 04/18/2026
+  Time: 2:28 AM
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <!-- TITLE -->
+    <title>${pageTitle != null ? pageTitle : "Fengshui Stone"}</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- ================= BOOTSTRAP ================= -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <!-- ================= FONT AWESOME ================= -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- ================= BASE CSS ================= -->
+    <link rel="stylesheet"
+          href="${pageContext.request.contextPath}/views/css/base.css">
+
+    <!-- ================= HEADER + FOOTER CSS ================= -->
+    <link rel="stylesheet"
+          href="${pageContext.request.contextPath}/views/css/header-footer.css">
+
+    <!-- ================= PAGE CSS (OPTIONAL) ================= -->
+    <c:if test="${not empty pageCss}">
+        <link rel="stylesheet"
+              href="${pageContext.request.contextPath}${pageCss}">
+    </c:if>
+
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+<jsp:include page="/views/common/client-header.jsp"/>
+
+
+<!-- ================= MAIN CONTENT ================= -->
+<div class="container-fluid p-0 overflow-hidden">
+
+<%--    <jsp:include page="${contentPage}"/>--%>
+    <c:choose>
+        <c:when test="${not empty contentPage}">
+            <jsp:include page="${contentPage}"/>
+        </c:when>
+        <c:otherwise>
+            <div class="container py-5 text-center text-danger">
+                No content page found
+            </div>
+        </c:otherwise>
+    </c:choose>
+
+</div>
+
+<c:if test="${not empty sessionScope.msg}">
+
+    <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 9999">
+
+        <div id="liveToast" class="toast align-items-center text-bg-success border-0 show"
+             role="alert">
+
+            <div class="d-flex">
+                <div class="toast-body">
+                        ${sessionScope.msg}
+                </div>
+
+                <button type="button" class="btn-close btn-close-white me-2 m-auto"
+                        data-bs-dismiss="toast"></button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <c:remove var="msg" scope="session"/>
+
+</c:if>
+
+<!-- ================= FOOTER ================= -->
+<jsp:include page="/views/common/client-footer.jsp"/>
+
+
+<!-- ================= BOOTSTRAP JS ================= -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/dist/js/notification.js"></script>
+</body>
+</html>

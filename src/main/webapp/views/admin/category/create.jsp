@@ -14,160 +14,86 @@
 
 <div class="container mt-4">
 
-    <h2 class="page-title text-center">Category List</h2>
+    <h2 class="page-title">Create Category</h2>
 
-    <!-- Search + Filter -->
-    <div class="card p-3 mb-3">
-        <form method="get" action="${pageContext.request.contextPath}/admin/category">
-            <div class="row">
+    <div class="form-container">
 
-                <div class="col-md-4">
-                    <input type="text"
-                           name="keyword"
-                           value="${param.keyword}"
-                           class="form-control"
-                           placeholder="Search by name">
-                </div>
+        <form action="${pageContext.request.contextPath}/admin/category?act=create" method="post">
 
-                <div class="col-md-3">
-                    <select name="status" class="form-select">
-                        <option value="">All status</option>
-                        <option value="1" ${param.status == '1' ? 'selected' : ''}>Active</option>
-                        <option value="0" ${param.status == '0' ? 'selected' : ''}>Inactive</option>
-                    </select>
-                </div>
+            <input type="hidden" name="act" value="create"/>
 
-                <div class="col-md-3">
-                    <button class="btn btn-primary">
-                        Search
-                    </button>
+            <!-- NAME -->
+            <div class="mb-3">
+                <label class="form-label">Name</label>
 
-                    <a href="${pageContext.request.contextPath}/admin/category"
-                       class="btn btn-secondary">
-                        Reset
-                    </a>
-                </div>
+                <input type="text"
+                       name="name"
+                       class="form-control ${not empty errorName ? 'is-invalid' : ''}"
+                       value="${name}"
+                       required>
 
-                <div class="col-md-2 text-end">
-                    <strong>Total: ${total}</strong>
-                </div>
-
+                <c:if test="${not empty errorName}">
+                    <div class="invalid-feedback">
+                            ${errorName}
+                    </div>
+                </c:if>
             </div>
+
+            <!-- DESCRIPTION -->
+            <div class="mb-3">
+                <label class="form-label">Description</label>
+                <textarea name="description"
+                          class="form-control">${description}</textarea>
+            </div>
+
+            <!-- STATUS -->
+            <div class="mb-3">
+                <label class="form-label">Status</label>
+                <select name="status" class="form-control">
+                    <option value="1" ${status == 1 ? 'selected' : ''}>Active</option>
+                    <option value="0" ${status == 0 ? 'selected' : ''}>Inactive</option>
+                </select>
+            </div>
+
+            <div class="d-flex gap-2">
+                <button class="btn btn-success flex-fill">
+                    Save
+                </button>
+
+                <a href="${pageContext.request.contextPath}/admin/category"
+                   class="btn btn-secondary flex-fill"
+                   id="btnBack">
+                    Back
+                </a>
+            </div>
+
         </form>
-    </div>
 
-    <div class="text-end mb-3">
-        <a href="${pageContext.request.contextPath}/admin/category?act=create"
-           class="btn btn-success">
-            + Add Category
-        </a>
-    </div>
-
-    <div class="table-responsive">
-        <table class="table table-bordered table-hover">
-
-            <thead class="table-dark">
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Status</th>
-                <th width="180">Action</th>
-            </tr>
-            </thead>
-
-            <tbody>
-
-            <c:forEach var="c" items="${categories}">
-                <tr style="cursor:pointer"
-                    onclick="goDetail(${c.id})">
-
-                    <td>${c.id}</td>
-                    <td>${c.name}</td>
-                    <td>${c.description}</td>
-
-                    <td>
-                        <c:choose>
-                            <c:when test="${c.status == 1}">
-                                <span class="badge bg-success">Active</span>
-                            </c:when>
-                            <c:otherwise>
-                                <span class="badge bg-secondary">Inactive</span>
-                            </c:otherwise>
-                        </c:choose>
-                    </td>
-
-                    <td onclick="event.stopPropagation()">
-                        <a class="btn btn-warning btn-sm"
-                           href="${pageContext.request.contextPath}/admin/category?act=edit&id=${c.id}">
-                            Edit
-                        </a>
-
-                        <form action="${pageContext.request.contextPath}/admin/category?act=delete&id=${c.id}"
-                              method="post"
-                              style="display:inline-block;"
-                              class="form-delete">
-
-                            <input type="hidden" name="act" value="delete"/>
-                            <input type="hidden" name="id" value="${c.id}"/>
-
-                            <button type="button" class="btn btn-danger btn-sm btn-delete">
-                                Delete
-                            </button>
-                        </form>
-                    </td>
-
-                </tr>
-            </c:forEach>
-
-            </tbody>
-
-        </table>
     </div>
 
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<!-- SweetAlert message -->
-<c:if test="${not empty sessionScope.msg}">
-    <script>
-        Swal.fire({
-            icon: 'info',
-            title: 'Notification',
-            text: '${sessionScope.msg}',
-            confirmButtonColor: '#3085d6'
-        });
-    </script>
-    <c:remove var="msg" scope="session"/>
-</c:if>
-
 <script>
-    function goDetail(id){
-        window.location =
-            "${pageContext.request.contextPath}/admin/category?act=detail&id=" + id;
-    }
+    document.getElementById("btnBack").addEventListener("click", function (e) {
+        e.preventDefault();
 
-    document.querySelectorAll(".btn-delete").forEach(btn => {
-        btn.addEventListener("click", function () {
+        let url = this.getAttribute("href");
 
-            const form = this.closest("form");
-
-            Swal.fire({
-                title: "Delete this category?",
-                text: "This action cannot be undone",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonText: "Delete",
-                cancelButtonText: "Cancel",
-                confirmButtonColor: "#dc3545",
-                cancelButtonColor: "#6c757d"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    form.submit();
-                }
-            });
-
+        Swal.fire({
+            title: "Exit without saving?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Exit",
+            cancelButtonText: "Stay",
+            confirmButtonColor: "#dc3545",
+            cancelButtonColor: "#6c757d",
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = url;
+            }
         });
     });
 </script>
