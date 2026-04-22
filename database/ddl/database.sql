@@ -133,3 +133,11 @@ INSERT INTO contact_requests (full_name, phone, email, subject, message, stone_i
                                                                                                ('Trần Thị B', '0902222333', 'b@gmail.com', 'Giá sản phẩm', 'Cho tôi hỏi giá đá này', 2, 'NEW'),
                                                                                                ('Lê Văn C', '0903333444', 'c@gmail.com', 'Đặt hàng', 'Tôi muốn đặt mua đá', 3, 'PROCESSING'),
                                                                                                ('Phạm Thị D', '0904444555', 'd@gmail.com', 'Hỏi thông tin', 'Đá này có hợp mệnh không?', 4, 'DONE');
+
+CREATE TABLE blog (
+                      id INT PRIMARY KEY AUTO_INCREMENT,
+                      title VARCHAR(255),
+                      content TEXT,
+                      image VARCHAR(255),
+                      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
