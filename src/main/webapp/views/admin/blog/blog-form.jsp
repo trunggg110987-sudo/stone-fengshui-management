@@ -61,8 +61,8 @@
 
                             <input type="radio"
                                    name="imageOption"
-                                   value="images/${img}"
-                                   <c:if test="${blog.image == 'images/'.concat(img)}">checked</c:if> />
+                                   value="${img}"
+                                   <c:if test="${blog.image == img}">checked</c:if> />
 
                             <br>
 
@@ -89,7 +89,7 @@
                 <c:if test="${not empty blog.image}">
                     <div class="mb-3">
                         <label>Current Image:</label><br>
-                        <img src="${pageContext.request.contextPath}/${blog.image}"
+                        <img src="${pageContext.request.contextPath}/images/${blog.image}"
                              width="120"
                              style="border:1px solid #ddd; padding:3px;" />
                     </div>

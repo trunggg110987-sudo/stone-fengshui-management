@@ -39,7 +39,8 @@
 
                     <td>
                         <c:if test="${not empty b.image}">
-                            <img src="${b.image}" width="80"/>
+                            <img src="${pageContext.request.contextPath}/images/${b.image}"
+                                 style="width:80px; height:60px; object-fit:cover;">
                         </c:if>
                     </td>
 

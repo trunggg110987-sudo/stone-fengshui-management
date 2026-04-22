@@ -20,7 +20,7 @@
             <!-- IMAGE -->
             <c:if test="${not empty blog.image}">
                 <div class="mb-3 text-center">
-                    <img src="${pageContext.request.contextPath}/${blog.image}"
+                    <img src="${pageContext.request.contextPath}/images/${blog.image}"
                          class="img-fluid rounded"
                          style="max-width: 400px;" />
                 </div>
