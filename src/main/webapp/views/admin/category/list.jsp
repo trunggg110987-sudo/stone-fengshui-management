@@ -5,18 +5,16 @@
   Time: 2:45 PM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet"
-      href="${pageContext.request.contextPath}/views/css/category.css">
 
 <div class="container mt-4">
 
     <h2 class="page-title text-center">Category List</h2>
 
-    <!-- Search + Filter -->
+    <!-- SEARCH -->
     <div class="card p-3 mb-3">
         <form method="get" action="${pageContext.request.contextPath}/admin/category">
             <div class="row">
@@ -38,14 +36,9 @@
                 </div>
 
                 <div class="col-md-3">
-                    <button class="btn btn-primary">
-                        Search
-                    </button>
-
+                    <button class="btn btn-primary">Search</button>
                     <a href="${pageContext.request.contextPath}/admin/category"
-                       class="btn btn-secondary">
-                        Reset
-                    </a>
+                       class="btn btn-secondary">Reset</a>
                 </div>
 
                 <div class="col-md-2 text-end">
@@ -56,6 +49,7 @@
         </form>
     </div>
 
+    <!-- ADD -->
     <div class="text-end mb-3">
         <a href="${pageContext.request.contextPath}/admin/category?act=create"
            class="btn btn-success">
@@ -63,6 +57,7 @@
         </a>
     </div>
 
+    <!-- TABLE -->
     <div class="table-responsive">
         <table class="table table-bordered table-hover">
 
@@ -78,10 +73,10 @@
 
             <tbody>
 
-            <c:forEach var="c" items="${categories}">
-                <tr style="cursor:pointer"
-                    onclick="goDetail(${c.id})">
+            <c:forEach var="c" items="${categories}" varStatus="i">
 
+                <!-- row click -->
+                <tr class="clickable-row" data-id="${c.id}">
                     <td>${c.id}</td>
                     <td>${c.name}</td>
                     <td>${c.description}</td>
@@ -97,27 +92,32 @@
                         </c:choose>
                     </td>
 
-                    <td onclick="event.stopPropagation()">
+                    <td>
+
+                        <!-- EDIT -->
                         <a class="btn btn-warning btn-sm"
                            href="${pageContext.request.contextPath}/admin/category?act=edit&id=${c.id}">
                             Edit
                         </a>
 
-                        <form action="${pageContext.request.contextPath}/admin/category?act=delete&id=${c.id}"
+                        <!-- DELETE -->
+                        <form action="${pageContext.request.contextPath}/admin/category"
                               method="post"
-                              style="display:inline-block;"
-                              class="form-delete">
+                              style="display:inline-block;">
 
                             <input type="hidden" name="act" value="delete"/>
                             <input type="hidden" name="id" value="${c.id}"/>
 
-                            <button type="button" class="btn btn-danger btn-sm btn-delete">
+                            <button type="button"
+                                    class="btn btn-danger btn-sm btn-delete">
                                 Delete
                             </button>
                         </form>
+
                     </td>
 
                 </tr>
+
             </c:forEach>
 
             </tbody>
@@ -127,29 +127,27 @@
 
 </div>
 
+<!-- SWEET ALERT -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<!-- SweetAlert message -->
-<c:if test="${not empty sessionScope.msg}">
-    <script>
-        Swal.fire({
-            icon: 'info',
-            title: 'Notification',
-            text: '${sessionScope.msg}',
-            confirmButtonColor: '#3085d6'
-        });
-    </script>
-    <c:remove var="msg" scope="session"/>
-</c:if>
-
+<!-- CLICK ROW DETAIL -->
 <script>
-    function goDetail(id){
-        window.location =
-            "${pageContext.request.contextPath}/admin/category?act=detail&id=" + id;
-    }
+    document.querySelectorAll(".clickable-row").forEach(row => {
+        row.addEventListener("click", function () {
+            const id = this.getAttribute("data-id");
 
+            window.location =
+                "${pageContext.request.contextPath}/admin/category?act=detail&id=" + id;
+        });
+    });
+</script>
+
+<!-- DELETE FIX -->
+<script>
     document.querySelectorAll(".btn-delete").forEach(btn => {
-        btn.addEventListener("click", function () {
+        btn.addEventListener("click", function (event) {
+
+            event.stopPropagation(); // ✔ QUAN TRỌNG
 
             const form = this.closest("form");
 

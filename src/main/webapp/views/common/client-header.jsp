@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
 
     <div class="container-fluid px-2">
@@ -52,16 +53,15 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="${pageContext.request.contextPath}/blog">
                         Blog
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        About
-                    </a>
-                </li>
+                <a class="nav-link"
+                   href="${pageContext.request.contextPath}/contact">
+                    Contact Us
+                </a>
 
             </ul>
 
@@ -85,9 +85,9 @@
                    class="text-dark position-relative">
                     <i class="fa fa-heart"></i>
                     <c:if test="${not empty sessionScope.favorites}">
-                        <span class="badge bg-danger position-absolute top-0 start-100 translate-middle">
-                            ${sessionScope.favorites.size()}
-                        </span>
+                    <span class="badge bg-danger position-absolute top-0 start-100 translate-middle">
+                        ${sessionScope.favorites.size()}
+                    </span>
                     </c:if>
                 </a>
 
@@ -95,16 +95,70 @@
                    class="text-dark position-relative">
                     <i class="fa fa-shopping-cart"></i>
                     <c:if test="${not empty sessionScope.cart}">
-                         <span class="badge bg-danger position-absolute top-0 start-100 translate-middle">
-                             ${sessionScope.cart.size()}
-                            </span>
+                        <span class="badge bg-danger position-absolute top-0 start-100 translate-middle">
+                            ${sessionScope.cart.size()}
+                        </span>
                     </c:if>
                 </a>
 
-                <!-- LOGIN ICON -->
-                <a href="#" id="loginBtn" class="text-dark">
-                    <i class="fa fa-user"></i>
-                </a>
+
+                <c:choose>
+
+
+                    <c:when test="${empty sessionScope.user}">
+                        <a href="#" id="loginBtn"
+                           class="text-dark">
+                            <i class="fa fa-user"></i>
+                        </a>
+                    </c:when>
+
+
+                    <c:otherwise>
+
+                        <div class="dropdown">
+
+                            <a class="text-dark dropdown-toggle text-decoration-none"
+                               href="#"
+
+                               role="button"
+                               data-bs-toggle="dropdown"
+                               aria-expanded="false">
+
+                                <i class="fa fa-user"></i>
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-end p-3">
+
+                                <div class="mb-2">
+                                    <strong>${sessionScope.user.username}</strong><br>
+
+                                    <small class="text-muted">
+                                        Role: ${sessionScope.user.role}
+                                    </small>
+                                </div>
+
+                                <div class="dropdown-divider"></div>
+
+                                <!-- ADMIN DASHBOARD -->
+                                <c:if test="${sessionScope.user != null && sessionScope.user.role eq 'ADMIN'}">
+                                    <a class="dropdown-item"
+                                       href="${pageContext.request.contextPath}/admin/dashboard">
+                                        Dashboard
+                                    </a>
+                                </c:if>
+
+                                <!-- LOGOUT -->
+                                <a class="dropdown-item text-danger"
+                                   href="${pageContext.request.contextPath}/logout">
+                                    Logout
+                                </a>
+
+                            </div>
+                        </div>
+
+                    </c:otherwise>
+
+                </c:choose>
 
             </div>
 

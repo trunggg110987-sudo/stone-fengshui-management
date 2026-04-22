@@ -41,10 +41,21 @@
                 <!-- IMAGE -->
                 <div class="col-md-5">
                     <div class="card shadow-sm">
-                        <img src="${pageContext.request.contextPath}/images/${stone.imageUrl}"
-                             class="card-img-top"
-                             style="height: 350px; object-fit: contain; background-color: #f8f9fa;"
-                             alt="">
+                        <c:choose>
+                            <c:when test="${stone.imageUrl.startsWith('upload_')}">
+                                <img src="${pageContext.request.contextPath}/uploads/${stone.imageUrl.substring(7)}"
+                                     class="card-img-top"
+                                     style="height: 350px; object-fit: contain; background-color: #f8f9fa;"
+                                     alt="">
+                            </c:when>
+
+                            <c:otherwise>
+                                <img src="${pageContext.request.contextPath}/images/${stone.imageUrl}"
+                                     class="card-img-top"
+                                     style="height: 350px; object-fit: contain; background-color: #f8f9fa;"
+                                     alt="">
+                            </c:otherwise>
+                        </c:choose>
                     </div>
                 </div>
 

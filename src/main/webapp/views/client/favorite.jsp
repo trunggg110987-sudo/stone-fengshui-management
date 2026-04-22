@@ -25,9 +25,21 @@
 
                     <div class="card h-100 shadow-sm border-0 hover-shadow">
 
-                        <img src="${pageContext.request.contextPath}/images/${item.image}"
-                             class="card-img-top"
-                             style="height:220px; object-fit:cover;">
+                        <c:choose>
+                            <c:when test="${item.image.startsWith('upload_')}">
+                                <img src="${pageContext.request.contextPath}/uploads/${item.image.substring(7)}"
+                                     class="card-img-top p-2"
+                                     style="height: 200px; object-fit: contain; background-color: #f8f9fa;"
+                                     alt="">
+                            </c:when>
+
+                            <c:otherwise>
+                                <img src="${pageContext.request.contextPath}/images/${item.image}"
+                                     class="card-img-top p-2"
+                                     style="height: 200px; object-fit: contain; background-color: #f8f9fa;"
+                                     alt="">
+                            </c:otherwise>
+                        </c:choose>
 
                         <div class="card-body text-center">
 
@@ -39,11 +51,11 @@
                                                   groupingUsed="true"/> VND
                             </p>
 
-                            <a href="favorite?action=remove&id=${item.stoneId}"
-                               class="btn btn-outline-danger btn-sm"
-                               onclick="return confirm('Bỏ yêu thích?')">
-                                💔 Bỏ yêu thích
-                            </a>
+                            <form action="${pageContext.request.contextPath}/favorite" method="post">
+                                <input type="hidden" name="stoneId" value="${item.stoneId}">
+                                <input type="hidden" name="action" value="remove">
+                                <button type="submit"> 💔 Bỏ yêu thích </button>
+                            </form>
 
                         </div>
 

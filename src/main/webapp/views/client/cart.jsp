@@ -32,6 +32,7 @@
                             <th>Giá</th>
                             <th>Số lượng</th>
                             <th>Tổng</th>
+                            <th>Hành động</th>
                         </tr>
                         </thead>
 
@@ -43,12 +44,24 @@
                             <tr>
 
                                 <td>
-                                    <img src="${pageContext.request.contextPath}/images/${item.image}"
-                                         class="rounded"
-                                         width="70" height="70"
-                                         style="object-fit: cover;">
+                                    <c:choose>
+                                        <c:when test="${item.image.startsWith('upload_')}">
+                                            <img src="${pageContext.request.contextPath}/uploads/${item.image.substring(7)}"
+                                                 class="rounded"
+                                                 width="70" height="70"
+                                                 style="object-fit: cover;" alt="">
+                                        </c:when>
+
+                                        <c:otherwise>
+                                            <img src="${pageContext.request.contextPath}/images/${item.image}"
+                                                 class="rounded"
+                                                 width="70" height="70"
+                                                 style="object-fit: cover;" alt="">
+                                        </c:otherwise>
+                                    </c:choose>
                                 </td>
 
+                                
                                 <td class="fw-semibold">${item.name}</td>
 
                                 <td class="text-primary">
@@ -65,10 +78,22 @@
                                     <fmt:formatNumber value="${item.total}" type="number"/> VND
                                 </td>
 
+                                <td>
+                                    <form action="${pageContext.request.contextPath}/cart" method="post">
+                                        <input type="hidden" name="stoneId" value="${item.stoneId}">
+                                        <input type="hidden" name="action" value="remove">
+
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            Xóa
+                                        </button>
+                                    </form>
+                                </td>
+
                             </tr>
 
                             <c:set var="total" value="${total + item.total}" />
                         </c:forEach>
+
 
                         </tbody>
 
