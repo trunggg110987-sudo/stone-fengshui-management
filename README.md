@@ -7,8 +7,8 @@ A web application built using Java JSP/Servlet following MVC architecture to man
 ---
 
 ## 👨‍💻 2. Team Members
-- Ngọc Ánh  
-- Nguyễn Được  
+- Ngọc Ánh
+- Nguyễn Được
 - Trung (Team Leader)
 
 ---
@@ -19,38 +19,38 @@ A web application built using Java JSP/Servlet following MVC architecture to man
 - HTML5
 - CSS3
 - JavaScript (Vanilla ES5/ES6)
-  - var, let, const
-  - (No AJAX, No jQuery yet)
+    - var, let, const
+    - (No AJAX, No jQuery yet)
 - Bootstrap 5
 
 ### Backend
 - Java 1.8
 - JSP & Servlet (Tomcat 9)
 - MVC Pattern:
-  - Controller (Servlet)
-  - Model
-  - Service
-  - DAO
+    - Controller (Servlet)
+    - Model
+    - Service
+    - DAO
 
 ### Database
 - SQL
 - MySQL
 - JDBC:
-  - Connection
-  - Statement
-  - PreparedStatement
-  - CallableStatement
-  - ResultSet
-  - DriverManager
-  - SQLException
+    - Connection
+    - Statement
+    - PreparedStatement
+    - CallableStatement
+    - ResultSet
+    - DriverManager
+    - SQLException
 
 > ⚠️ Note: No role-based access control (Filter) implemented yet.
 
 ---
 
 ## ⏰ 4. Project Timeline
-- Start: 10/04/2026  
-- End: 20/04/2026  
+- Start: 10/04/2026
+- End: 20/04/2026
 
 ---
 
@@ -70,7 +70,7 @@ A web application built using Java JSP/Servlet following MVC architecture to man
 ### Step 1: Import Database
 - Open MySQL Workbench
 - Import file:
-/database/ddl/database.sql
+  /database/ddl/database.sql
 
 
 ---
@@ -84,7 +84,7 @@ A web application built using Java JSP/Servlet following MVC architecture to man
 ### Step 3: Run Project
 - Click **Debug / Run**
 - Open browser:
-http://localhost:8080
+  http://localhost:8080
 
 ---
 
@@ -105,8 +105,8 @@ http://localhost:8080
 ### 👤 User Features
 - View products without login
 - Add products to:
-  - ❤️ Favorite list (requires login)
-  - 🛒 Shopping cart (requires login)
+    - ❤️ Favorite list (requires login)
+    - 🛒 Shopping cart (requires login)
 - View product details
 
 ---
@@ -115,8 +115,8 @@ http://localhost:8080
 After login with admin account:
 - Redirect to **Dashboard**
 - Manage:
-  - 🪨 Stones (Products)
-  - 📂 Categories
-  - 📩 Contact Requests
+    - 🪨 Stones (Products)
+    - 📂 Categories
+    - 📩 Contact Requests
 
 ---
