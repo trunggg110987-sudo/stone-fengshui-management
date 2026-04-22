@@ -61,7 +61,6 @@ A web application built using Java JSP/Servlet following MVC architecture to man
 - MySQL Workbench
 - Apache Tomcat 9
 - Windows OS
-- Bootrap 5
 
 ---
 
