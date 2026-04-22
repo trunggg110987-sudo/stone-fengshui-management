@@ -44,7 +44,6 @@ A web application built using Java JSP/Servlet following MVC architecture to man
     - DriverManager
     - SQLException
 
-> ⚠️ Note: No role-based access control (Filter) implemented yet.
 
 ---
 
@@ -62,6 +61,7 @@ A web application built using Java JSP/Servlet following MVC architecture to man
 - MySQL Workbench
 - Apache Tomcat 9
 - Windows OS
+- Bootrap 5
 
 ---
 
@@ -118,5 +118,6 @@ After login with admin account:
     - 🪨 Stones (Products)
     - 📂 Categories
     - 📩 Contact Requests
+    - 📚 Blog
 
 ---
