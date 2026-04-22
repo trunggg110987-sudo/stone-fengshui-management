@@ -172,7 +172,7 @@ public class StoneController extends HttpServlet {
             // tránh trùng tên
             fileName = System.currentTimeMillis() + "_" + fileName;
 
-            // 📁 lưu ngoài project (C:\Users\<username>\stone-upload để không mất khi deploy)
+            // lưu ngoài project (C:\Users\<username>\stone-upload để không mất khi deploy)
             String uploadPath = System.getProperty("user.home") + File.separator + "stone-upload";
 
             File uploadDir = new File(uploadPath);
@@ -190,7 +190,7 @@ public class StoneController extends HttpServlet {
 
         if (filePart != null && filePart.getSize() > 0) {
 
-            // 🔥 XÓA ẢNH CŨ TRƯỚC
+            //  XÓA ẢNH CŨ TRƯỚC
             deleteOldImage(oldImage);
 
             imageUrl = "upload_" + fileName;

@@ -61,9 +61,7 @@ public class StoneListController extends HttpServlet {
             req.getRequestDispatcher("/views/common/client-layout.jsp")
                     .forward(req, resp);
 
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (DatabaseException e) {
+        } catch (SQLException | DatabaseException e) {
             throw new RuntimeException(e);
         }
     }

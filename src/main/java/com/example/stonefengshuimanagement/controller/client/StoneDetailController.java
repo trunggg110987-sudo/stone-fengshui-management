@@ -13,7 +13,7 @@ import java.sql.SQLException;
 
 @WebServlet(name = "stoneDetail", urlPatterns = "/stone-detail")
 public class StoneDetailController extends HttpServlet {
-    private StoneService stoneService = new StoneService();
+    private final StoneService stoneService = new StoneService();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int id = Integer.parseInt(req.getParameter("id"));
