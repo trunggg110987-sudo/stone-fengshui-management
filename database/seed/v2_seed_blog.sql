@@ -164,4 +164,4 @@ KẾT LUẬN
 Đá phong thủy không chỉ là vật trang trí mà còn mang ý nghĩa tinh thần và năng lượng. Việc bảo quản đúng cách không chỉ giúp giữ vẻ đẹp tự nhiên của đá mà còn giúp duy trì nguồn năng lượng tích cực lâu dài.
 
 Chỉ cần chăm sóc đúng cách, viên đá phong thủy của bạn sẽ luôn “sáng – sạch – và đầy năng lượng tốt”.',
-     'blog.png');
+     'blog3.jpg');

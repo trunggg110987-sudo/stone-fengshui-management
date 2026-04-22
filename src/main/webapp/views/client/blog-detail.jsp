@@ -17,7 +17,7 @@
             <c:if test="${not empty blog.image}">
                 <img src="${pageContext.request.contextPath}/images/${blog.image}"
                      class="card-img-top"
-                     style="max-height:400px; object-fit:cover;">
+                     style="max-width:600px; width:100%; height:auto; display:block; margin:auto;">
             </c:if>
 
             <div class="card-body">
