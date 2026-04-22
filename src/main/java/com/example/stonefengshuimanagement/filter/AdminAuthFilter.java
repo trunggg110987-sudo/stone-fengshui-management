@@ -36,16 +36,22 @@ public class AdminAuthFilter implements Filter {
             return;
         }
 
-        boolean isLoginRequest = uri.equals(contextPath + "/admin/login");
-
         HttpSession session = req.getSession(false);
         User user = session == null ? null : (User) session.getAttribute("user");
 
-        if (isLoginRequest || user != null) {
-            chain.doFilter(request, response);
+        // Chưa login
+        if (user == null) {
+            resp.sendRedirect(contextPath + "/admin/login");
             return;
         }
 
-        resp.sendRedirect(contextPath + "/admin/login");
+        // Không phải ADMIN
+        if (!"ADMIN".equalsIgnoreCase(user.getRole())) {
+            resp.sendRedirect(contextPath + "/home");
+            return;
+        }
+
+        // ✅ OK
+        chain.doFilter(request, response);
     }
 }
