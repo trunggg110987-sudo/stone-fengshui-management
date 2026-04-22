@@ -63,7 +63,6 @@
 
             <thead class="table-dark">
             <tr>
-                <th>#</th>
                 <th>ID</th>
                 <th>Name</th>
                 <th>Description</th>
@@ -78,10 +77,6 @@
 
                 <!-- row click -->
                 <tr class="clickable-row" data-id="${c.id}">
-
-                    <!-- STT -->
-                    <td>${i.index + 1}</td>
-
                     <td>${c.id}</td>
                     <td>${c.name}</td>
                     <td>${c.description}</td>

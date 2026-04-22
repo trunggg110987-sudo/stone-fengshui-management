@@ -82,6 +82,13 @@
                         </a>
                     </li>
 
+                    <li class="nav-item">
+                        <a href="${pageContext.request.contextPath}/admin/blog" class="nav-link">
+                            <i class="nav-icon fas fa-blog"></i>
+                            <p>Blog</p>
+                        </a>
+                    </li>
+
                 </ul>
             </nav>
 
