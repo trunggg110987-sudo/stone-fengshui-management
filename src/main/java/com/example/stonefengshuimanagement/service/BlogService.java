@@ -98,4 +98,7 @@ public class BlogService {
 
         return true;
     }
+    public int countAll() {
+        return blogDAO.countAll();
+    }
 }

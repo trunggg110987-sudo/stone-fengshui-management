@@ -45,4 +45,16 @@
         </div>
     </div>
 
+    <div class="col-md-4">
+        <div class="small-box bg-warning">
+            <div class="inner">
+                <h3>${totalBlogs}</h3>
+                <p>Blog</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-envelope"></i>
+            </div>
+        </div>
+    </div>
+
 </div>
