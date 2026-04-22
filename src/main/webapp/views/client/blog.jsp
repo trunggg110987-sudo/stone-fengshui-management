@@ -21,7 +21,7 @@
 
                         <!-- IMAGE -->
                         <c:if test="${not empty b.image}">
-                            <img src="${pageContext.request.contextPath}/${b.image}"
+                            <img src="${pageContext.request.contextPath}/images/${b.image}"
                                  class="card-img-top"
                                  style="height:200px; object-fit:cover;">
                         </c:if>
